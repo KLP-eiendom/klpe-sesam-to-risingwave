@@ -1,0 +1,51 @@
+{
+  "entities": [
+    {
+      "_id": "n204100193",
+      "Sum": "8176.25",
+      "betalt_dato": null,
+      "bygg_nummer": "N20101",
+      "faktura_nummer": "100193",
+      "faktura_sendt_elektronisk": 1,
+      "fakturadato": "2021-03-01T00:00:00",
+      "firma_id": "n204",
+      "forfallsdato": "2021-03-01T00:00:00",
+      "id": "n204100193",
+      "kid": "6011241001933",
+      "kontraktsnummer": "601124.01",
+      "kunde_nummer": "601124",
+      "opprettet": "2020-12-22T14:37:31",
+      "pdf_filnavn": "n204100193.pdf",
+      "sist_oppdatert": "2020-12-22T14:37:31",
+      "siste_innbetaling": null,
+      "sum_innbetalt": null,
+      "sum_utestaaende": "8176.25",
+      "sum_utestaaende_forsinket": "8176.25",
+      "sum_utestaaende_forsinket_dager": "-100"
+    },
+    {
+      "_id": "s207400001",
+      "Sum": "-7341458.75",
+      "betalt_dato": "2021-01-29T00:00:00",
+      "bygg_nummer": "N20102",
+      "faktura_nummer": "400001",
+      "faktura_sendt_elektronisk": 1,
+      "fakturadato": "2021-01-29T00:00:00",
+      "fil_finnes": false,
+      "firma_id": "s207",
+      "forfallsdato": "2021-02-28T00:00:00",
+      "id": "s207400001",
+      "kid": "4000014",
+      "kontraktsnummer": "400051.01",
+      "kunde_nummer": "400051",
+      "opprettet": "2020-12-08T16:00:37",
+      "pdf_filnavn": "s207400001.pdf",
+      "sist_oppdatert": "2020-12-08T16:00:41",
+      "siste_innbetaling": "2021-01-29T00:00:00",
+      "sum_innbetalt": "7341458.75",
+      "sum_utestaaende": "0",
+      "sum_utestaaende_forsinket": "0",
+      "sum_utestaaende_forsinket_dager": "0"
+    }
+  ]
+}

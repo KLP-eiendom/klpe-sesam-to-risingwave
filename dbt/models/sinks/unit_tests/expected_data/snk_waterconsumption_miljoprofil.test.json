@@ -1,0 +1,8 @@
+{
+  "mart": "mrt_energinet_waterconsumption",
+  "blacklist": [
+    "created",
+    "lastupdated"
+  ],
+  "id_field": "Id"
+}

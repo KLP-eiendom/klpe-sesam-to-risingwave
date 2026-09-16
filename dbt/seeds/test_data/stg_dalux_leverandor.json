@@ -1,0 +1,110 @@
+{
+  "entities": [
+    {
+      "_id": "10",
+      "companyId": "10",
+      "name": "Ahlsell Norge AS",
+      "organisationId": "500351",
+      "isActive": true,
+      "address": "{\"road\":\"Brobekkveien 80A / PB 184\",\"zipCode\":\"4068\",\"city\":\"STAVANGER\"}",
+      "companyTypes": "[\"Leverandør\"]"
+    },
+    {
+      "_id": "19",
+      "companyId": "19",
+      "name": "Nordic Installations AS",
+      "organisationId": "500142",
+      "isActive": true,
+      "address": "{\"road\":\"Østre Aker vei 90 / PB 313 Økern\",\"zipCode\":\"0511\",\"city\":\"OSLO\"}",
+      "companyTypes": "[\"Installatør; Leverandør\"]"
+    },
+    {
+      "_id": "56",
+      "companyId": "56",
+      "name": "GK Norge AS",
+      "organisationId": "503280",
+      "isActive": true,
+      "address": "{\"road\":\"Postboks 70 Bryn\",\"zipCode\":\"0611\",\"city\":\"OSLO\"}",
+      "companyTypes": "[\"Installatør; Leverandør; Serviceleverandør\"]"
+    },
+    {
+      "_id": "1",
+      "companyId": "1",
+      "name": "Unify",
+      "isActive": true,
+      "address": "{}",
+      "companyTypes": "[\"Produsent\"]"
+    },
+    {
+      "_id": "54",
+      "companyId": "54",
+      "name": "Gartner Moe Steinar Mostad",
+      "isActive": true,
+      "address": "{\"road\":\"Gisle Johnsons gate 7\",\"zipCode\":\"7067\",\"city\":\"TRONDHEIM\"}",
+      "companyTypes": "[\"Serviceleverandør\"]"
+    },
+    {
+      "_id": "20",
+      "companyId": "20",
+      "name": "Nordic Installations Trondheim AS (Trondheim)",
+      "isActive": true,
+      "address": "{\"road\":\"Tungasletta 10\",\"zipCode\":\"7047\",\"city\":\"Trondheim\"}",
+      "companyTypes": "[\"Installatør; Leverandør\"]"
+    },
+    {
+      "_id": "86",
+      "companyId": "86",
+      "name": "Midtnorsk Brannsikring AS",
+      "isActive": true,
+      "address": "{\"road\":\"Solstrandvegen 40\",\"zipCode\":\"6264\",\"city\":\"TENNFJORD\"}",
+      "companyTypes": "[\"Leverandør\"]"
+    },
+    {
+      "_id": "47",
+      "companyId": "47",
+      "name": "Findable AS",
+      "organisationId": "506290",
+      "isActive": true,
+      "address": "{}",
+      "companyTypes": "[\"Leverandør\"]"
+    },
+    {
+      "_id": "33",
+      "companyId": "33",
+      "name": "Dalux Norway AS",
+      "organisationId": "501369",
+      "isActive": true,
+      "address": "{\"road\":\"Karvesvingen 2 /\",\"zipCode\":\"0579\",\"city\":\"OSLO\"}",
+      "companyTypes": "[\"Leverandør\"]"
+    },
+    {
+      "_id": "100",
+      "companyId": "100",
+      "name": "Raise the Bar AB",
+      "organisationId": "507570",
+      "isActive": true,
+      "address": "{\"road\":\"Kyrkogatan 6B,\",\"zipCode\":\"SE-632 19,\",\"city\":\"ESKILSTUNA\"}",
+      "companyTypes": "[\"Leverandør\"]"
+    },
+    {
+      "_id": "2",
+      "companyId": "2",
+      "name": "Logistics Express AS",
+      "organisationId": "502003",
+      "isActive": true,
+      "address": "{\"road\": \"Postboks 228 Alnabru\", \"zipCode\": \"0614\", \"city\": \"OSLO\"}",
+      "companyTypes": "[\"Leverandør\"]",
+      "userDefinedFields": "{\"items\": [{\"userDefinedFieldId\": \"1294\", \"name\": \"Org.nr.\", \"description\": \"Organisasjonsnummer\", \"values\": [{\"text\": \"\"}]}, {\"userDefinedFieldId\": \"1295\", \"name\": \"Klassifisering\", \"description\": \"\", \"values\": [{\"text\": \"Godkjent\"}]}, {\"userDefinedFieldId\": \"1296\", \"name\": \"Lokasjon\", \"description\": \"\", \"values\": [{\"text\": \"Oslo\"}]}, {\"userDefinedFieldId\": \"1297\", \"name\": \"Vurderingskommentar\", \"description\": \"\", \"values\": [{\"text\": \"Ingen\"}]}]}"
+    },
+    {
+      "_id": "3",
+      "companyId": "3",
+      "name": "Idun Real Estate Sol",
+      "organisationId": "502393",
+      "isActive": true,
+      "address": "{}",
+      "companyTypes": "[\"Leverandør\"]",
+      "userDefinedFields": "{\"items\": [{\"userDefinedFieldId\": \"1294\", \"name\": \"Org.nr.\", \"description\": \"Organisasjonsnummer\", \"values\": [{\"text\": \"\"}]}, {\"userDefinedFieldId\": \"1295\", \"name\": \"Klassifisering\", \"description\": \"\", \"values\": [{\"text\": \"Ikke vurdert\"}]}, {\"userDefinedFieldId\": \"1296\", \"name\": \"Lokasjon\", \"description\": \"\", \"values\": [{\"text\": \"Oslo\"}]}, {\"userDefinedFieldId\": \"1297\", \"name\": \"Vurderingskommentar\", \"description\": \"\", \"values\": [{\"text\": \"Ingen\"}]}]}"
+    }
+  ]
+}

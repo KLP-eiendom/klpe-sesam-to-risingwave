@@ -1,0 +1,8 @@
+{
+  "mart": "mrt_global_ticket",
+  "blacklist": [
+    "created",
+    "lastupdated"
+  ],
+  "id_field": "EksternSakId"
+}

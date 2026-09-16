@@ -1,0 +1,28 @@
+name: Release · version check
+run-name: "Version check · #${{ github.event.pull_request.number }}"
+
+# ── The release gate ──────────────────────────────────────────────────────────
+# Runs on every PR into `release`, BEFORE merge, so a missing label is fixed on
+# the open PR rather than through a follow-up PR. Its job id and the callee's
+# job name form the required-check context
+#   check-version-label / Check version label
+# which the `release` ruleset requires. NEVER add a `name:` to the job below,
+# rename it, or add a paths filter to this trigger — a skipped or renamed
+# required check never reports and every release PR deadlocks.
+#
+# The deploy itself lives in cd-release.yml (push → release).
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  pull_request:
+    branches: [release]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+jobs:
+  # ── Version label check (all PR events against release) ───────────────────
+  check-version-label:
+    uses: "klpkonsern/klpe-actions/.github/workflows/release-version-check.yml@v2"
+    permissions:
+      contents: read
+      pull-requests: write
+    secrets: inherit

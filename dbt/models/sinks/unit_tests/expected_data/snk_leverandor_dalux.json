@@ -1,0 +1,32 @@
+[
+  {
+    "#id": "2",
+    "companyId": "2",
+    "name": "UPS Norway AS",
+    "phoneNo": null,
+    "email": null,
+    "isActive": false,
+    "address_road": "Postboks 228 Alnabru",
+    "address_zipcode": "0614",
+    "address_city": "OSLO",
+    "klassifisering": "Ikke godkjent",
+    "organisasjonsnummer": "921000015",
+    "lokasjon": null,
+    "evalueringskommentar": "Kredittsjekk utført i Bisnode"
+  },
+  {
+    "#id": "3",
+    "companyId": "3",
+    "name": "Idun Real Estate Solutions AB",
+    "phoneNo": null,
+    "email": null,
+    "isActive": false,
+    "address_road": "c/o Vasakronan AB\nBox 30074\nStockholm",
+    "address_zipcode": "10425",
+    "address_city": null,
+    "klassifisering": "Godkjent",
+    "organisasjonsnummer": "5590161245",
+    "lokasjon": "Felles",
+    "evalueringskommentar": null
+  }
+]

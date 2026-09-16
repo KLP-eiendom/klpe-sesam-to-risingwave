@@ -1,0 +1,47 @@
+[
+  {
+    "#id": "N251.0200-831-AK000169-11300-2025-02-01",
+    "Id": "N251.0200-831-AK000169-11300-2025-02-01",
+    "ProsjektId": "N251.0200",
+    "KategoriId": "831",
+    "KategorigruppeId": "8",
+    "BilagId": "AK000169",
+    "KontoId": "11300",
+    "BilagDato": "2025-02-01T00:00:00+00:00",
+    "BelopFirmavaluta": 270321.1,
+    "BelopFastvaluta": 270321.1,
+    "AktivertKostnadsfort": "Aktivert",
+    "Mva": "ExMVA",
+    "BilagTekst": null
+  },
+  {
+    "#id": "N251.0200-831-AK000169-11399-2025-02-01",
+    "Id": "N251.0200-831-AK000169-11399-2025-02-01",
+    "ProsjektId": "N251.0200",
+    "KategoriId": "831",
+    "KategorigruppeId": "8",
+    "BilagId": "AK000169",
+    "KontoId": "11399",
+    "BilagDato": "2025-02-01T00:00:00+00:00",
+    "BelopFirmavaluta": 67580.27,
+    "BelopFastvaluta": 67580.27,
+    "AktivertKostnadsfort": "Aktivert",
+    "Mva": "MVA",
+    "BilagTekst": null
+  },
+  {
+    "#id": "N251.0200-REGNSKAP-n251-110000100-67700-2024-09-16",
+    "Id": "N251.0200-REGNSKAP-n251-110000100-67700-2024-09-16",
+    "ProsjektId": "N251.0200",
+    "KategoriId": "REGNSKAP",
+    "KategorigruppeId": "T",
+    "BilagId": "n251-110000100",
+    "KontoId": "67700",
+    "BilagDato": "2024-12-10T00:00:00+00:00",
+    "BelopFirmavaluta": -721.25,
+    "BelopFastvaluta": -721.25,
+    "AktivertKostnadsfort": "Kostnadsført",
+    "Mva": "ExMVA",
+    "BilagTekst": null
+  }
+]

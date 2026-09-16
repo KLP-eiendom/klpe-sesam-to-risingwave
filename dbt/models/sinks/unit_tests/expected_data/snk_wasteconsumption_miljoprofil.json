@@ -1,0 +1,93 @@
+[
+  {
+    "#id": "N22701--1200 Papir, papp og kartong-202102",
+    "UniqueId": "N22701--1200 Papir, papp og kartong-202102",
+    "EksternId": "N22701--1200 Papir, papp og kartong-202102",
+    "ByggNummer": "N22701",
+    "TypeKode": "1200",
+    "Beskrivelse": "Papir, papp og kartong",
+    "Sum": 110.0,
+    "Mnd": 202102,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00",
+    "System": "Energinet"
+  },
+  {
+    "#id": "N22701--9900 Blandet avfall-202102",
+    "UniqueId": "N22701--9900 Blandet avfall-202102",
+    "EksternId": "N22701--9900 Blandet avfall-202102",
+    "ByggNummer": "N22701",
+    "TypeKode": "9900",
+    "Beskrivelse": "Blandet avfall",
+    "Sum": 210.0,
+    "Mnd": 202102,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00",
+    "System": "Energinet"
+  },
+  {
+    "#id": "N24901--9900 Blandet avfall-202103",
+    "UniqueId": "N24901--9900 Blandet avfall-202103",
+    "EksternId": "N24901--9900 Blandet avfall-202103",
+    "ByggNummer": "N24901",
+    "TypeKode": "9900",
+    "Beskrivelse": "Blandet avfall",
+    "Sum": 1010.0,
+    "Mnd": 202103,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00",
+    "System": "Energinet"
+  },
+  {
+    "#id": "N22701--1300 Glass-202101",
+    "UniqueId": "N22701--1300 Glass-202101",
+    "EksternId": "N22701--1300 Glass-202101",
+    "ByggNummer": "N22701",
+    "TypeKode": "1300",
+    "Beskrivelse": "Glass",
+    "Sum": 10.0,
+    "Mnd": 202101,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00",
+    "System": "Energinet"
+  },
+  {
+    "#id": "N22701--1200 Papir, papp og kartong-202103",
+    "UniqueId": "N22701--1200 Papir, papp og kartong-202103",
+    "EksternId": "N22701--1200 Papir, papp og kartong-202103",
+    "ByggNummer": "N22701",
+    "TypeKode": "1200",
+    "Beskrivelse": "Papir, papp og kartong",
+    "Sum": 100.0,
+    "Mnd": 202103,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00",
+    "System": "Energinet"
+  },
+  {
+    "#id": "N22701--1300 Glass-202103",
+    "UniqueId": "N22701--1300 Glass-202103",
+    "EksternId": "N22701--1300 Glass-202103",
+    "ByggNummer": "N22701",
+    "TypeKode": "1300",
+    "Beskrivelse": "Glass",
+    "Sum": 10.0,
+    "Mnd": 202103,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00",
+    "System": "Energinet"
+  },
+  {
+    "#id": "N24901--1200 Papir, papp og kartong-202102",
+    "UniqueId": "N24901--1200 Papir, papp og kartong-202102",
+    "EksternId": "N24901--1200 Papir, papp og kartong-202102",
+    "ByggNummer": "N24901",
+    "TypeKode": "1200",
+    "Beskrivelse": "Papir, papp og kartong",
+    "Sum": 150.0,
+    "Mnd": 202102,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00",
+    "System": "Energinet"
+  }
+]

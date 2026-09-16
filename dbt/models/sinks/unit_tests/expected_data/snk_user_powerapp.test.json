@@ -1,0 +1,9 @@
+{
+  "blacklist": [
+    "_id",
+    "_ts",
+    "_updated",
+    "type"
+  ],
+  "id_field": "epost"
+}

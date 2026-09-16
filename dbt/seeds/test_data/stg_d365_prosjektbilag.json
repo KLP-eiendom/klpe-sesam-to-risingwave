@@ -1,0 +1,58 @@
+{
+  "entities": [
+    {
+      "_id": "N251.0200-831-AK000169-11300-2025-02-01",
+      "prosjekt_id": "N251.0200",
+      "firma_id": "N251",
+      "kategori_id": "831",
+      "kategorigruppe_id": "8",
+      "bilagsdato": "2025-02-01T00:00:00",
+      "prosjektdato": "2025-02-01T00:00:00",
+      "belop_firmavaluta": "270321.1",
+      "belop_fastvaluta": "270321.1",
+      "konto_id": "11300",
+      "aktivert_kostnad": "Aktivert",
+      "leverandor_id": "500753",
+      "bilag": "AK000169",
+      "mvakode": null,
+      "mva": "ExMVA",
+      "transaksjonsdato": "2025-02-01T00:00:00"
+    },
+    {
+      "_id": "N251.0200-831-AK000169-11399-2025-02-01",
+      "prosjekt_id": "N251.0200",
+      "firma_id": "N251",
+      "kategori_id": "831",
+      "kategorigruppe_id": "8",
+      "bilagsdato": "2025-02-01T00:00:00",
+      "prosjektdato": "2025-02-01T00:00:00",
+      "belop_firmavaluta": "67580.27",
+      "belop_fastvaluta": "67580.27",
+      "konto_id": "11399",
+      "aktivert_kostnad": "Aktivert",
+      "leverandor_id": "500753",
+      "bilag": "AK000169",
+      "mvakode": null,
+      "mva": "MVA",
+      "transaksjonsdato": "2025-02-01T00:00:00"
+    },
+    {
+      "_id": "N251.0200-REGNSKAP-n251-110000100-67700-2024-09-16",
+      "prosjekt_id": "N251.0200",
+      "firma_id": "N251",
+      "kategori_id": "REGNSKAP",
+      "kategorigruppe_id": "T",
+      "bilagsdato": "2024-12-10T00:00:00",
+      "prosjektdato": "2024-09-16T00:00:00",
+      "belop_firmavaluta": "-721.25",
+      "belop_fastvaluta": "-721.25",
+      "konto_id": "67700",
+      "aktivert_kostnad": "Kostnadsført",
+      "leverandor_id": "500469",
+      "bilag": "n251-110000100",
+      "mvakode": "N25101",
+      "mva": "ExMVA",
+      "transaksjonsdato": "2024-09-16T00:00:00"
+    }
+  ]
+}

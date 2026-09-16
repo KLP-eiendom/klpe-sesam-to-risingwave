@@ -1,0 +1,132 @@
+version: 2
+
+unit_tests:
+  - name: mrt_superoffice_user__sesam_cases
+    description: >
+      Verifies that mrt_superoffice_user correctly extracts typed columns from the
+      JSONB payload column of stg_superoffice_user.
+      Uses 4 test cases:
+        personId 15133 — Tor Richard Fossum, unique email, mobilePhone set, non-retired
+        personId 15925 — Tone Lise Paulsen, first of two persons sharing same email
+        personId 55555 — Tone Lise Paulsen, duplicate email (different contactId/personId)
+        personId 99999 — deleted user (_deleted=true) — should pass through with _deleted=true
+      The mart applies no filtering — all rows pass through regardless of duplicate emails or deletion.
+      Fields not present in the Sesam test data (fullName, title, roleName, region,
+      uniqueId, copyEmail, registered, updated) are expected as NULL.
+    model: mrt_superoffice_user
+    given:
+      - input: ref('stg_superoffice_user')
+        rows:
+          - payload: >-
+              {"personId": 15133, "contactId": 9,
+               "email": "tor.fossum@example.com",
+               "firstName": "Tom-Richard", "lastName": "Fossum",
+               "mobilePhone": "982 99 971",
+               "personInterestIds": "",
+               "personRegisteredDate": "2011-12-08T20:28:32",
+               "personUpdatedDate": "2013-09-17T11:45:30",
+               "retired": false}
+          - payload: >-
+              {"personId": 15925, "contactId": 3,
+               "email": "tone.paulsen@example.com",
+               "firstName": "Tone Lise", "lastName": "Paulsen",
+               "mobilePhone": "",
+               "personInterestIds": "",
+               "personRegisteredDate": "2012-03-27T10:13:58",
+               "personUpdatedDate": "2012-03-27T10:14:03",
+               "retired": false}
+          - payload: >-
+              {"personId": 55555, "contactId": 6,
+               "email": "tone.paulsen@example.com",
+               "firstName": "Tone Lise", "lastName": "Paulsen",
+               "mobilePhone": "",
+               "personInterestIds": "",
+               "personRegisteredDate": "2012-03-27T10:13:58",
+               "personUpdatedDate": "2012-03-27T10:14:03",
+               "retired": false}
+          - payload: >-
+              {"personId": 99999, "contactId": 7,
+               "email": "deleted.user@example.com",
+               "firstName": "Deleted", "lastName": "User",
+               "mobilePhone": "",
+               "personInterestIds": "",
+               "retired": false,
+               "_deleted": true}
+    expect:
+      rows:
+        - personId: 15133
+          contactId: 9
+          email: "tor.fossum@example.com"
+          firstName: "Tom-Richard"
+          lastName: "Fossum"
+          fullName: "Tor Richard Fossum"
+          title: null
+          mobilePhone: "982 99 971"
+          roleName: null
+          region: null
+          uniqueId: null
+          copyEmail: null
+          retired: false
+          _deleted: false
+          personInterestIds: '""'
+          personRegisteredDate: "2011-12-08T20:28:32+00:00"
+          personUpdatedDate: "2013-09-17T11:45:30+00:00"
+          registered: null
+          updated: null
+        - personId: 15925
+          contactId: 3
+          email: "tone.paulsen@example.com"
+          firstName: "Tone Lise"
+          lastName: "Pedersen"
+          fullName: "Tone Lise Paulsen"
+          title: null
+          mobilePhone: ""
+          roleName: null
+          region: null
+          uniqueId: null
+          copyEmail: null
+          retired: false
+          _deleted: false
+          personInterestIds: '""'
+          personRegisteredDate: "2012-03-27T10:13:58+00:00"
+          personUpdatedDate: "2012-03-27T10:14:03+00:00"
+          registered: null
+          updated: null
+        - personId: 55555
+          contactId: 6
+          email: "tone.paulsen@example.com"
+          firstName: "Tone Lise"
+          lastName: "Pedersen"
+          fullName: "Tone Lise Paulsen"
+          title: null
+          mobilePhone: ""
+          roleName: null
+          region: null
+          uniqueId: null
+          copyEmail: null
+          retired: false
+          _deleted: false
+          personInterestIds: '""'
+          personRegisteredDate: "2012-03-27T10:13:58+00:00"
+          personUpdatedDate: "2012-03-27T10:14:03+00:00"
+          registered: null
+          updated: null
+        - personId: 99999
+          contactId: 7
+          email: "deleted.user@example.com"
+          firstName: "Deleted"
+          lastName: "User"
+          fullName: "Deleted User"
+          title: null
+          mobilePhone: ""
+          roleName: null
+          region: null
+          uniqueId: null
+          copyEmail: null
+          retired: false
+          _deleted: true
+          personInterestIds: '""'
+          personRegisteredDate: null
+          personUpdatedDate: null
+          registered: null
+          updated: null

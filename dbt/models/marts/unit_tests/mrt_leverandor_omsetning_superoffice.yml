@@ -1,0 +1,176 @@
+version: 2
+
+unit_tests:
+  - name: mrt_leverandor_omsetning_superoffice__sesam_d365_flags
+    description: >
+      Tests that the five D365 vendor flag fields are computed correctly from stg_d365_leverandor.
+      Two Sesam test entities (502393: leverandorgruppe=200; 502003: sperret=0, kommentar, nei)
+      plus four synthetic edge cases covering every flag branch.
+      BigQuery pre-aggregates turnover per vendor (omsetning_belop_i_aar/i_fjor) — no year filtering needed.
+      Key rules:
+        Sperret         = leverandorsperre IS NOT NULL AND leverandorsperre != 0
+        UnderAvvikling  = underavvikling = 'ja' OR undertvangsavviklingellertvangsopplosning = 'ja'
+        Engangsleverandor = engangsleverandor = 'ja'
+        Konsernintern   = leverandorgruppe = '200'
+        D365Kommentar   = merknad (pass-through)
+      NULL fields produce NULL (not false) for equality comparisons.
+    model: mrt_leverandor_omsetning_superoffice
+    given:
+      - input: ref('stg_d365_leverandoromsetning')
+        rows:
+          # BigQuery pre-aggregates per vendor: one row with current and prior year totals
+          - {leverandor_id: "502393", omsetning_belop_i_aar: 100000.0, omsetning_belop_i_fjor:  50000.0}
+          - {leverandor_id: "502003", omsetning_belop_i_aar: 100000.0, omsetning_belop_i_fjor:  50000.0}
+          - {leverandor_id: "999001", omsetning_belop_i_aar: 100000.0, omsetning_belop_i_fjor:  50000.0}
+          - {leverandor_id: "999002", omsetning_belop_i_aar: 100000.0, omsetning_belop_i_fjor:  50000.0}
+          - {leverandor_id: "999003", omsetning_belop_i_aar: 100000.0, omsetning_belop_i_fjor:  50000.0}
+          - {leverandor_id: "999004", omsetning_belop_i_aar: 100000.0, omsetning_belop_i_fjor:  50000.0}
+
+      - input: ref('stg_d365_leverandor')
+        rows:
+          # Sesam entity 502393: leverandorgruppe=200 → Konsernintern; all flag fields null
+          - leverandor_id: "502393"
+            organisasjonsnummer: null
+            aktiv: true
+            leverandorsperre: null
+            merknad: null
+            underavvikling: null
+            undertvangsavviklingellertvangsopplosning: null
+            engangsleverandor: null
+            leverandorgruppe: "200"
+          # Sesam entity 502003: leverandorsperre=0 (not blocked), kommentar set, alle avvikling=nei
+          - leverandor_id: "502003"
+            organisasjonsnummer: null
+            aktiv: true
+            leverandorsperre: 0
+            merknad: "UPS føres opp som en forbudt leverandør i våre leverandørlister."
+            underavvikling: "nei"
+            undertvangsavviklingellertvangsopplosning: "nei"
+            engangsleverandor: null
+            leverandorgruppe: "100"
+          # Synthetic 1: leverandorsperre=1 → Sperret=true
+          - leverandor_id: "999001"
+            organisasjonsnummer: null
+            aktiv: true
+            leverandorsperre: 1
+            merknad: null
+            underavvikling: "nei"
+            undertvangsavviklingellertvangsopplosning: "nei"
+            engangsleverandor: null
+            leverandorgruppe: null
+          # Synthetic 2: underavvikling=ja → UnderAvvikling=true
+          - leverandor_id: "999002"
+            organisasjonsnummer: null
+            aktiv: true
+            leverandorsperre: null
+            merknad: null
+            underavvikling: "ja"
+            undertvangsavviklingellertvangsopplosning: "nei"
+            engangsleverandor: null
+            leverandorgruppe: null
+          # Synthetic 3: undertvangsavviklingellertvangsopplosning=ja → UnderAvvikling=true via OR
+          - leverandor_id: "999003"
+            organisasjonsnummer: null
+            aktiv: true
+            leverandorsperre: null
+            merknad: null
+            underavvikling: "nei"
+            undertvangsavviklingellertvangsopplosning: "ja"
+            engangsleverandor: null
+            leverandorgruppe: null
+          # Synthetic 4: engangsleverandor=ja → Engangsleverandor=true
+          - leverandor_id: "999004"
+            organisasjonsnummer: null
+            aktiv: true
+            leverandorsperre: null
+            merknad: null
+            underavvikling: "nei"
+            undertvangsavviklingellertvangsopplosning: "nei"
+            engangsleverandor: "ja"
+            leverandorgruppe: null
+
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - {d365_leverandor_id: "502393", contactId: 1001, mvaRegistrert: "ja", revisor: null}
+          - {d365_leverandor_id: "502003", contactId: 1002, mvaRegistrert: null,  revisor: null}
+          - {d365_leverandor_id: "999001", contactId: 1003, mvaRegistrert: null,  revisor: null}
+          - {d365_leverandor_id: "999002", contactId: 1004, mvaRegistrert: null,  revisor: null}
+          - {d365_leverandor_id: "999003", contactId: 1005, mvaRegistrert: null,  revisor: null}
+          - {d365_leverandor_id: "999004", contactId: 1006, mvaRegistrert: null,  revisor: null}
+
+    expect:
+      rows:
+        # 502393: Konsernintern (leverandorgruppe=200), Sperret=false (NULL leverandorsperre),
+        #         UnderAvvikling=null (both NULL → NULL OR NULL = NULL), Engangsleverandor=null
+        - leverandornummer: "502393"
+          omsetning_belop_i_aar: 100000
+          omsetning_belop_i_fjor: 50000
+          contactid: 1001
+          MvaRegistrert: "ja"
+          Revisor: null
+          Sperret: false
+          D365Kommentar: null
+          UnderAvvikling: null
+          Engangsleverandor: null
+          Konsernintern: true
+        # 502003: Sperret=false (leverandorsperre=0), D365Kommentar set, UnderAvvikling=false (nei+nei),
+        #         Konsernintern=false (100 ≠ 200), Engangsleverandor=null (NULL = 'ja' = NULL)
+        - leverandornummer: "502003"
+          omsetning_belop_i_aar: 100000
+          omsetning_belop_i_fjor: 50000
+          contactid: 1002
+          MvaRegistrert: null
+          Revisor: null
+          Sperret: false
+          D365Kommentar: "UPS føres opp som en forbudt leverandør i våre leverandørlister."
+          UnderAvvikling: false
+          Engangsleverandor: null
+          Konsernintern: false
+        # 999001: leverandorsperre=1 → Sperret=true; leverandorgruppe=null → Konsernintern=null
+        - leverandornummer: "999001"
+          omsetning_belop_i_aar: 100000
+          omsetning_belop_i_fjor: 50000
+          contactid: 1003
+          MvaRegistrert: null
+          Revisor: null
+          Sperret: true
+          D365Kommentar: null
+          UnderAvvikling: false
+          Engangsleverandor: null
+          Konsernintern: null
+        # 999002: underavvikling=ja → UnderAvvikling=true
+        - leverandornummer: "999002"
+          omsetning_belop_i_aar: 100000
+          omsetning_belop_i_fjor: 50000
+          contactid: 1004
+          MvaRegistrert: null
+          Revisor: null
+          Sperret: false
+          D365Kommentar: null
+          UnderAvvikling: true
+          Engangsleverandor: null
+          Konsernintern: null
+        # 999003: undertvangsavvikling=ja → UnderAvvikling=true via OR (nei OR ja = true)
+        - leverandornummer: "999003"
+          omsetning_belop_i_aar: 100000
+          omsetning_belop_i_fjor: 50000
+          contactid: 1005
+          MvaRegistrert: null
+          Revisor: null
+          Sperret: false
+          D365Kommentar: null
+          UnderAvvikling: true
+          Engangsleverandor: null
+          Konsernintern: null
+        # 999004: engangsleverandor=ja → Engangsleverandor=true; UnderAvvikling=false (nei+nei)
+        - leverandornummer: "999004"
+          omsetning_belop_i_aar: 100000
+          omsetning_belop_i_fjor: 50000
+          contactid: 1006
+          MvaRegistrert: null
+          Revisor: null
+          Sperret: false
+          D365Kommentar: null
+          UnderAvvikling: false
+          Engangsleverandor: true
+          Konsernintern: null

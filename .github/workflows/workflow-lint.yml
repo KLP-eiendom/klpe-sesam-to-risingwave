@@ -1,0 +1,40 @@
+# .github/workflows/workflow-lint.yml
+#
+# Caller workflow committed to every klpe-* spoke. Delegates to the reusable
+# workflow-lint hub in klpkonsern/klpe-actions.
+#
+# Why it exists: `.github/workflows/**` sits in ci.yml / cd.yml's
+# `paths-ignore`, so editing a workflow no longer builds the app or deploys.
+# That is intentional — spoke workflows are thin callers into the hub, so a
+# rebuild validated nothing while consuming a scarce ARC runner. This is the
+# replacement: it validates the thing that actually changed, on
+# `ubuntu-latest`, in seconds, and never touches the ARC pool.
+#
+# No secrets and no inputs — actionlint only reads the files in this repo.
+#
+# ⚠️ Do NOT add this to branch protection as a required status check. It is
+# path-filtered, so a PR touching no workflow file skips it, and a skipped
+# required check never reports — which deadlocks the PR permanently. This is
+# the same trap that keeps cd.yml's `pull_request → release` unfiltered.
+
+name: Workflow Lint
+
+on:
+  pull_request:
+    # No `branches:` filter — main and release PRs are both worth checking.
+    paths:
+      - ".github/workflows/**"
+  push:
+    branches: [main]
+    # Closes the direct-push / admin-merge hole, where no PR run ever happens.
+    paths:
+      - ".github/workflows/**"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    uses: "klpkonsern/klpe-actions/.github/workflows/workflow-lint.yml@v2"

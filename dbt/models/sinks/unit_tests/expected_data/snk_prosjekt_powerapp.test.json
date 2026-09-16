@@ -1,0 +1,9 @@
+{
+  "blacklist": [
+    "_ts",
+    "_updated",
+    "type",
+    "prosjektareal"
+  ],
+  "id_field": "prosjekt_id"
+}

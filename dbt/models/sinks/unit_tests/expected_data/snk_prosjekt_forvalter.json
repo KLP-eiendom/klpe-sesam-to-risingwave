@@ -1,0 +1,67 @@
+[
+  {
+    "Beskrivelse": "405-431 Paleet Kontor",
+    "Id": "3",
+    "EndretAv": "TL",
+    "Navn": "405-431 Paleet Kontor",
+    "OpprettetAv": "TL",
+    "Status": "Aktiv",
+    "Type": "Eiendom",
+    "D365Prosjektnummer": null,
+    "#id": "3",
+    "Created": "2020-08-24 08:30:59",
+    "LastUpdated": "2020-08-24 08:30:59"
+  },
+  {
+    "Beskrivelse": "300-301 Pilestredet 40",
+    "Id": "4",
+    "EndretAv": "TL",
+    "Navn": "300-301 Pilestredet 40",
+    "OpprettetAv": "TL",
+    "Status": "Aktiv",
+    "Type": "Eiendom",
+    "D365Prosjektnummer": null,
+    "#id": "4",
+    "Created": "2020-08-24 08:43:09",
+    "LastUpdated": "2020-08-24 08:45:33"
+  },
+  {
+    "Beskrivelse": "N23001 KLP Ibsenkvartalet",
+    "EndretAv": "TVTL",
+    "Id": "608",
+    "Navn": "N23001 KLP Ibsenkvartalet",
+    "OpprettetAv": "jls",
+    "Status": "Aktiv",
+    "Type": "Eiendom",
+    "D365Prosjektnummer": "N230.0467",
+    "#id": "608",
+    "Created": "2012-01-20 09:01:44",
+    "LastUpdated": "2022-08-18 12:50:47"
+  },
+  {
+    "Beskrivelse": "N242.0300 Ventilasjonsanlegg - Ombygging av hovedanlegg for ventilasjon",
+    "EndretAv": "ASB",
+    "Id": "2064",
+    "Navn": "N242.0300 Ventilasjonsanlegg - Ombygging av hovedanlegg for ventilasjon",
+    "OpprettetAv": "ark",
+    "Status": "Aktiv",
+    "Type": "Prosjekt",
+    "D365Prosjektnummer": null,
+    "#id": "2064",
+    "Created": "2022-10-05 09:26:30",
+    "LastUpdated": "2024-02-16 09:03:03"
+  },
+  {
+    "Beskrivelse": "011-N503 - Teknobyen alle bygg",
+    "EndretAv": "AMØ",
+    "Id": "2217",
+    "Navn": "011-N503 - Teknobyen alle bygg",
+    "OpprettetAv": "AMØ",
+    "Status": "Aktiv",
+    "Type": "Administrativt",
+    "D365Prosjektnummer": null,
+    "#id": "2217",
+    "Created": "2023-09-26 09:42:08",
+    "LastUpdated": "2024-02-15 13:53:49"
+  }
+]

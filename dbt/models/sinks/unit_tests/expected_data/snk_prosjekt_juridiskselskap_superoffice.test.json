@@ -1,0 +1,4 @@
+{
+  "id_field": "ProjectId",
+  "blacklist": ["updateddate"]
+}

@@ -1,0 +1,86 @@
+unit_tests:
+  - name: snk_ticket_kundeportal__sesam_parity
+    model: snk_ticket_kundeportal
+    given:
+      - input: ref('mrt_superoffice_ticket')
+        rows:
+          - {
+              ticketid: 255,
+              createdat: "2020-07-23 10:12:21Z",
+              lastchanged: "2020-07-23 12:06:46Z",
+              ticketcategoryid: 7,
+              title: "Integration test of Ticket create with message",
+              ticketstatusid: 1,
+              author: "per.olsen@example.com",
+              personId: 100,
+              closedat: null,
+              contactid: 2,
+            }
+      - input: ref('mrt_global_customer')
+        rows:
+          - { contactid: 2, kundenummer: "101219" }
+      - input: ref('mrt_superoffice_user')
+        rows:
+          - { personId: 100, email: "per.olsen@example.com" }
+      - input: ref('mrt_global_ticketcategory')
+        rows:
+          - { SakskategoriId: 7, System: "superoffice", Type: "property", Id: 7 }
+    expect:
+      rows:
+        - {
+            "#id": "255",
+            Created: "2020-07-23 10:12:21Z",
+            LastUpdated: "2020-07-23 12:06:46Z",
+            EksternSakId: "255:superoffice-ticket",
+            SakskategoriId: 7,
+            Emne: "Integration test of Ticket create with message",
+            Status: "1",
+            OpprettetAv: "per.olsen@example.com",
+            LukketDato: null,
+            SoContactId: 2,
+            KundeNummer: "101219",
+          }
+
+  - name: snk_ticketsupportcategory_kundeportal__sesam_parity
+    model: snk_ticketsupportcategory_kundeportal
+    given:
+      - input: ref('mrt_superoffice_ticket')
+        rows:
+          - {
+              ticketid: 23332,
+              createdat: "2020-09-11 12:05:11Z",
+              lastchanged: "2020-09-11 12:42:33Z",
+              supportcategoryname: "Annet",
+            }
+          - {
+              ticketid: 11395,
+              createdat: "2018-04-24 07:09:13Z",
+              lastchanged: "2018-05-02 05:50:59Z",
+              supportcategoryname: "Sikkerhet",
+            }
+          - {
+              ticketid: 99999,
+              createdat: "2021-01-01 10:00:00Z",
+              lastchanged: "2021-01-01 10:00:00Z",
+              supportcategoryname: null,
+            }
+      - input: ref('mrt_global_ticketcategory')
+        rows:
+          - { Id: 99, SakskategoriId: 13, Navn: "Annet", System: "superoffice", Type: "support" }
+          - { Id: 103, SakskategoriId: 12, Navn: "Sikkerhet", System: "superoffice", Type: "support" }
+    expect:
+      rows:
+        - {
+            "#id": "23332:superoffice-ticket",
+            EksternSakId: "23332:superoffice-ticket",
+            SakskategoriId: 99,
+            Created: "2020-09-11 12:05:11Z",
+            LastUpdated: "2020-09-11 12:42:33Z",
+          }
+        - {
+            "#id": "11395:superoffice-ticket",
+            EksternSakId: "11395:superoffice-ticket",
+            SakskategoriId: 103,
+            Created: "2018-04-24 07:09:13Z",
+            LastUpdated: "2018-05-02 05:50:59Z",
+          }

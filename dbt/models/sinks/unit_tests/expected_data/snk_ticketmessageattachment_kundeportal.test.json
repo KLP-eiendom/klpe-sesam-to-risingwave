@@ -1,0 +1,8 @@
+{
+  "mart": "mrt_superoffice_ticketmessage_update",
+  "id_field": "EksternId",
+  "blacklist": [
+    "created",
+    "lastupdated"
+  ]
+}

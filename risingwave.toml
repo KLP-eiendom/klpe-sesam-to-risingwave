@@ -1,0 +1,2 @@
+[streaming.developer]
+aggressive_noop_update_elimination = true

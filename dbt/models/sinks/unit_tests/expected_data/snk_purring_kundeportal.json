@@ -1,0 +1,30 @@
+[
+  {
+    "#id": "n254600035",
+    "Id": "n254600035",
+    "KundeNummer": "612375",
+    "FakturaNummer": "600035",
+    "Kid": "6123756000356",
+    "FakturaDato": "2025-05-07 00:00:00",
+    "ForfallsDato": "2025-05-21 00:00:00+00:00",
+    "PdfFileName": "n254600035.pdf",
+    "Status": 0,
+    "Type": 5,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "n249600017",
+    "Id": "n249600017",
+    "KundeNummer": "600626",
+    "FakturaNummer": "600017",
+    "Kid": "6006266000174",
+    "FakturaDato": "2025-05-07 00:00:00",
+    "ForfallsDato": "2025-05-21 00:00:00+00:00",
+    "PdfFileName": "n249600017.pdf",
+    "Status": 0,
+    "Type": 1,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  }
+]

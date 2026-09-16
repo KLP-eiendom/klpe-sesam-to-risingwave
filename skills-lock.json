@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "risingwave": {
+      "source": "risingwavelabs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "a6477f3906583a6e3d1d83202bc14da21bebd07187dfc9d5f88cb19c43fdfad4"
+    },
+    "risingwave-best-practices": {
+      "source": "risingwavelabs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "b66a83a4239ff9788e11994edc887979e62f490a8c3590b654293ddf4dc9b16d"
+    }
+  }
+}

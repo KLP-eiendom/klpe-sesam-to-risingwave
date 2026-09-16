@@ -1,0 +1,490 @@
+{
+  "entities": [
+    {
+      "aborted": false,
+      "automaticReminders": 1,
+      "completed": true,
+      "created": "2021-09-02T10:59:07.431Z",
+      "descriptor": "default",
+      "documents": [
+        {
+          "name": "sesam.pdf",
+          "source": "file",
+          "aborted": false,
+          "attachments": [],
+          "created": "2021-09-02T10:59:07.852Z",
+          "descriptor": {
+            "type": "file",
+            "attachments": [
+              {
+                "label": "Attachment",
+                "numMax": 20,
+                "numMin": 0
+              }
+            ],
+            "hash": 1,
+            "numMax": 10,
+            "numMin": 1,
+            "roles": []
+          },
+          "file": {
+            "type": "document",
+            "name": "sesam.pdf",
+            "id": "4I0Ob-kTm5YOCP1_",
+            "namespace": "/envelopes/HkxQKRmAbF/documents/Syg4YRXCbt",
+            "uid": "/envelopes/HkxQKRmAbF/documents/Syg4YRXCbt/files/4I0Ob-kTm5YOCP1_"
+          },
+          "id": "Syg4YRXCbt",
+          "modified": "2021-09-02T10:59:08.022Z",
+          "rejected": false,
+          "signatures": [
+            {
+              "comment": "",
+              "date": "2021-09-02T10:59:26.767Z",
+              "email": "rune.nygard@example.com",
+              "familyName": "Nielsen",
+              "givenName": "Rune Mydske",
+              "id": "Syg4YRXCbt.S1ZVFR70-K",
+              "ip": "192.0.2.1",
+              "origin": "email",
+              "signatory": {
+                "uid": "/envelopes/HkxQKRmAbF/recipients/S1ZVFR70-K"
+              },
+              "status": "signed"
+            }
+          ],
+          "signed": true,
+          "signedFile": {
+            "type": "signedDocument",
+            "name": "sesam.pdf",
+            "id": "3u0Ye9am1OUbq_fZ",
+            "namespace": "/envelopes/HkxQKRmAbF/documents/Syg4YRXCbt",
+            "uid": "/envelopes/HkxQKRmAbF/documents/Syg4YRXCbt/files/3u0Ye9am1OUbq_fZ"
+          },
+          "tags": [],
+          "uid": "/envelopes/HkxQKRmAbF/documents/Syg4YRXCbt"
+        }
+      ],
+      "expiration": "2021-09-16T10:59:04.571Z",
+      "expired": false,
+      "flow": null,
+      "greeting": "Hei,\nHer er dokument for din signering.\nAcme Eiendom AS - SOD\nRune Mydske Nielsen\n",
+      "id": "HkxQKRmAbF",
+      "modified": "2021-09-02T10:59:24.144Z",
+      "owners": [
+        {
+          "email": "api-verified-acme-realestate@example.com",
+          "familyName": "acme-realestate",
+          "givenName": "api",
+          "language": "en",
+          "uid": "/companies/SJbXZyExt/users/SkUmCyugF"
+        },
+        {
+          "uid": "/system"
+        },
+        {
+          "uid": "/companies/SJbXZyExt"
+        },
+        {
+          "uid": "/companies/SJbXZyExt"
+        },
+        {
+          "email": "rune.nygard@example.com",
+          "familyName": "Nielsen",
+          "givenName": "Rune Mydske",
+          "uid": "/companies/SJbXZyExt/users/SkUmCyugF"
+        }
+      ],
+      "publishDate": "2021-09-02T10:59:08.704Z",
+      "published": true,
+      "recipients": [
+        {
+          "completed": true,
+          "deleted": false,
+          "demandAttachment": false,
+          "email": "rune.nygard@example.com",
+          "familyName": "Nielsen",
+          "givenName": "Rune Mydske",
+          "id": "S1ZVFR70-K",
+          "language": "en_EN",
+          "lastNotification": "HJboCmRbY-4",
+          "namespace": "/envelopes/HkxQKRmAbF",
+          "notificationMethod": "email",
+          "notifications": {
+            "H1HF0m0bF": {
+              "date": "2021-09-02T10:59:09.244Z",
+              "details": {
+                "messageId": "6c22f99c-cccd-46e7-ad6e-9a58506d4693",
+                "subject": "Documents for signing",
+                "submittedAt": "2021-09-02T10:59:09.244Z",
+                "toEmail": "rune.nygard@example.com"
+              },
+              "id": "H1HF0m0bF",
+              "namespace": "/envelopes/HkxQKRmAbF/recipients/S1ZVFR70-K",
+              "order": 0,
+              "status": "sent",
+              "uid": "/envelopes/HkxQKRmAbF/recipients/S1ZVFR70-K/notifications/H1HF0m0bF"
+            },
+            "H1HF0m0bF-3": {
+              "date": "2021-09-02T10:59:10.000Z",
+              "details": {
+                "DeliveredAt": "2021-09-02T10:59:10Z",
+                "Details": "smtp;250 2.0.0 OK 1630580349 m126si2085197yba.154 - gsmtp",
+                "MessageID": "6c22f99c-cccd-46e7-ad6e-9a58506d4693",
+                "MessageStream": "outbound",
+                "Recipient": "rune.nygard@example.com",
+                "RecordType": "Delivery",
+                "ServerID": 2245606,
+                "Tag": "notification-H1HF0m0bF"
+              },
+              "id": "H1HF0m0bF-3",
+              "namespace": "/envelopes/HkxQKRmAbF/recipients/S1ZVFR70-K",
+              "order": 1,
+              "status": "delivered",
+              "uid": "/envelopes/HkxQKRmAbF/recipients/S1ZVFR70-K/notifications/H1HF0m0bF"
+            },
+            "HJboCmRbY": {
+              "date": "2021-09-02T10:59:37.644Z",
+              "details": {
+                "messageId": "1e99f7e7-ccd1-452a-96d0-bb7b3c83b958",
+                "subject": "Your signed document",
+                "submittedAt": "2021-09-02T10:59:37.644Z",
+                "toEmail": "rune.nygard@example.com"
+              },
+              "id": "HJboCmRbY",
+              "namespace": "/envelopes/HkxQKRmAbF/recipients/S1ZVFR70-K",
+              "order": 0,
+              "status": "sent",
+              "uid": "/envelopes/HkxQKRmAbF/recipients/S1ZVFR70-K/notifications/HJboCmRbY"
+            },
+            "HJboCmRbY-4": {
+              "date": "2021-09-02T10:59:39.000Z",
+              "details": {
+                "Client": {
+                  "Company": "Microsoft Corporation.",
+                  "Family": "Windows",
+                  "Name": "Windows 10"
+                },
+                "FirstOpen": true,
+                "Geo": {
+                  "City": "Mountain View",
+                  "Coords": "37.4043,-122.0748",
+                  "Country": "United States",
+                  "CountryISOCode": "US",
+                  "IP": "192.0.2.2",
+                  "Region": "California",
+                  "RegionISOCode": "CA",
+                  "Zip": "94043"
+                },
+                "MessageID": "1e99f7e7-ccd1-452a-96d0-bb7b3c83b958",
+                "MessageStream": "outbound",
+                "OS": {
+                  "Company": "Microsoft Corporation.",
+                  "Family": "Windows",
+                  "Name": "Windows 10"
+                },
+                "Platform": "WebMail",
+                "ReadSeconds": 0,
+                "ReceivedAt": "2021-09-02T10:59:39Z",
+                "Recipient": "rune.nygard@example.com",
+                "RecordType": "Open",
+                "Tag": "notification-HJboCmRbY",
+                "UserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246 Mozilla/5.0"
+              },
+              "id": "HJboCmRbY-4",
+              "namespace": "/envelopes/HkxQKRmAbF/recipients/S1ZVFR70-K",
+              "order": 2,
+              "status": "opened",
+              "uid": "/envelopes/HkxQKRmAbF/recipients/S1ZVFR70-K/notifications/HJboCmRbY"
+            },
+            "HJboCmRbY-5": {
+              "date": "2021-09-02T10:59:38.000Z",
+              "details": {
+                "DeliveredAt": "2021-09-02T10:59:38Z",
+                "Details": "smtp;250 2.0.0 OK 1630580378 62si1854897ybs.354 - gsmtp",
+                "MessageID": "1e99f7e7-ccd1-452a-96d0-bb7b3c83b958",
+                "MessageStream": "outbound",
+                "Recipient": "rune.nygard@example.com",
+                "RecordType": "Delivery",
+                "ServerID": 2245606,
+                "Tag": "notification-HJboCmRbY"
+              },
+              "id": "HJboCmRbY-5",
+              "namespace": "/envelopes/HkxQKRmAbF/recipients/S1ZVFR70-K",
+              "order": 1,
+              "status": "delivered",
+              "uid": "/envelopes/HkxQKRmAbF/recipients/S1ZVFR70-K/notifications/HJboCmRbY"
+            },
+            "recS1ZVFR70-K": {
+              "date": "2021-09-02T10:59:20.697Z",
+              "details": {
+                "date": "2021-09-02T10:59:20.666Z",
+                "ip": "192.0.2.1",
+                "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:91.0) Gecko/20100101 Firefox/91.0"
+              },
+              "id": "recS1ZVFR70-K",
+              "order": 3,
+              "status": "envelope-opened"
+            }
+          },
+          "notified": true,
+          "order": 1,
+          "role": {
+            "name": "signer",
+            "action": "sign"
+          },
+          "signingMethod": "email",
+          "uid": "/envelopes/HkxQKRmAbF/recipients/S1ZVFR70-K"
+        }
+      ],
+      "sender": {
+        "email": "rune.nygard@example.com",
+        "familyName": "Nielsen",
+        "givenName": "Rune Mydske",
+        "uid": "/companies/SJbXZyExt/users/SkUmCyugF"
+      },
+      "sequentialSigning": false,
+      "tags": [],
+      "trashed": false,
+      "uid": "/envelopes/HkxQKRmAbF",
+      "version": 15
+    },
+    {
+      "aborted": false,
+      "automaticReminders": 0,
+      "completed": true,
+      "created": "2021-09-01T14:13:06.812Z",
+      "descriptor": "default",
+      "documents": [
+        {
+          "name": "leieavtale2.pdf",
+          "source": "file",
+          "aborted": false,
+          "attachments": [],
+          "created": "2021-09-01T14:13:07.055Z",
+          "descriptor": {
+            "type": "file",
+            "attachments": [
+              {
+                "label": "Attachment",
+                "numMax": 20,
+                "numMin": 0
+              }
+            ],
+            "hash": 1,
+            "numMax": 10,
+            "numMin": 1,
+            "roles": []
+          },
+          "file": {
+            "type": "document",
+            "name": "leieavtale2.pdf",
+            "id": "3d_mVHskxo6XC-F4",
+            "namespace": "/envelopes/H1liOq-pbK/documents/SkZsOcZ6WK",
+            "uid": "/envelopes/H1liOq-pbK/documents/SkZsOcZ6WK/files/3d_mVHskxo6XC-F4"
+          },
+          "id": "SkZsOcZ6WK",
+          "modified": "2021-09-01T14:13:07.245Z",
+          "rejected": false,
+          "signatures": [
+            {
+              "comment": "",
+              "date": "2021-09-03T08:57:13.284Z",
+              "email": "rune@example.com",
+              "familyName": "Nielsen",
+              "givenName": "Rune Test",
+              "id": "SkZsOcZ6WK.rJh_5bTWY",
+              "ip": "192.0.2.3",
+              "origin": "email",
+              "signatory": {
+                "uid": "/envelopes/H1liOq-pbK/recipients/rJh_5bTWY"
+              },
+              "status": "signed"
+            }
+          ],
+          "signed": true,
+          "signedFile": {
+            "type": "signedDocument",
+            "name": "leieavtale2.pdf",
+            "id": "NuUiGwn7QWuSKDJM",
+            "namespace": "/envelopes/H1liOq-pbK/documents/SkZsOcZ6WK",
+            "uid": "/envelopes/H1liOq-pbK/documents/SkZsOcZ6WK/files/NuUiGwn7QWuSKDJM"
+          },
+          "tags": [],
+          "uid": "/envelopes/H1liOq-pbK/documents/SkZsOcZ6WK"
+        }
+      ],
+      "expired": false,
+      "flow": null,
+      "greeting": "Hei,\nHer er dokument for din signering.\nAcme Eiendom AS - SOD\nRune Mydske Nielsen\n",
+      "id": "H1liOq-pbK",
+      "modified": "2021-09-03T08:57:15.346Z",
+      "owners": [
+        {
+          "email": "api-verified-acme-realestate@example.com",
+          "familyName": "acme-realestate",
+          "givenName": "api",
+          "language": "en",
+          "uid": "/companies/SJbXZyExt/users/SkUmCyugF"
+        },
+        {
+          "uid": "/system"
+        },
+        {
+          "uid": "/companies/SJbXZyExt"
+        },
+        {
+          "uid": "/companies/SJbXZyExt"
+        },
+        {
+          "email": "rune.nygard@example.com",
+          "familyName": "Nielsen",
+          "givenName": "Rune Mydske",
+          "uid": "/companies/SJbXZyExt/users/SkUmCyugF"
+        }
+      ],
+      "publishDate": "2021-09-01T14:13:07.881Z",
+      "published": true,
+      "recipients": [
+        {
+          "completed": true,
+          "deleted": false,
+          "demandAttachment": false,
+          "email": "rune@example.com",
+          "familyName": "Nielsen",
+          "givenName": "Rune Test",
+          "id": "rJh_5bTWY",
+          "language": "nb_NO",
+          "lastNotification": "ByesdXD1Gt-5",
+          "namespace": "/envelopes/H1liOq-pbK",
+          "notificationMethod": "email",
+          "notifications": {
+            "ByesdXD1Gt": {
+              "date": "2021-09-03T08:57:23.403Z",
+              "details": {
+                "messageId": "b9b6005f-b31f-4164-a8a2-c43dcbacf2b8",
+                "subject": "Signert dokument",
+                "submittedAt": "2021-09-03T08:57:23.403Z",
+                "toEmail": "rune@example.com"
+              },
+              "id": "ByesdXD1Gt",
+              "namespace": "/envelopes/H1liOq-pbK/recipients/rJh_5bTWY",
+              "order": 0,
+              "status": "sent",
+              "uid": "/envelopes/H1liOq-pbK/recipients/rJh_5bTWY/notifications/ByesdXD1Gt"
+            },
+            "ByesdXD1Gt-5": {
+              "date": "2021-09-03T08:57:24.000Z",
+              "details": {
+                "DeliveredAt": "2021-09-03T08:57:24Z",
+                "Details": "smtp;250 2.0.0 OK 1630659444 r4si4751421ila.160 - gsmtp",
+                "MessageID": "b9b6005f-b31f-4164-a8a2-c43dcbacf2b8",
+                "MessageStream": "outbound",
+                "Recipient": "rune@example.com",
+                "RecordType": "Delivery",
+                "ServerID": 2245606,
+                "Tag": "notification-ByesdXD1Gt"
+              },
+              "id": "ByesdXD1Gt-5",
+              "namespace": "/envelopes/H1liOq-pbK/recipients/rJh_5bTWY",
+              "order": 1,
+              "status": "delivered",
+              "uid": "/envelopes/H1liOq-pbK/recipients/rJh_5bTWY/notifications/ByesdXD1Gt"
+            },
+            "rJh_9bTZt": {
+              "date": "2021-09-01T14:13:08.427Z",
+              "details": {
+                "messageId": "c9d4b95f-4af1-4d88-9d5a-8a2206368cd5",
+                "subject": "Invitasjon til å signere",
+                "submittedAt": "2021-09-01T14:13:08.427Z",
+                "toEmail": "rune@example.com"
+              },
+              "id": "rJh_9bTZt",
+              "namespace": "/envelopes/H1liOq-pbK/recipients/rJh_5bTWY",
+              "order": 0,
+              "status": "sent",
+              "uid": "/envelopes/H1liOq-pbK/recipients/rJh_5bTWY/notifications/rJh_9bTZt"
+            },
+            "rJh_9bTZt-1": {
+              "date": "2021-09-01T14:13:11.000Z",
+              "details": {
+                "DeliveredAt": "2021-09-01T14:13:11Z",
+                "Details": "smtp;250 2.0.0 OK 1630505591 h24si23179649ejt.408 - gsmtp",
+                "MessageID": "c9d4b95f-4af1-4d88-9d5a-8a2206368cd5",
+                "MessageStream": "outbound",
+                "Recipient": "rune@example.com",
+                "RecordType": "Delivery",
+                "ServerID": 2245606,
+                "Tag": "notification-rJh_9bTZt"
+              },
+              "id": "rJh_9bTZt-1",
+              "namespace": "/envelopes/H1liOq-pbK/recipients/rJh_5bTWY",
+              "order": 1,
+              "status": "delivered",
+              "uid": "/envelopes/H1liOq-pbK/recipients/rJh_5bTWY/notifications/rJh_9bTZt"
+            },
+            "rJh_9bTZt-2": {
+              "date": "2021-09-01T14:35:48.000Z",
+              "details": {
+                "Client": {
+                  "Company": "Microsoft Corporation.",
+                  "Family": "Windows",
+                  "Name": "Windows XP"
+                },
+                "FirstOpen": true,
+                "MessageID": "c9d4b95f-4af1-4d88-9d5a-8a2206368cd5",
+                "MessageStream": "outbound",
+                "OS": {
+                  "Company": "Microsoft Corporation.",
+                  "Family": "Windows",
+                  "Name": "Windows XP"
+                },
+                "Platform": "Desktop",
+                "ReadSeconds": 0,
+                "ReceivedAt": "2021-09-01T14:35:48Z",
+                "Recipient": "rune@example.com",
+                "RecordType": "Open",
+                "Tag": "notification-rJh_9bTZt",
+                "UserAgent": "Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko Firefox/11.0 (via ggpht.com GoogleImageProxy)"
+              },
+              "id": "rJh_9bTZt-2",
+              "namespace": "/envelopes/H1liOq-pbK/recipients/rJh_5bTWY",
+              "order": 2,
+              "status": "opened",
+              "uid": "/envelopes/H1liOq-pbK/recipients/rJh_5bTWY/notifications/rJh_9bTZt"
+            },
+            "recrJh_5bTWY": {
+              "date": "2021-09-03T08:57:01.653Z",
+              "details": {
+                "ip": "192.0.2.3",
+                "ua": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0"
+              },
+              "id": "recrJh_5bTWY",
+              "order": 3,
+              "status": "envelope-opened"
+            }
+          },
+          "notified": true,
+          "order": 1,
+          "role": {
+            "name": "signer",
+            "action": "sign"
+          },
+          "signingMethod": "email",
+          "uid": "/envelopes/H1liOq-pbK/recipients/rJh_5bTWY"
+        }
+      ],
+      "sender": {
+        "email": "rune.nygard@example.com",
+        "familyName": "Nielsen",
+        "givenName": "Rune Mydske",
+        "uid": "/companies/SJbXZyExt/users/SkUmCyugF"
+      },
+      "sequentialSigning": false,
+      "tags": [],
+      "trashed": false,
+      "uid": "/envelopes/H1liOq-pbK",
+      "version": 14
+    }
+  ]
+}

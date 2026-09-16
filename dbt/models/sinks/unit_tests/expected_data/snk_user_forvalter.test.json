@@ -1,0 +1,8 @@
+{
+  "mart": "mrt_global_internaluser",
+  "blacklist": [
+    "created",
+    "lastupdated"
+  ],
+  "id_field": "BrukerId"
+}

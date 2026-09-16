@@ -1,0 +1,6 @@
+@RisingWaveDataApi_HostAddress = http://localhost:5087
+
+GET {{RisingWaveDataApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

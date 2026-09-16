@@ -1,0 +1,795 @@
+unit_tests:
+  - name: snk_contract_details_forvalter__sesam_parity
+    model: snk_contract_details_forvalter
+    given:
+      - input: ref('stg_d365_contract_line')
+        rows:
+          - {
+              unik_id: "5637144615",
+              kontrakt_nummer: "600015.20",
+              firma: "N201",
+              linje_type: 0,
+              navn: "Eiendomsskatt",
+              gyldig_fra: "2016-07-01 00:00:00",
+              gyldig_til: "2026-06-30 00:00:00",
+              leie_objekt_id: 5637145326,
+              maanedlig_beloep: 3759.5175,
+              aarlig_beloep: 45114.21,
+              areal_ikke_medregnet: 0,
+              leie_enhet: "m2",
+              leie_antall: null,
+              fysisk_areal: null,
+              areal: null,
+              areal_type: null,
+              areal_type_navn: null,
+              leie_kost_type_id: null,
+              leie_kost_type_navn: null,
+              leie_kost_gruppe_id: null,
+              leie_art_gruppe_id: null,
+              leie_art_gruppe_kode: null,
+              leie_art_gruppe_n1: null,
+              kontrakt_dato: null,
+            }
+      - input: ref('stg_d365_kontrakt')
+        rows:
+          - {
+              _id: "600015.20.N201",
+              kontrakt_id: "600015.20",
+              kundenummer: "600015",
+              byggnummer: "N20101",
+              kontrakt_navn: null,
+              gyldig_fra: "2016-07-01 00:00:00",
+              gyldig_til: "2026-06-30 00:00:00",
+            }
+      - input: ref('stg_d365_firma')
+        rows: []
+    expect:
+      rows:
+        - {
+            Id: "5637144615",
+            KundeNummer: "600015",
+            KontraktsNummer: "600015.20.N201",
+            ByggNummer: "N20101",
+            LinjeType: 0,
+            LinjeNavn: "Eiendomsskatt",
+            KontraktGyldigFra: "2016-07-01 00:00:00",
+            KontraktGyldigTil: "2026-06-30 00:00:00",
+            LinjeGyldigFra: "2016-07-01 00:00:00",
+            LinjeGyldigTil: "2026-06-30 00:00:00",
+            LeieObjektId: 5637145326,
+            MaanedligBeloep: 3759.5175,
+            AarligBeloep: 45114.21,
+            ArealUnntattBeregning: false,
+            KontraktsNavn: null,
+            Region: "",
+            OrgNivaa2: "",
+            OrgNivaa3: "",
+          }
+
+  - name: snk_dokument_forvalter__sesam_parity
+    model: snk_dokument_forvalter
+    given:
+      - input: ref('mrt_global_document')
+        rows:
+          - {
+              documentid: 24,
+              unique_verified_id: null,
+              createddate: "2021-09-01 12:00:00",
+              updateddate: "2021-09-02 10:00:00",
+              verified_envelope_id: null,
+              so_envelope_id: "HkxQKRmAbF",
+              owner: "api-verified-klpeiendom@example.com",
+              name: "hkxqkrmabf_syg4yrxcbt.pdf",
+              header: "Standard leiekontrakt - sesam",
+              signed_date: "2021-09-02 10:59:26",
+              contactid: 2,
+              project_type: "Eiendom",
+              projectname: "N20900-N20902 Byporten Kjøpesenter",
+              projectid: 4,
+              saleid: null,
+              leko_id: "Contract-21-08-22_12-09-327",
+              documenttemplatename: "Signert Kontrakt",
+            }
+          - {
+              documentid: 25,
+              unique_verified_id: null,
+              createddate: "2021-09-01 12:00:00",
+              updateddate: "2021-09-02 10:00:00",
+              verified_envelope_id: null,
+              so_envelope_id: "HkxQKRmAbF",
+              owner: null,
+              name: "hkxqkrmabf_syg4yrxcbt.pdf",
+              header: "Standard leiekontrakt - sesam",
+              signed_date: "2021-09-02 10:59:26",
+              contactid: 2,
+              project_type: "Eiendom",
+              projectname: "N20900-N20902 Byporten Kjøpesenter",
+              projectid: 4,
+              saleid: null,
+              leko_id: "Contract-21-08-22_12-09-327",
+              documenttemplatename: "Signert Kontrakt",
+            }
+      - input: ref('mrt_global_user')
+        rows:
+          - { email: "api-verified-klpeiendom@example.com", personid: 7 }
+    expect:
+      rows:
+        - {
+            Id: "24:superoffice-document",
+            Filnavn: "Standard leiekontrakt - sesam",
+            Navn: "Standard leiekontrakt - sesam",
+            KonvoluttId: "HkxQKRmAbF",
+            LekoId: "Contract-21-08-22_12-09-327",
+            OpprettetAvSoPersonId: 7,
+            Prosjekt: "N20900-N20902 Byporten Kjøpesenter",
+            SignertDato: "2021-09-02 10:59:26",
+            SoContactId: 2,
+            ProsjektId: 4,
+            SalgId: null,
+            Created: "2021-09-01 12:00:00",
+            LastUpdated: "2021-09-02 10:00:00",
+          }
+        - {
+            Id: "25:superoffice-document",
+            Filnavn: "Standard leiekontrakt - sesam",
+            Navn: "Standard leiekontrakt - sesam",
+            KonvoluttId: "HkxQKRmAbF",
+            LekoId: "Contract-21-08-22_12-09-327",
+            OpprettetAvSoPersonId: 0,
+            Prosjekt: "N20900-N20902 Byporten Kjøpesenter",
+            SignertDato: "2021-09-02 10:59:26",
+            SoContactId: 2,
+            ProsjektId: 4,
+            SalgId: null,
+            Created: "2021-09-01 12:00:00",
+            LastUpdated: "2021-09-02 10:00:00",
+          }
+
+  - name: snk_firma_forvalter__sesam_parity
+    model: snk_firma_forvalter
+    given:
+      - input: ref('stg_d365_firma')
+        rows:
+          - { firma_id: "D202", navn: "KLP Ørestad 5G A/S" }
+    expect:
+      rows:
+        - {
+            Id: "D202",
+            Navn: "KLP Ørestad 5G A/S",
+            Region: null,
+            OrgNivaa2: null,
+            OrgNivaa3: null,
+          }
+
+  - name: snk_kostkategori_forvalter__sesam_parity
+    model: snk_kostkategori_forvalter
+    given:
+      - input: ref('stg_d365_kostkategori')
+        rows:
+          - {
+              kategori_id: "822",
+              kategori_navn: "RIB",
+              kategori: null,
+              kategorigruppe_id: null,
+              kategorigruppe_navn: "Generelle kostnader",
+              kategorigruppe: null,
+            }
+    expect:
+      rows:
+        - {
+            Id: "822",
+            Navn: "RIB",
+            Beskrivelse: null,
+            GruppeId: null,
+            GruppeNavn: "Generelle kostnader",
+            GruppeBeskrivelse: null,
+          }
+
+  - name: snk_leieobjekt_forvalter__sesam_parity
+    model: snk_leieobjekt_forvalter
+    given:
+      - input: ref('stg_d365_leieobjekt')
+        rows:
+          # no gyldig_til -> kept via the "gyldig_til IS NULL" guard
+          - {
+              id: 5637145326,
+              leieobjekt_id: 5637145326,
+              navn: "07 Kontor 326kvm",
+              bygg: "N20101",
+              utleieobjekt_type: "Bygg",
+            }
+          # expired (_is_active false, gyldig_til in the past) -> dropped, mirroring
+          # Sesam's "gyldig_til IS NULL OR gyldig_til > now()" filter
+          - {
+              id: "N99999L9",
+              leieobjekt_id: 9999999999,
+              navn: "Expired Object",
+              bygg: "N99999",
+              utleieobjekt_type: "Bygg",
+              gyldig_til: "2020-01-01 00:00:00",
+              _is_active: false,
+            }
+    expect:
+      rows:
+        - {
+            Id: 5637145326,
+            Navn: "07 Kontor 326kvm",
+            Bygg: "N20101",
+            Type: "Bygg",
+            ForvalterId: null,
+            DrifterId: null,
+            OekonomId: null,
+            GyldigFra: null,
+            GyldigTil: null,
+          }
+
+  - name: snk_personkonvolutt_forvalter__sesam_parity
+    model: snk_personkonvolutt_forvalter
+    given:
+      - input: ref('mrt_verified_personkonvolutt')
+        rows:
+          - {
+              email: "rune.nygard@example.com",
+              envelopeId: "HkxQKRmAbF",
+              type: "owner",
+              givenName: "Rune Mydske",
+              familyName: "Nielsen",
+            }
+          - {
+              email: "rune.nygard@example.com",
+              envelopeId: "HkxQKRmAbF",
+              type: "recipient",
+              givenName: "Rune Mydske",
+              familyName: "Nielsen",
+            }
+    expect:
+      rows:
+        - {
+            PersonEpost: "rune.nygard@example.com",
+            KonvoluttId: "HkxQKRmAbF",
+            Type: "eier",
+            Fornavn: "Rune Mydske",
+            Etternavn: "Nielsen",
+          }
+        - {
+            PersonEpost: "rune.nygard@example.com",
+            KonvoluttId: "HkxQKRmAbF",
+            Type: "mottaker",
+            Fornavn: "Rune Mydske",
+            Etternavn: "Nielsen",
+          }
+
+  - name: snk_prosjektbudsjett_forvalter__sesam_parity
+    model: snk_prosjektbudsjett_forvalter
+    given:
+      - input: ref('stg_d365_prosjektbudsjett')
+        rows:
+          # BelopFastValutakurs must come from belop_firmavaluta (as Sesam's DTL maps it),
+          # NOT the identically-named belop_fast_valutakurs. Distinct values prove the column choice.
+          - {
+              _id: "24|N228|Pros.03-11300-N22801-EIER-2024-12-31",
+              prosjekt_id: "24|N228|Pros.03",
+              firma_id: "N228",
+              konto_id: "11300",
+              bygg_avdeling_id: "N22801",
+              kontnadsted_id: "EIER",
+              budsjettdato: "2024-12-31",
+              belop_firmavaluta: 200000.0,
+              belop_fast_valutakurs: 273000.0,
+            }
+          # negative case: Sesam filters KontoId == '-' — must be dropped, absent from expect
+          - {
+              _id: "24|N228|Pros.03--N22801-EIER-2024-12-31",
+              prosjekt_id: "24|N228|Pros.03",
+              firma_id: "N228",
+              konto_id: "-",
+              bygg_avdeling_id: "N22801",
+              kontnadsted_id: "EIER",
+              budsjettdato: "2024-12-31",
+            }
+    expect:
+      rows:
+        - {
+            Id: "24|N228|Pros.03-11300-N22801-EIER-2024-12-31",
+            FirmaId: "N228",
+            KontoId: "11300",
+            ByggAvdelingId: "N22801",
+            Budsjettdato: "2024-12-31",
+            KontraktId: null,
+            Budsjettnummer: "24|N228|Pros.03",
+            Budsjettmodell: null,
+            BelopFastValutakurs: 200000.0,
+            BelopFastValutakursPerDato: null,
+            Kommentar: null,
+          }
+
+  - name: snk_leverandorvurdering_forvalter__sesam_parity
+    model: snk_leverandorvurdering_forvalter
+    given:
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - {
+              unique_orgnr: "920224520",
+              contactid: 16445,
+              d365_leverandor_id: "500506",
+              navn: "Proffklær AS",
+              klassifiseringkode: "33",
+              klassifiseringbeskrivelse: "Godkjent",
+            }
+    expect:
+      rows:
+        - {
+            Orgnummer: "920224520",
+            SuperOfficeContactId: 16445,
+            LeverandorId: "500506",
+            Navn: "Proffklær AS",
+            KlassifiseringKode: "33",
+            KlassifiseringBeskrivelse: "Godkjent",
+          }
+
+  - name: snk_directlink_forvalter__sesam_parity
+    model: snk_directlink_forvalter
+    given:
+      - input: ref('stg_lekoworker_directlink')
+        rows:
+          - payload: >-
+              {"soDokumentId": "181", "dokumentId": "SkxQTYI64j",
+               "konvoluttId": "SJ7atIa4s", "kundeLenke": "http://lenke",
+               "kundeNummer": "612003", "lekoId": "Contract-123"}
+    expect:
+      rows:
+        - {
+            Id: "181:superoffice-document",
+            DokumentId: "SkxQTYI64j",
+            KonvoluttId: "SJ7atIa4s",
+            KundeLenke: "http://lenke",
+            KundeNummer: "612003",
+            LekoId: "Contract-123",
+            SoDokumentId: 181,
+            KontraktLenke: null,
+            KontraktNummer: null,
+          }
+
+  - name: snk_ledige_arealer_forvalter__sesam_parity
+    description: >
+      Verifies filter (EFA/BFA/MFA/NRA excluded) and field mapping.
+      Row with areal_type='EFA' must be filtered out.
+    model: snk_ledige_arealer_forvalter
+    given:
+      - input: ref('stg_d365_areas')
+        rows:
+          - {
+              _id: "D2020-D20201|U1|U101F-D2020153-LAGuten--",
+              bygg_id: "D20201",
+              grunn_id: "D2020",
+              sone_id: "D20201|U1|U101F",
+              leieobjekt_id: "D2020153",
+              kontrakt_id: "-",
+              areal_type: "LAGuten",
+              areal_type_navn: "Lager uten fellesareal",
+              etasje: "Kælder",
+              ledig_areal: 42.439250438999991,
+              markedspris_ledig_areal: 32678.222838029993,
+              markedspris_pr_m2: 550.0,
+              sone_beskrivelse: "FU1 Adgangsveje/foyer",
+              sone_nummer: "U101F",
+              fysisk_areal: 42.439250438999991,
+            }
+          - {
+              _id: "N2100-N21001|U1|U132-N210L104-GARuten--",
+              bygg_id: "N21001",
+              grunn_id: "N2100",
+              sone_id: "N21001|U1|U132",
+              leieobjekt_id: "N210L104",
+              kontrakt_id: "-",
+              areal_type: "GARuten",
+              areal_type_navn: "Garasje uten fellesareal",
+              etasje: "1. underetasje",
+              ledig_areal: 34.0,
+              markedspris_ledig_areal: 51000.0,
+              markedspris_pr_m2: 1500.0,
+              sone_beskrivelse: "U1.32 - Garasje 2, P-plass 13",
+              sone_nummer: "U132",
+              fysisk_areal: 34.0,
+            }
+          # vacant area with no specific building (bygg_id='-') → ByggId must fall back to
+          # grunn_id, UPPER-cased (mirrors Sesam d365-areas.unique_eiendom_id). Lowercase
+          # grunn_id here also proves the UPPER() while GrunnId keeps its original case.
+          - {
+              _id: "n2090-N20901|04|04007F-N209vac-Lag--",
+              bygg_id: "-",
+              grunn_id: "n2090",
+              sone_id: "N20901|04|04007F",
+              leieobjekt_id: "N209vac",
+              kontrakt_id: "-",
+              areal_type: "Lag",
+              areal_type_navn: "Lager",
+              etasje: "4. etasje",
+              ledig_areal: 10.0,
+              markedspris_ledig_areal: 0.0,
+              markedspris_pr_m2: 0.0,
+              sone_beskrivelse: "vacant, no building",
+              sone_nummer: "04007F",
+              fysisk_areal: 10.0,
+            }
+          - {
+              _id: "N2100-N21001|U1|U132-N210L104-EFA--",
+              bygg_id: "N21001",
+              grunn_id: "N2100",
+              sone_id: "N21001|U1|U132",
+              leieobjekt_id: "N210L104",
+              kontrakt_id: "-",
+              areal_type: "EFA",
+              areal_type_navn: "Eksklusivt fellesareal",
+              etasje: "1. etasje",
+              ledig_areal: 10.0,
+              markedspris_ledig_areal: null,
+              markedspris_pr_m2: null,
+              sone_beskrivelse: null,
+              sone_nummer: null,
+              fysisk_areal: 10.0,
+            }
+    expect:
+      rows:
+        - {
+            Id: "D2020-D20201|U1|U101F-D2020153-LAGuten--",
+            Created: "2024-01-01 00:00:00",
+            ByggId: "D20201",
+            GrunnId: "D2020",
+            SoneId: "D20201|U1|U101F",
+            LeieobjektId: "D2020153",
+            ArealType: "LAGuten",
+            ArealTypeNavn: "Lager uten fellesareal",
+            Etasje: "Kælder",
+            LedigArealM2: 42.439250438999991,
+            MarkedsprisLedigAreal: 32678.222838029993,
+            MarkedsprisPerM2: 550.0,
+            SoneBeskrivelse: "FU1 Adgangsveje/foyer",
+            SoneNummer: "U101F",
+            FysiskArealM2: 42.439250438999991,
+          }
+        - {
+            Id: "N2100-N21001|U1|U132-N210L104-GARuten--",
+            Created: "2024-01-01 00:00:00",
+            ByggId: "N21001",
+            GrunnId: "N2100",
+            SoneId: "N21001|U1|U132",
+            LeieobjektId: "N210L104",
+            ArealType: "GARuten",
+            ArealTypeNavn: "Garasje uten fellesareal",
+            Etasje: "1. underetasje",
+            LedigArealM2: 34.0,
+            MarkedsprisLedigAreal: 51000.0,
+            MarkedsprisPerM2: 1500.0,
+            SoneBeskrivelse: "U1.32 - Garasje 2, P-plass 13",
+            SoneNummer: "U132",
+            FysiskArealM2: 34.0,
+          }
+        - {
+            Id: "n2090-N20901|04|04007F-N209vac-Lag--",
+            Created: "2024-01-01 00:00:00",
+            ByggId: "N2090",
+            GrunnId: "n2090",
+            SoneId: "N20901|04|04007F",
+            LeieobjektId: "N209vac",
+            ArealType: "Lag",
+            ArealTypeNavn: "Lager",
+            Etasje: "4. etasje",
+            LedigArealM2: 10.0,
+            MarkedsprisLedigAreal: 0.0,
+            MarkedsprisPerM2: 0.0,
+            SoneBeskrivelse: "vacant, no building",
+            SoneNummer: "04007F",
+            FysiskArealM2: 10.0,
+          }
+
+  - name: snk_prosjektbilag_forvalter__sesam_parity
+    model: snk_prosjektbilag_forvalter
+    given:
+      - input: ref('stg_d365_prosjektbilag')
+        rows:
+          - {
+              _id: "N251.0200-831-AK000169-11300-2025-02-01",
+              prosjekt_id: "N251.0200",
+              kategori_id: "831",
+              kategorigruppe_id: "8",
+              bilag: "AK000169",
+              konto_id: "11300",
+              bilagsdato: "2025-02-01 00:00:00",
+              belop_firmavaluta: 270321.1,
+              belop_fastvaluta: 270321.1,
+              aktivert_kostnad: "Aktivert",
+              mva: "ExMVA",
+              beskrivelse: null,
+            }
+          - {
+              _id: "N251.0200-REGNSKAP-n251-110000100-67700-2024-09-16",
+              prosjekt_id: "N251.0200",
+              kategori_id: "REGNSKAP",
+              kategorigruppe_id: "T",
+              bilag: "n251-110000100",
+              konto_id: "67700",
+              bilagsdato: "2024-12-10 00:00:00",
+              belop_firmavaluta: -721.25,
+              belop_fastvaluta: -721.25,
+              aktivert_kostnad: "Kostnadsført",
+              mva: "ExMVA",
+              beskrivelse: null,
+            }
+    expect:
+      rows:
+        - {
+            Id: "N251.0200-831-AK000169-11300-2025-02-01",
+            ProsjektId: "N251.0200",
+            KategoriId: "831",
+            KategorigruppeId: "8",
+            BilagId: "AK000169",
+            KontoId: "11300",
+            BilagDato: "2025-02-01 00:00:00",
+            BelopFirmavaluta: 270321.1,
+            BelopFastvaluta: 270321.1,
+            AktivertKostnadsfort: "Aktivert",
+            Mva: "ExMVA",
+            BilagTekst: null,
+          }
+        - {
+            Id: "N251.0200-REGNSKAP-n251-110000100-67700-2024-09-16",
+            ProsjektId: "N251.0200",
+            KategoriId: "REGNSKAP",
+            KategorigruppeId: "T",
+            BilagId: "n251-110000100",
+            KontoId: "67700",
+            BilagDato: "2024-12-10 00:00:00",
+            BelopFirmavaluta: -721.25,
+            BelopFastvaluta: -721.25,
+            AktivertKostnadsfort: "Kostnadsført",
+            Mva: "ExMVA",
+            BilagTekst: null,
+          }
+
+  - name: snk_user_person_forvalter__sesam_parity
+    model: snk_user_person_forvalter
+    given:
+      - input: ref('mrt_global_user')
+        rows:
+          - {
+              personId: 34770,
+              contactId: 11251,
+              email: "jon.arild@example.com",
+              firstName: "John Arild",
+              lastName: "Myhrvold",
+              registered: "1996-04-23T10:11:10Z",
+            }
+          - {
+              personId: 19880,
+              contactId: 5,
+              email: "bjorn@example.com",
+              firstName: "Anne-Live",
+              lastName: "Bjørnstad",
+              registered: null,
+            }
+          - {
+              # user-webhook-only person — never appeared under the old
+              # stg_superoffice_csuser-only sink; proves the mrt_global_user switch works.
+              personId: 42001,
+              contactId: 200,
+              email: "eva.olsen@example.com",
+              firstName: "Eva",
+              lastName: "Olsen",
+              registered: "2022-01-01T00:00:00Z",
+            }
+          - {
+              # contactId=0 means "no contact" per Sesam's filter(gt(_,0), ...) — must be
+              # excluded, not treated as a present contact by a naive IS NOT NULL check.
+              personId: 42002,
+              contactId: 0,
+              email: "noone@example.com",
+              firstName: "No",
+              lastName: "One",
+              registered: null,
+            }
+      - input: ref('mrt_global_customer')
+        rows:
+          # Kundenummer comes from a global-customer hop by contactId (gc.number), not
+          # csuser's own contactNumber field — contactId 11251/200 have no matching customer.
+          - { contactid: 5, kundenummer: "107061" }
+    expect:
+      rows:
+        - {
+            Id: "34770-jon.arild@example.com",
+            SoPersonId: 34770,
+            SoContactId: 11251,
+            Epost: "jon.arild@example.com",
+            Navn: "John Arild Myhrvold",
+            Kundenummer: null,
+            Created: "1996-04-23 10:11:10",
+          }
+        - {
+            Id: "19880-bjorn@example.com",
+            SoPersonId: 19880,
+            SoContactId: 5,
+            Epost: "bjorn@example.com",
+            Navn: "Anne-Live Bjørnstad",
+            Kundenummer: "107061",
+            Created: "1970-01-01 00:00:00",
+          }
+        - {
+            Id: "42001-eva.olsen@example.com",
+            SoPersonId: 42001,
+            SoContactId: 200,
+            Epost: "eva.olsen@example.com",
+            Navn: "Eva Olsen",
+            Kundenummer: null,
+            Created: "2022-01-01 00:00:00",
+          }
+
+  # SuperOffice data quality occasionally duplicates a customer's Kundenummer onto a
+  # department/branch contact (e.g. "Skatteetaten avd Bergen", contactId 18327) that
+  # shouldn't be treated as authoritative — confirmed real case: kundenummer 600335,
+  # contactId 8636 is the real company, 18327 is its Bergen department. A person linked
+  # to the department contactId must NOT resolve Kundenummer (matches Sesam).
+  - name: snk_user_person_forvalter__excludes_department_contact
+    model: snk_user_person_forvalter
+    given:
+      - input: ref('mrt_global_user')
+        rows:
+          - {
+              personId: 50001,
+              contactId: 8636,
+              email: "hovedkontakt@example.com",
+              firstName: "Hoved",
+              lastName: "Kontakt",
+              registered: null,
+            }
+          - {
+              personId: 50002,
+              contactId: 18327,
+              email: "bergen@example.com",
+              firstName: "Bergen",
+              lastName: "Avdeling",
+              registered: null,
+            }
+      - input: ref('mrt_global_customer')
+        rows:
+          - { contactid: 8636, kundenummer: "600335", department: "" }
+          - { contactid: 18327, kundenummer: "600335", department: "Bergen" }
+    expect:
+      rows:
+        - {
+            Id: "50001-hovedkontakt@example.com",
+            SoPersonId: 50001,
+            SoContactId: 8636,
+            Epost: "hovedkontakt@example.com",
+            Navn: "Hoved Kontakt",
+            Kundenummer: "600335",
+            Created: "1970-01-01 00:00:00",
+          }
+        - {
+            Id: "50002-bergen@example.com",
+            SoPersonId: 50002,
+            SoContactId: 18327,
+            Epost: "bergen@example.com",
+            Navn: "Bergen Avdeling",
+            Kundenummer: null,
+            Created: "1970-01-01 00:00:00",
+          }
+
+  # A contact that has a department filled in but is the ONLY contact for its kundenummer
+  # (no non-department sibling) is a normal single contact, not a duplicate — its
+  # Kundenummer must NOT be nulled out just because department happens to be set.
+  - name: snk_user_person_forvalter__keeps_kundenummer_for_lone_department_contact
+    model: snk_user_person_forvalter
+    given:
+      - input: ref('mrt_global_user')
+        rows:
+          - {
+              personId: 50003,
+              contactId: 40001,
+              email: "innkjop@example.com",
+              firstName: "Inn",
+              lastName: "Kjop",
+              registered: null,
+            }
+      - input: ref('mrt_global_customer')
+        rows:
+          - { contactid: 40001, kundenummer: "700001", department: "Innkjøp" }
+    expect:
+      rows:
+        - {
+            Id: "50003-innkjop@example.com",
+            SoPersonId: 50003,
+            SoContactId: 40001,
+            Epost: "innkjop@example.com",
+            Navn: "Inn Kjop",
+            Kundenummer: "700001",
+            Created: "1970-01-01 00:00:00",
+          }
+
+  # Sesam prioritizes the SO user webhook's own fullName over a firstName+lastName concat —
+  # avoids reconstruction artifacts (e.g. a double space) when the split fields don't cleanly
+  # recombine.
+  - name: snk_user_person_forvalter__navn_prefers_fullname
+    model: snk_user_person_forvalter
+    given:
+      - input: ref('mrt_global_user')
+        rows:
+          - {
+              personId: 10606,
+              contactId: 300,
+              email: "kristian@example.com",
+              fullName: "Kristian Hogstad Lund",
+              firstName: "Kristian Hogstad ",
+              lastName: "Lund",
+              registered: null,
+            }
+      - input: ref('mrt_global_customer')
+        rows: []
+    expect:
+      rows:
+        - {
+            Id: "10606-kristian@example.com",
+            SoPersonId: 10606,
+            SoContactId: 300,
+            Epost: "kristian@example.com",
+            Navn: "Kristian Hogstad Lund",
+            Kundenummer: null,
+            Created: "1970-01-01 00:00:00",
+          }
+
+  - name: snk_konvolutt_forvalter__sesam_parity
+    model: snk_konvolutt_forvalter
+    given:
+      - input: ref('mrt_verified_envelope')
+        rows:
+          - {
+              id: "HkxQKRmAbF",
+              greeting: "Hei,\nHer er dokument for din signering.\n",
+              completed: true,
+              aborted: false,
+              expired: false,
+              published: true,
+              created: "2021-09-02 10:59:07",
+              modified: "2021-09-02 10:59:08",
+              expiration: "2021-09-16 10:59:04",
+              publishDate: "2021-09-02 10:59:08",
+              automaticReminders: null,
+              descriptor: null,
+              sender_email: "rune.nygard@example.com",
+            }
+          - {
+              id: "H1liOq-pbK",
+              greeting: "Hei,\nHer er dokument for din signering.\n",
+              completed: true,
+              aborted: false,
+              expired: false,
+              published: true,
+              created: "2021-09-01 14:13:06",
+              modified: "2021-09-01 14:13:07",
+              expiration: null,
+              publishDate: "2021-09-01 14:13:07",
+              automaticReminders: null,
+              descriptor: null,
+              sender_email: "rune.nygard@example.com",
+            }
+    expect:
+      rows:
+        - {
+            Id: "HkxQKRmAbF",
+            Navn: "Hei,\nHer er dokument for din signering.\n",
+            Fullfoert: true,
+            Utloept: false,
+            FristDato: "2021-09-16 10:59:04",
+            OpprettetDato: "2021-09-02 10:59:07",
+            PublisertDato: "2021-09-02 10:59:08",
+            AvsenderEpost: "rune.nygard@example.com",
+          }
+        - {
+            Id: "H1liOq-pbK",
+            Navn: "Hei,\nHer er dokument for din signering.\n",
+            Fullfoert: true,
+            Utloept: false,
+            FristDato: null,
+            OpprettetDato: "2021-09-01 14:13:06",
+            PublisertDato: "2021-09-01 14:13:07",
+            AvsenderEpost: "rune.nygard@example.com",
+          }

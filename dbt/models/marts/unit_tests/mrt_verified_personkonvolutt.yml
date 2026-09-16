@@ -1,0 +1,101 @@
+version: 2
+
+unit_tests:
+  - name: mrt_verified_personkonvolutt__sesam_cases
+    description: >
+      Verifies that mrt_verified_personkonvolutt correctly flattens owners[] and recipients[]
+      from stg_verified_envelope into individual person-per-envelope rows.
+
+      Envelope HkxQKRmAbF:
+        owners[] with email: api-verified-klpeiendom@example.com (givenName=api), rune.nygard@example.com (givenName=Rune Mydske)
+          (owners without email field — {uid:"/system"}, {uid:"/companies/..."} — are excluded by WHERE)
+        recipients[]: rune.nygard@example.com, uid ends with /S1ZVFR70-K → _id=S1ZVFR70-K
+
+      Envelope H1liOq-pbK:
+        owners[] with email: api-verified-klpeiendom@example.com, rune.nygard@example.com
+        recipients[]: rune.nygard@example.com, uid ends with /rJh_5bTWY → _id=rJh_5bTWY
+
+      Owner _id = MD5(LOWER(email) || '_' || envelope_id || '_o')
+      Recipient _id = last path segment of uid (REGEXP_REPLACE uid, '^.*/', '')
+    model: mrt_verified_personkonvolutt
+    given:
+      - input: ref('stg_verified_envelope')
+        rows:
+          - payload: >-
+              {"id": "HkxQKRmAbF",
+               "created": "2021-09-02T10:59:07.431Z",
+               "owners": [
+                 {"email": "api-verified-klpeiendom@example.com", "givenName": "api", "familyName": "klpeiendom",
+                  "uid": "/companies/SJbXZyExt/users/SkUmCyugF"},
+                 {"uid": "/system"},
+                 {"uid": "/companies/SJbXZyExt"},
+                 {"email": "rune.nygard@example.com", "givenName": "Rune Mydske", "familyName": "Nielsen",
+                  "uid": "/companies/SJbXZyExt/users/SkUmCyugF"}
+               ],
+               "recipients": [
+                 {"uid": "/envelopes/HkxQKRmAbF/recipients/S1ZVFR70-K",
+                  "email": "rune.nygard@example.com", "givenName": "Rune Mydske", "familyName": "Nielsen"}
+               ]}
+          - payload: >-
+              {"id": "H1liOq-pbK",
+               "created": "2021-09-01T14:13:06.812Z",
+               "owners": [
+                 {"email": "api-verified-klpeiendom@example.com", "givenName": "api", "familyName": "klpeiendom",
+                  "uid": "/companies/SJbXZyExt/users/SkUmCyugF"},
+                 {"uid": "/system"},
+                 {"email": "rune.nygard@example.com", "givenName": "Rune Mydske", "familyName": "Nielsen",
+                  "uid": "/companies/SJbXZyExt/users/SkUmCyugF"}
+               ],
+               "recipients": [
+                 {"uid": "/envelopes/H1liOq-pbK/recipients/rJh_5bTWY",
+                  "email": "rune.nygard@example.com", "givenName": "Rune Test", "familyName": "Nielsen"}
+               ]}
+
+    expect:
+      rows:
+        # --- Owners from HkxQKRmAbF ---
+        - _id: "70362bc9d569e13e686684887d13f5a9"
+          email: "api-verified-klpeiendom@example.com"
+          givenName: "api"
+          familyName: "klpeiendom"
+          envelopeId: "HkxQKRmAbF"
+          type: "owner"
+          createdAt: "2021-09-02T10:59:07.431+00:00"
+        - _id: "d3efb9a3a6064feb590b96a5fbb266d4"
+          email: "rune.nygard@example.com"
+          givenName: "Rune Mydske"
+          familyName: "Nielsen"
+          envelopeId: "HkxQKRmAbF"
+          type: "owner"
+          createdAt: "2021-09-02T10:59:07.431+00:00"
+        # --- Recipients from HkxQKRmAbF ---
+        - _id: "S1ZVFR70-K"
+          email: "rune.nygard@example.com"
+          givenName: "Rune Mydske"
+          familyName: "Nielsen"
+          envelopeId: "HkxQKRmAbF"
+          type: "recipient"
+          createdAt: "2021-09-02T10:59:07.431+00:00"
+        # --- Owners from H1liOq-pbK ---
+        - _id: "1d24b3a4518049ca0a07fdd9728da526"
+          email: "api-verified-klpeiendom@example.com"
+          givenName: "api"
+          familyName: "klpeiendom"
+          envelopeId: "H1liOq-pbK"
+          type: "owner"
+          createdAt: "2021-09-01T14:13:06.812+00:00"
+        - _id: "cc708ac4124f254c4b0574ec4d37092f"
+          email: "rune.nygard@example.com"
+          givenName: "Rune Mydske"
+          familyName: "Nielsen"
+          envelopeId: "H1liOq-pbK"
+          type: "owner"
+          createdAt: "2021-09-01T14:13:06.812+00:00"
+        # --- Recipients from H1liOq-pbK ---
+        - _id: "rJh_5bTWY"
+          email: "rune.nygard@example.com"
+          givenName: "Rune Test"
+          familyName: "Nielsen"
+          envelopeId: "H1liOq-pbK"
+          type: "recipient"
+          createdAt: "2021-09-01T14:13:06.812+00:00"

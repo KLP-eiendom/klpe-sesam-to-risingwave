@@ -1,0 +1,13 @@
+[
+  {
+    "#id": "89bae85d-4142-11f0-962a-0290f7e50b48",
+    "business_key_": "48-tiltak_gjennomforing",
+    "duration_": 86074618,
+    "end_time_": "2025-06-05 12:45:22",
+    "id_": "89bae85d-4142-11f0-962a-0290f7e50b48",
+    "proc_def_key_": "tiltak_gjennomforing",
+    "proc_inst_id_": "89bae85d-4142-11f0-962a-0290f7e50b48",
+    "start_time_": "2025-06-04 12:50:48",
+    "state_": "COMPLETED"
+  }
+]

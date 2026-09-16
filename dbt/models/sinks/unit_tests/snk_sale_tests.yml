@@ -1,0 +1,85 @@
+unit_tests:
+  - name: snk_sale_kundeportal__sesam_parity
+    model: snk_sale_kundeportal
+    given:
+      - input: ref('mrt_sale_forvalter')
+        rows:
+          # kundeportal Type must come from the SO `type` field, NOT saleType.
+          # Distinct values here prove the sink picks `type` (forvalter picks saleType).
+          - {
+              saleId: "1",
+              externalId: "1:superoffice-sale",
+              description: "This is just an example sale!",
+              amount: 150,
+              contactId: 1,
+              registeredDate: "2016-01-04 00:00:00",
+              registeredBy: "RB",
+              updatedDate: "2016-01-04 10:00:00",
+              updatedBy: "UB",
+              saleType: "Sale to new customer",
+              type: "[SR_SALE_SOLD]",
+              saleStatus: "[SR_SALE_OPEN]",
+              date: "2016-01-04 00:00:00",
+              projectId: 0,
+              projectName: null,
+              kundenummer: null,
+            }
+    expect:
+      rows:
+        - {
+            EksternId: "1:superoffice-sale",
+            Created: "2016-01-04 00:00:00",
+            OpprettetAv: "RB",
+            LastUpdated: "2016-01-04 10:00:00",
+            EndretAv: "UB",
+            SoContactId: 1,
+            Kundenummer: null,
+            Beskrivelse: "This is just an example sale!",
+            Belop: 150,
+            Type: "[SR_SALE_SOLD]",
+            Status: "[SR_SALE_OPEN]",
+            SolgtDato: "2016-01-04 00:00:00",
+            ProsjektId: 0,
+            ProsjektNavn: null,
+          }
+
+  - name: snk_sale_forvalter__sesam_parity
+    model: snk_sale_forvalter
+    given:
+      - input: ref('mrt_sale_forvalter')
+        rows:
+          - {
+              saleId: "1",
+              externalId: "1:superoffice-sale",
+              description: "This is just an example sale!",
+              amount: 150,
+              contactId: 1,
+              registeredDate: "2016-01-04 00:00:00",
+              registeredBy: "RB",
+              updatedDate: "2016-01-04 10:00:00",
+              updatedBy: "UB",
+              saleType: "Sale to new customer",
+              saleStatus: "[SR_SALE_OPEN]",
+              date: "2016-01-04 00:00:00",
+              projectId: 0,
+              projectName: null,
+              kundenummer: null,
+            }
+    expect:
+      rows:
+        - {
+            Id: "1",
+            Created: "2016-01-04 00:00:00",
+            OpprettetAv: "RB",
+            LastUpdated: "2016-01-04 10:00:00",
+            EndretAv: "UB",
+            SoContactId: 1,
+            Kundenummer: null,
+            Beskrivelse: "This is just an example sale!",
+            Belop: 150,
+            Type: "Sale to new customer",
+            Status: "[SR_SALE_OPEN]",
+            SolgtDato: "2016-01-04 00:00:00",
+            ProsjektId: 0,
+            ProsjektNavn: null,
+          }

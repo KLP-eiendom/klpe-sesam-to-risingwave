@@ -1,0 +1,36 @@
+{
+  "entities": [
+    {
+      "_id": "prosjekt_ltt_bestilling_Activity_06ftnwe1",
+      "id": "Activity_06ftnwe1",
+      "proc_def_key_": "prosjekt_ltt_bestilling",
+      "name": "Bestilling",
+      "index": 1,
+      "ownerRole": "Prosjektleder"
+    },
+    {
+      "_id": "prosjekt_ltt_godkjenning_Activity_06ftnwe",
+      "id": "Activity_06ftnwe",
+      "proc_def_key_": "prosjekt_ltt_godkjenning",
+      "name": "Definer prosjekt",
+      "index": 1,
+      "ownerRole": "Prosjekteier"
+    },
+    {
+      "_id": "prosjekt_ltt_godkjenning_Activity_0n11puh",
+      "id": "Activity_0n11puh",
+      "proc_def_key_": "prosjekt_ltt_godkjenning",
+      "name": "Kontroller og korriger",
+      "index": 2,
+      "ownerRole": "Prosjektleder"
+    },
+    {
+      "_id": "prosjekt_tek_bestilling_Activity_0vbv03d7",
+      "id": "Activity_0vbv03d7",
+      "proc_def_key_": "prosjekt_tek_bestilling",
+      "name": "Administrerendedirektør godkjenning",
+      "index": 9,
+      "ownerRole": "Administrerendedirektor"
+    }
+  ]
+}

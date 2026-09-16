@@ -1,0 +1,16 @@
+{
+  "entities": [
+    {
+      "_id": "502393",
+      "omsetning_belop_i_aar": "~f-54863.45",
+      "omsetning_belop_i_fjor": "~f-14863.45",
+      "leverandor_id": "502393"
+    },
+    {
+      "_id": "502003",
+      "omsetning_belop_i_aar": "~f1000000.0",
+      "omsetning_belop_i_fjor": "~f900000.0",
+      "leverandor_id": "502003"
+    }
+  ]
+}

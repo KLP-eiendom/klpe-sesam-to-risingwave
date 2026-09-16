@@ -1,0 +1,8 @@
+{
+  "mart": "mrt_global_leverandorvurdering",
+  "blacklist": [
+    "created",
+    "lastupdated"
+  ],
+  "id_field": ["Orgnummer", "SuperOfficeContactId"]
+}

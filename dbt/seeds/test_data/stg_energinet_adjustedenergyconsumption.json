@@ -1,0 +1,44 @@
+{
+  "entities": [
+    {
+      "_id": "N22701-202105-Totalt-kWh",
+      "BuildingId": "N22701",
+      "month": "202105",
+      "Value": 105256.8,
+      "Type": "Totalt",
+      "unit": "kWh"
+    },
+    {
+      "_id": "N24901-202107-Prognoser-kWh",
+      "BuildingId": "N24901",
+      "month": "202107",
+      "Value": 200112.123,
+      "Type": "Prognoser",
+      "unit": "kWh"
+    },
+    {
+      "_id": "N24901-202106-Prognoser-kWh",
+      "BuildingId": "N24901",
+      "month": "202106",
+      "Value": 119129.123,
+      "Type": "Prognoser",
+      "unit": "kWh"
+    },
+    {
+      "_id": "N24901-202106-Totalt-kWh",
+      "BuildingId": "N24901",
+      "month": "202106",
+      "Value": 286,
+      "Type": "Totalt",
+      "unit": "kWh"
+    },
+    {
+      "_id": "N24901-202105-Totalt-kWh",
+      "BuildingId": "N24901",
+      "month": "202105",
+      "Value": 6989.200012208,
+      "Type": "Totalt",
+      "unit": "kWh"
+    }
+  ]
+}

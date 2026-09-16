@@ -1,0 +1,122 @@
+[
+  {
+    "#id": "3:eva.lunde@example.com",
+    "SuperOfficeId": 14546,
+    "Created": "2024-01-01 00:00:00",
+    "LastUpdated": "2024-01-01 00:00:00",
+    "SoContactId": 3,
+    "BrukerId": "eva.lunde@example.com"
+  },
+  {
+    "#id": "3:tone.paulsen@example.com",
+    "SuperOfficeId": 15925,
+    "Created": "2024-01-01 00:00:00",
+    "LastUpdated": "2024-01-01 00:00:00",
+    "SoContactId": 3,
+    "BrukerId": "tone.paulsen@example.com"
+  },
+  {
+    "#id": "10:anders.lien@example.com",
+    "SuperOfficeId": 17398,
+    "Created": "2024-01-01 00:00:00",
+    "LastUpdated": "2024-01-01 00:00:00",
+    "SoContactId": 10,
+    "BrukerId": "anders.lien@example.com"
+  },
+  {
+    "#id": "2:siri.kristoffersen@example.com",
+    "SuperOfficeId": 14542,
+    "Created": "2024-01-01 00:00:00",
+    "LastUpdated": "2024-01-01 00:00:00",
+    "SoContactId": 2,
+    "BrukerId": "siri.kristoffersen@example.com"
+  },
+  {
+    "#id": "8:hoan.phung@example.com",
+    "SuperOfficeId": 17757,
+    "Created": "2024-01-01 00:00:00",
+    "LastUpdated": "2024-01-01 00:00:00",
+    "SoContactId": 8,
+    "BrukerId": "hoan.phung@example.com"
+  },
+  {
+    "#id": "9:tor.fossum@example.com",
+    "SuperOfficeId": 15133,
+    "Created": "2024-01-01 00:00:00",
+    "LastUpdated": "2024-01-01 00:00:00",
+    "SoContactId": 9,
+    "BrukerId": "tor.fossum@example.com"
+  },
+  {
+    "#id": "5:bjorn@example.com",
+    "SuperOfficeId": 19880,
+    "Created": "2024-01-01 00:00:00",
+    "LastUpdated": "2024-01-01 00:00:00",
+    "SoContactId": 5,
+    "BrukerId": "bjorn@example.com"
+  },
+  {
+    "#id": "6:tone.paulsen@example.com",
+    "SuperOfficeId": 55555,
+    "Created": "2024-01-01 00:00:00",
+    "LastUpdated": "2024-01-01 00:00:00",
+    "SoContactId": 6,
+    "BrukerId": "tone.paulsen@example.com"
+  },
+  {
+    "#id": "2:eva.lunde@example.com",
+    "SuperOfficeId": 14544,
+    "Created": "2024-01-01 00:00:00",
+    "LastUpdated": "2024-01-01 00:00:00",
+    "SoContactId": 2,
+    "BrukerId": "eva.lunde@example.com"
+  },
+  {
+    "#id": "11251:jon.arild@example.com",
+    "SuperOfficeId": 34770,
+    "Created": "2024-01-01 00:00:00",
+    "LastUpdated": "2024-01-01 00:00:00",
+    "SoContactId": 11251,
+    "BrukerId": "jon.arild@example.com"
+  },
+  {
+    "#id": "2:hilde.marie.juliussen@example.com",
+    "SuperOfficeId": 24274,
+    "Created": "2024-01-01 00:00:00",
+    "LastUpdated": "2024-01-01 00:00:00",
+    "SoContactId": 2,
+    "BrukerId": "hilde.marie.juliussen@example.com"
+  },
+  {
+    "#id": "12:marit.gundersen@example.com",
+    "SuperOfficeId": 16701,
+    "Created": "2024-01-01 00:00:00",
+    "LastUpdated": "2024-01-01 00:00:00",
+    "SoContactId": 12,
+    "BrukerId": "marit.gundersen@example.com"
+  },
+  {
+    "#id": "11:jan.johansen@example.com",
+    "SuperOfficeId": 16736,
+    "Created": "2024-01-01 00:00:00",
+    "LastUpdated": "2024-01-01 00:00:00",
+    "SoContactId": 11,
+    "BrukerId": "jan.johansen@example.com"
+  },
+  {
+    "#id": "2:per.olsen@example.com",
+    "SuperOfficeId": 14543,
+    "Created": "2024-01-01 00:00:00",
+    "LastUpdated": "2024-01-01 00:00:00",
+    "SoContactId": 2,
+    "BrukerId": "per.olsen@example.com"
+  },
+  {
+    "#id": "6:camilla.bakken@example.com",
+    "SuperOfficeId": 17626,
+    "Created": "2024-01-01 00:00:00",
+    "LastUpdated": "2024-01-01 00:00:00",
+    "SoContactId": 6,
+    "BrukerId": "camilla.bakken@example.com"
+  }
+]

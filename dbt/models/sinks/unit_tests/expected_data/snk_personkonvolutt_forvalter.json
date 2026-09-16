@@ -1,0 +1,50 @@
+[
+  {
+    "#id": "rune.nygard@example.com:HkxQKRmAbF:mottaker",
+    "PersonEpost": "rune.nygard@example.com",
+    "KonvoluttId": "HkxQKRmAbF",
+    "Type": "mottaker",
+    "Fornavn": "Rune Mydske",
+    "Etternavn": "Nielsen"
+  },
+  {
+    "#id": "rune.nygard@example.com:HkxQKRmAbF:eier",
+    "PersonEpost": "rune.nygard@example.com",
+    "KonvoluttId": "HkxQKRmAbF",
+    "Type": "eier",
+    "Fornavn": "Rune Mydske",
+    "Etternavn": "Nielsen"
+  },
+  {
+    "#id": "rune.nygard@example.com:H1liOq-pbK:mottaker",
+    "PersonEpost": "rune.nygard@example.com",
+    "KonvoluttId": "H1liOq-pbK",
+    "Type": "mottaker",
+    "Fornavn": "Rune Test",
+    "Etternavn": "Nielsen"
+  },
+  {
+    "#id": "api-verified-klpeiendom@example.com:H1liOq-pbK:eier",
+    "PersonEpost": "api-verified-klpeiendom@example.com",
+    "KonvoluttId": "H1liOq-pbK",
+    "Type": "eier",
+    "Fornavn": "api",
+    "Etternavn": "klpeiendom"
+  },
+  {
+    "#id": "api-verified-klpeiendom@example.com:HkxQKRmAbF:eier",
+    "PersonEpost": "api-verified-klpeiendom@example.com",
+    "KonvoluttId": "HkxQKRmAbF",
+    "Type": "eier",
+    "Fornavn": "api",
+    "Etternavn": "klpeiendom"
+  },
+  {
+    "#id": "rune.nygard@example.com:H1liOq-pbK:eier",
+    "PersonEpost": "rune.nygard@example.com",
+    "KonvoluttId": "H1liOq-pbK",
+    "Type": "eier",
+    "Fornavn": "Rune Mydske",
+    "Etternavn": "Nielsen"
+  }
+]

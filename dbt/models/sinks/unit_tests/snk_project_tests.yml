@@ -1,0 +1,63 @@
+version: 2
+
+unit_tests:
+  - name: snk_prosjekt_forvalter__sesam_parity
+    description: >
+      Verifies field mappings against the Sesam prosjekt-forvalter pipe:
+      - Id = projectId (VARCHAR)
+      - Beskrivelse = text field (not description)
+      - D365Prosjektnummer = userDefinedFields["8"] (UDF field 8 from poller)
+      - Status and Type have embedded double-quotes stripped (Sesam split-on-quote workaround for SO API quirk)
+    model: snk_prosjekt_forvalter
+    given:
+      - input: ref('mrt_global_project')
+        rows:
+          # Case 1: SO returns status/type in NO:"value"; format (raw SO API format)
+          - projectId: 1
+            name: "Pilestredet 40"
+            status: 'NO:"Aktiv";'
+            type: 'NO:"Eiendom";'
+            text: "Renoveringsprosjekt"
+            description: "Intern beskrivelse"
+            registeredBy: "TL"
+            updatedBy: "TL"
+            userDefinedFields: '{"superOffice:8": "D365-300-301"}'
+            registeredDate: "2026-05-26 08:00:00"
+            updatedDate: "2026-05-26 08:30:00"
+          # Case 2: Webhook-only record — status/type already clean, no userDefinedFields
+          - projectId: 2
+            name: "Akersgata 65"
+            status: "Planning"
+            type: "Prosjekt"
+            text: "Ny kontorfløy"
+            description: null
+            registeredBy: "bruker3"
+            updatedBy: null
+            userDefinedFields: null
+            registeredDate: null
+            updatedDate: null
+
+    expect:
+      rows:
+        - "#id": "1"
+          Id: "1"
+          Navn: "Pilestredet 40"
+          Status: "Aktiv"
+          Type: "Eiendom"
+          Beskrivelse: "Renoveringsprosjekt"
+          OpprettetAv: "TL"
+          EndretAv: "TL"
+          D365Prosjektnummer: "D365-300-301"
+          Created: "2026-05-26 08:00:00"
+          LastUpdated: "2026-05-26 08:30:00"
+        - "#id": "2"
+          Id: "2"
+          Navn: "Akersgata 65"
+          Status: "Planning"
+          Type: "Prosjekt"
+          Beskrivelse: "Ny kontorfløy"
+          OpprettetAv: "bruker3"
+          EndretAv: null
+          D365Prosjektnummer: null
+          Created: "1970-01-01 00:00:00"
+          LastUpdated: "1970-01-01 00:00:00"

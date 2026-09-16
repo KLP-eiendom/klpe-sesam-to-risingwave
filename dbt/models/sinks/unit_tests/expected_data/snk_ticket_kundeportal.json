@@ -1,0 +1,54 @@
+[
+  {
+    "#id": 255,
+    "Created": "1970-01-01 00:00:00",
+    "EksternSakId": "255:superoffice-ticket",
+    "Emne": "Integration test of Ticket create with message",
+    "KundeNummer": "101219",
+    "LastUpdated": "1970-01-01 00:00:00",
+    "LukketDato": null,
+    "OpprettetAv": "per.olsen@example.com",
+    "SakskategoriId": 7,
+    "SoContactId": 2,
+    "Status": "1"
+  },
+  {
+    "#id": 2551,
+    "Created": "1970-01-01 00:00:00",
+    "EksternSakId": "2551:superoffice-ticket",
+    "Emne": "Integration test of Ticket  with message, but internal",
+    "KundeNummer": "101219",
+    "LastUpdated": "1970-01-01 00:00:00",
+    "LukketDato": null,
+    "OpprettetAv": "per.olsen@example.com",
+    "SakskategoriId": 7,
+    "SoContactId": 2,
+    "Status": "1"
+  },
+  {
+    "#id": 300,
+    "Created": "1970-01-01 00:00:00",
+    "EksternSakId": "300:superoffice-ticket",
+    "Emne": "Test Sak som ikke finnes i kundeportal ennå",
+    "KundeNummer": "101219",
+    "LastUpdated": "1970-01-01 00:00:00",
+    "LukketDato": null,
+    "OpprettetAv": "per.olsen@example.com",
+    "SakskategoriId": 7,
+    "SoContactId": 2,
+    "Status": "1"
+  },
+  {
+    "#id": 342,
+    "Created": "1970-01-01 00:00:00",
+    "EksternSakId": "342:superoffice-ticket",
+    "Emne": "Test Sak 1",
+    "KundeNummer": "101219",
+    "LastUpdated": "1970-01-01 00:00:00",
+    "LukketDato": null,
+    "OpprettetAv": "per.olsen@example.com",
+    "SakskategoriId": 7,
+    "SoContactId": 2,
+    "Status": "1"
+  }
+]

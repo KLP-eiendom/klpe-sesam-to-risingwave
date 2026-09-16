@@ -1,0 +1,53 @@
+unit_tests:
+  - name: snk_serviceavtale_bq__sesam_parity
+    model: snk_serviceavtale_bq
+    given:
+      - input: ref('stg_fdvweb_serviceavtale')
+        rows:
+          - {
+              byggid: "bygg53",
+              id: 5,
+              nummer: "S1",
+              navn: "Utrykning/ alarmoverføring",
+              firma: "Securitas avd. trondheim",
+              pris: 500,
+              prisfrekvens: "Yearly",
+              oppsigelsesfrist: "3mnd.",
+              varighet: "2 år",
+              startdato: "2016-01-01 00:00:00",
+              utlopsdato: "2016-11-01 00:00:00",
+              fornyelse: "autonmatisk- 1 år av gangen ",
+              prisregulering: "CPI",
+              omfang: "Denne avtalen inneholder mottak av tekniske alarmer, heisalarmer and innbruddsalarmer.",
+              annet: "None",
+              type: "Andre tjenester",
+              bygningsdel: "54;",
+              ansvarlig: "John",
+              oppfolgingsdato: "2017-04-14 00:00:00",
+              garantidato: "2018-01-01 00:00:00",
+            }
+    expect:
+      rows:
+        - {
+            uniqueId: "bygg53_5",
+            BuildingId: "bygg53",
+            Id: 5,
+            Nummer: "S1",
+            Navn: "Utrykning/ alarmoverføring",
+            Firma: "Securitas avd. trondheim",
+            Pris: 500,
+            PrisFrekvens: "Yearly",
+            Oppsigelsesfrist: "3mnd.",
+            Varighet: "2 år",
+            Startdato: "2016-01-01 00:00:00",
+            Utlopsdato: "2016-11-01 00:00:00",
+            Fornyelse: "autonmatisk- 1 år av gangen ",
+            Prisregulering: "CPI",
+            Omfang: "Denne avtalen inneholder mottak av tekniske alarmer, heisalarmer and innbruddsalarmer.",
+            Annet: "None",
+            Type: "Andre tjenester",
+            Bygningsdel: "54;",
+            Ansvarlig: "John",
+            Oppfolgingsdato: "2017-04-14 00:00:00",
+            Garantidato: "2018-01-01 00:00:00",
+          }

@@ -1,0 +1,61 @@
+version: 2
+
+unit_tests:
+  - name: snk_kredittvurdering_superoffice__parity
+    description: >
+      Ported from mrt_kredittvurdering_superoffice unit test.
+      Ensures the final sink layer includes all the required fields and correctly
+      passes through the results from the underlying mart transformations.
+    model: snk_kredittvurdering_superoffice
+    given:
+      - input: ref('mrt_kredittvurdering_superoffice')
+        rows:
+          # Case 1: AA rating, revisorkommentar
+          - ContactId: 1001
+            Dunsnr: 562231845
+            Orgnummer: "10001"
+            Kredittrating: "AA"
+            Betalingsanmerkning: "Akseptabel"
+            Soliditet: 0.1747
+            MvaRegistrert: "ja"
+            Revisor: "DELOITTE AS"
+            RevisorKommentar: "Årsoppgjøret er ikke avgitt innen lovens frist"
+            Sanksjonert: null
+            Underavvikling: false
+          # Case 2: Sanksjonert
+          - ContactId: 1002
+            Dunsnr: 352798393
+            Orgnummer: "10002"
+            Kredittrating: "AA"
+            Betalingsanmerkning: "Very good"
+            Soliditet: 0.68
+            MvaRegistrert: "ja"
+            Revisor: "Ernst & Young AB"
+            RevisorKommentar: null
+            Sanksjonert: true
+            Underavvikling: false
+
+    expect:
+      rows:
+        - ContactId: 1001
+          Dunsnr: 562231845
+          Orgnummer: "10001"
+          Kredittrating: "AA"
+          Betanmerkning: "Akseptabel"
+          Soliditet: 0.1747
+          MvaRegistrert: "ja"
+          Revisor: "DELOITTE AS"
+          RevisorKommentar: "Årsoppgjøret er ikke avgitt innen lovens frist"
+          Sanksjonert: null
+          Underavvikling: false
+        - ContactId: 1002
+          Dunsnr: 352798393
+          Orgnummer: "10002"
+          Kredittrating: "AA"
+          Betanmerkning: "Very good"
+          Soliditet: 0.68
+          MvaRegistrert: "ja"
+          Revisor: "Ernst & Young AB"
+          RevisorKommentar: null
+          Sanksjonert: true
+          Underavvikling: false

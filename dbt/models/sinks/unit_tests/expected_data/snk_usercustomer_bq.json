@@ -1,0 +1,121 @@
+[
+  {
+    "#id": "15133:9",
+    "so_id": "15133",
+    "bruker_id": "tor.fossum@example.com",
+    "kunde_id": "9",
+    "kundenummer": "90002123"
+  },
+  {
+    "#id": "17626:6",
+    "so_id": "17626",
+    "bruker_id": "camilla.bakken@example.com",
+    "kunde_id": "6",
+    "kundenummer": "103960"
+  },
+  {
+    "#id": "14542:2",
+    "so_id": "14542",
+    "bruker_id": "siri.kristoffersen@example.com",
+    "kunde_id": "2",
+    "kundenummer": "101219"
+  },
+  {
+    "#id": "15926:0",
+    "so_id": "15926",
+    "bruker_id": "service@example.com",
+    "kunde_id": "0",
+    "kundenummer": null
+  },
+  {
+    "#id": "17757:8",
+    "so_id": "17757",
+    "bruker_id": "hoan.phung@example.com",
+    "kunde_id": "8",
+    "kundenummer": "501234"
+  },
+  {
+    "#id": "14546:3",
+    "so_id": "14546",
+    "bruker_id": "eva.lunde@example.com",
+    "kunde_id": "3",
+    "kundenummer": null
+  },
+  {
+    "#id": "14544:2",
+    "so_id": "14544",
+    "bruker_id": "eva.lunde@example.com",
+    "kunde_id": "2",
+    "kundenummer": "101219"
+  },
+  {
+    "#id": "17398:0",
+    "so_id": "17398",
+    "bruker_id": "anders.lien@example.com",
+    "kunde_id": "0",
+    "kundenummer": ""
+  },
+  {
+    "#id": "16701:0",
+    "so_id": "16701",
+    "bruker_id": "marit.gundersen@example.com",
+    "kunde_id": "0",
+    "kundenummer": ""
+  },
+  {
+    "#id": "34770:11251",
+    "so_id": "34770",
+    "bruker_id": "jon.arild@example.com",
+    "kunde_id": "11251",
+    "kundenummer": null
+  },
+  {
+    "#id": "17675:0",
+    "so_id": "17675",
+    "bruker_id": "service@example.com",
+    "kunde_id": "0",
+    "kundenummer": null
+  },
+  {
+    "#id": "19880:5",
+    "so_id": "19880",
+    "bruker_id": "bjorn@example.com",
+    "kunde_id": "5",
+    "kundenummer": "107061"
+  },
+  {
+    "#id": "15925:3",
+    "so_id": "15925",
+    "bruker_id": "tone.paulsen@example.com",
+    "kunde_id": "3",
+    "kundenummer": "100075"
+  },
+  {
+    "#id": "55555:6",
+    "so_id": "55555",
+    "bruker_id": "tone.paulsen@example.com",
+    "kunde_id": "6",
+    "kundenummer": null
+  },
+  {
+    "#id": "16736:0",
+    "so_id": "16736",
+    "bruker_id": "jan.johansen@example.com",
+    "kunde_id": "0",
+    "kundenummer": ""
+  },
+  {
+    "#id": "17589:0",
+    "so_id": "17589",
+    "bruker_id": "kontakt@example.com",
+    "kunde_id": "0",
+    "kundenummer": ""
+  },
+  {
+    "#id": "14543:2",
+    "so_id": "14543",
+    "bruker_id": "per.olsen@example.com",
+    "kunde_id": "2",
+    "kundenummer": null
+  }
+]

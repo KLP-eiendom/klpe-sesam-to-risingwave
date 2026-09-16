@@ -1,0 +1,8 @@
+{
+  "mart": "mrt_global_sale",
+  "blacklist": [
+    "created",
+    "lastupdated"
+  ],
+  "id_field": "EksternId"
+}

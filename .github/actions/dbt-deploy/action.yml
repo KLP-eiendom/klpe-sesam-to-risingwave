@@ -1,0 +1,199 @@
+name: dbt deploy
+description: >
+  Install dbt and run dbt/deploy.sh against one environment, with a preflight
+  that fails fast and legibly when Vault or GCS is not reachable.
+
+inputs:
+  environment:
+    description: "dbt target / deploy.sh argument: dev | test | prod"
+    required: true
+  dbt_args:
+    description: "Extra arguments forwarded to deploy.sh (e.g. --dry-run, --all)"
+    required: false
+    default: ""
+  allow_missing_state:
+    description: >
+      Proceed even when the smart-deploy state file cannot be read from GCS.
+      Doing so makes deploy.sh treat EVERY model as new and --full-refresh the
+      whole project. Only set this for a genuine first deploy into a new
+      environment.
+    required: false
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install dbt and the RisingWave adapter
+      shell: bash
+      run: |
+        pip install --quiet dbt-core dbt-postgres dbt-risingwave psycopg2-binary
+        dbt --version
+
+    # Every hub workflow that touches GCP does exactly this. It is NOT optional
+    # and GOOGLE_APPLICATION_CREDENTIALS does not substitute for it: classic
+    # gsutil authenticates as gcloud's ACTIVE ACCOUNT, so without this it has no
+    # usable credentials and reports "You aren't authorized" — which reads
+    # exactly like a missing IAM grant. The service account already holds
+    # roles/owner on the projects that own the workarea buckets.
+    - name: Auth to GCP
+      shell: bash
+      run: |
+        gcloud auth activate-service-account --key-file=/var/secrets/google/credentials.json
+        gcloud auth list --filter=status:ACTIVE --format="value(account)"
+
+    # Everything deploy.sh depends on, checked before it starts mutating a live
+    # RisingWave. A failure here is a configuration problem and says so; without
+    # it the first symptom is dbt reporting an empty DBT_RW_HOST, which reads
+    # like a database outage.
+    - name: Preflight — Vault, GCS and required keys
+      shell: bash
+      env:
+        DBT_ENV: ${{ inputs.environment }}
+      run: |
+        fail=0
+
+        for tool in gcloud gsutil; do
+          if command -v "$tool" >/dev/null 2>&1; then
+            echo "ok: $tool present"
+          else
+            echo "::error::$tool not found on the runner — deploy.sh needs it to sync smart-deploy state to GCS."
+            fail=1
+          fi
+        done
+
+        if [ -n "${GOOGLE_APPLICATION_CREDENTIALS:-}" ] && [ -f "${GOOGLE_APPLICATION_CREDENTIALS}" ]; then
+          echo "ok: GOOGLE_APPLICATION_CREDENTIALS present"
+        else
+          echo "::error::GOOGLE_APPLICATION_CREDENTIALS is unset or missing — the GCS state sync will fail."
+          fail=1
+        fi
+
+        # The one value the runner supplies; everything else is set in the workflow.
+        if [ -n "${VaultOptions__K8TokenId:-}" ]; then
+          echo "ok: VaultOptions__K8TokenId supplied by the runner (${#VaultOptions__K8TokenId} chars)"
+        else
+          echo "::error::VaultOptions__K8TokenId is empty. This job must run on example-project-runner, which supplies it via envFrom."
+          fail=1
+        fi
+
+        [ "$fail" -eq 0 ] || exit 1
+
+        # Resolve from Vault exactly as deploy.sh will, and assert the four keys
+        # dbt cannot run without. Prints names and presence only, never values.
+        python3 - <<'PY'
+        import os, sys, subprocess
+
+        env = os.environ["DBT_ENV"]
+        out = subprocess.run(
+            [sys.executable, "dbt/scripts/fetch_vault_secrets.py", "/nonexistent.env"],
+            capture_output=True, text=True,
+        )
+        if out.returncode != 0:
+            print("::error::Vault resolution failed — see stderr below")
+            print(out.stderr[:1500])
+            raise SystemExit(1)
+
+        resolved = {
+            line.split("=", 1)[0]
+            for line in out.stdout.splitlines()
+            if "=" in line
+        }
+        required = ["DBT_RW_HOST", "DBT_RW_USER", "DBT_RW_PASSWORD",
+                    "GCS_BIGQUERY_STAGING_BUCKET"]
+        missing = [k for k in required if k not in resolved]
+        print(f"Vault resolved {len(resolved)} keys for {env!r}")
+
+        sinks = sorted(k for k in resolved if k.endswith("_SINK_MODE"))
+        print(f"sink-mode keys present: {', '.join(sinks) if sinks else '(none — all sinks default to running)'}")
+
+        if missing:
+            print(f"::error::Vault returned no value for: {', '.join(missing)}")
+            raise SystemExit(1)
+        print("ok: all required keys resolved")
+
+        # Hand the bucket to the next step, which cannot re-derive it without
+        # calling Vault again.
+        bucket = next(
+            (l.split("=", 1)[1] for l in out.stdout.splitlines()
+             if l.startswith("GCS_BIGQUERY_STAGING_BUCKET=")), "")
+        with open(os.environ["GITHUB_ENV"], "a") as fh:
+            fh.write(f"DBT_STATE_BUCKET={bucket}/dbt-state\n")
+        PY
+
+    # deploy.sh downloads the smart-deploy state with
+    #   gsutil cp ... 2>/dev/null
+    # and on failure prints "No previous state found in bucket" and carries on.
+    # A permission error is therefore indistinguishable from a genuine first
+    # deploy — and the consequence is not cosmetic: with no prior state, EVERY
+    # model counts as new and gets --full-refresh, which drops and recreates
+    # each staging table and replays every sink. dbt/TESTING.md warns that a
+    # sink redeployed with backfill re-sends all upstream rows into MySQL.
+    # Silently doing that to production would be an incident, so check
+    # readability explicitly and refuse rather than proceed blind.
+    - name: Preflight — smart-deploy state is readable
+      shell: bash
+      env:
+        DBT_ENV: ${{ inputs.environment }}
+        ALLOW_MISSING_STATE: ${{ inputs.allow_missing_state }}
+      run: |
+        obj="gs://${DBT_STATE_BUCKET}/manifest_${DBT_ENV}.json"
+        echo "Checking $obj"
+        if err=$(gsutil stat "$obj" 2>&1); then
+          echo "ok: state file readable — smart deploy will process only changed models"
+          exit 0
+        fi
+
+        echo "$err" | head -5
+        if [ "${ALLOW_MISSING_STATE}" = "true" ]; then
+          echo "::warning::State unreadable and allow_missing_state=true — EVERY model will be --full-refresh'd."
+          exit 0
+        fi
+
+        {
+          echo "::error::Cannot read the smart-deploy state at ${obj}."
+          echo "::error::deploy.sh would silently treat this as a first deploy and --full-refresh all 173 models,"
+          echo "::error::dropping every staging table and replaying every sink. Refusing."
+        } >&2
+        cat >> "$GITHUB_STEP_SUMMARY" <<SUMMARY
+        ### dbt deploy blocked — smart-deploy state unreadable
+
+        \`${obj}\` could not be read. Active gcloud account:
+        \`$(gcloud auth list --filter=status:ACTIVE --format='value(account)' 2>/dev/null || echo '<none>')\`
+
+        Check in this order — the first is far more likely than the second:
+
+        1. **Authentication.** Classic \`gsutil\` authenticates as gcloud's *active
+           account*, NOT via \`GOOGLE_APPLICATION_CREDENTIALS\`. If the account above
+           is empty or unexpected, the \`Auth to GCP\` step did not run or failed.
+           An unauthenticated \`gsutil\` reports *"You aren't authorized"*, which is
+           indistinguishable from a missing grant.
+        2. **Authorisation.** Only if the account is correct: confirm it can read
+           the bucket. \`devopsagents\` normally holds project-level \`roles/owner\`
+           on the \`example-project-<env>\` project that owns \`klpe_<env>_workarea\`, so
+           a genuine IAM gap here is unusual and worth understanding before
+           granting anything.
+
+        Override with \`allow_missing_state: true\` **only** for a genuine first
+        deploy into a new environment — it makes every model \`--full-refresh\`.
+        SUMMARY
+        exit 1
+
+    - name: Deploy dbt models
+      shell: bash
+      working-directory: ./dbt
+      env:
+        DBT_PROFILES_DIR: ${{ github.workspace }}/dbt
+        # Passed through the environment, never interpolated into the script
+        # body: dbt_args is free text from workflow_dispatch, so
+        # `./deploy.sh ${{ inputs.dbt_args }}` would be a shell-injection hole.
+        DBT_ENV: ${{ inputs.environment }}
+        DBT_ARGS: ${{ inputs.dbt_args }}
+      run: |
+        chmod +x deploy.sh
+        # shellcheck disable=SC2086  # DBT_ARGS is a deliberate argument list and must word-split
+        ./deploy.sh "$DBT_ENV" $DBT_ARGS

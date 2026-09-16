@@ -1,0 +1,98 @@
+unit_tests:
+  - name: snk_energyconsumption_miljoprofil__sesam_parity
+    description: >
+      Verifies field mapping + filters (unit != 'C', BuildingId NOT NULL) and
+      UniqueId construction for energy consumption rows going to Miljoprofil's
+      MaalerDataPerMndPerBygg. Mirrors snk_energyconsumption_kundeportal test —
+      Miljoprofil shares the same MaalerDataPerMndPerBygg schema after
+      MiljoprofilCommonDAL migration 20260426171026_RefactorToUniqueId.
+    model: snk_energyconsumption_miljoprofil
+    given:
+      - input: ref('stg_energinet_energyconsumption')
+        rows:
+          - { BuildingId: "N24901", MeteringpointId: "2128831196", Mnd: 202106, MndString: "202106", Type: "Utetemperatur", unit: "C",   Sum: 66.4 }
+          - { BuildingId: "N22701", MeteringpointId: null,         Mnd: 202106, MndString: "202106", Type: "Fjernvarme",    unit: "kWh", Sum: 100 }
+          - { BuildingId: "N24901", MeteringpointId: "2128831196", Mnd: 202105, MndString: "202105", Type: "El",            unit: "kWh", Sum: 6989.200012208 }
+    expect:
+      rows:
+        - { UniqueId: "N22701--202106-Fjernvarme-kWh",          ByggNummer: "N22701", EksternId: null,         Type: "Fjernvarme", Unit: "kWh", Sum: 100,            Mnd: 202106, System: "Energinet" }
+        - { UniqueId: "N24901-2128831196-202105-El-kWh",        ByggNummer: "N24901", EksternId: "2128831196", Type: "El",         Unit: "kWh", Sum: 6989.200012208, Mnd: 202105, System: "Energinet" }
+
+  - name: snk_energycustomerconsumption_miljoprofil__sesam_parity
+    description: >
+      Verifies field mapping + UniqueId construction (composite of BuildingId-Type-unit-Mnd-CustomerNumber)
+      for customer-level energy consumption going to Miljoprofil's MaalerDataPerMndPerKunde.
+    model: snk_energycustomerconsumption_miljoprofil
+    given:
+      - input: ref('stg_energinet_energycustomerconsumption')
+        rows:
+          - { _id: "N24901-202105-El-kWh-600001", BuildingId: "N24901", CustomerNumber: "600001", Mnd: 202105, MndString: "202105", Sum: 6989.200012208, Type: "El", unit: "kWh" }
+          - { _id: "N24901-202106-El-kWh-600001", BuildingId: "N24901", CustomerNumber: "600001", Mnd: 202106, MndString: "202106", Sum: 286,            Type: "El", unit: "kWh" }
+    expect:
+      rows:
+        - { UniqueId: "N24901-El-kWh-202105-600001", ByggNummer: "N24901", KundeNummer: "600001", Type: "El", Unit: "kWh", Mnd: 202105, Sum: 6989.200012208, System: "Energinet" }
+        - { UniqueId: "N24901-El-kWh-202106-600001", ByggNummer: "N24901", KundeNummer: "600001", Type: "El", Unit: "kWh", Mnd: 202106, Sum: 286,            System: "Energinet" }
+
+  - name: snk_adjustedenergyconsumption_miljoprofil__sesam_parity
+    description: >
+      Verifies field mapping + UniqueId construction for adjusted energy
+      consumption going to Miljoprofil's MaalerDataAdjustedPerMndPerBygg.
+      No EksternId (Sesam DTL does not write one for adjusted source).
+    model: snk_adjustedenergyconsumption_miljoprofil
+    given:
+      - input: ref('stg_energinet_adjustedenergyconsumption')
+        rows:
+          - { _id: "N24901-202105-Totalt-kWh",    BuildingId: "N24901", month: 202105, Value: 6989.200012208, Type: "Totalt",    unit: "kWh" }
+          - { _id: "N24901-202107-Prognoser-kWh", BuildingId: "N24901", month: 202107, Value: 200112.123,     Type: "Prognoser", unit: "kWh" }
+    expect:
+      rows:
+        - { UniqueId: "N24901-Totalt-kWh-202105",    ByggNummer: "N24901", Type: "Totalt",    Unit: "kWh", Mnd: 202105, Sum: 6989.200012208, System: "Energinet" }
+        - { UniqueId: "N24901-Prognoser-kWh-202107", ByggNummer: "N24901", Type: "Prognoser", Unit: "kWh", Mnd: 202107, Sum: 200112.123,     System: "Energinet" }
+
+  - name: snk_waterconsumption_miljoprofil__sesam_parity
+    description: >
+      Verifies field mapping + Id construction (BuildingId-Mnd) for water
+      consumption going to Miljoprofil's VannDataPerMnd. Note: no unit != 'C'
+      filter — water source uses 'm3' not 'C', and water pipe does not filter
+      by unit.
+    model: snk_waterconsumption_miljoprofil
+    given:
+      - input: ref('stg_energinet_waterconsumption')
+        rows:
+          - { BuildingId: "N24901", MeteringpointId: "WP-12345", Mnd: 202105, MndString: "202105", Type: "Forbruk", unit: "m3", Sum: 12.5 }
+          - { BuildingId: "N22701", MeteringpointId: null,        Mnd: 202106, MndString: "202106", Type: "Forbruk", unit: "m3", Sum: 8 }
+    expect:
+      rows:
+        - { Id: "N24901-202105", ByggNummer: "N24901", EksternId: "WP-12345", Type: "Forbruk", Unit: "m3", Sum: 12.5, Mnd: 202105, System: "Energinet" }
+        - { Id: "N22701-202106", ByggNummer: "N22701", EksternId: null,        Type: "Forbruk", Unit: "m3", Sum: 8,    Mnd: 202106, System: "Energinet" }
+
+  - name: snk_wasteconsumption_miljoprofil__sesam_parity
+    description: >
+      Verifies TypeKode / Beskrivelse extraction logic. Sesam DTL:
+        - if Type starts with "(Ingen" then both TypeKode and Beskrivelse = Type as-is
+        - otherwise TypeKode = first 4 chars, Beskrivelse = chars 6.. (Sesam substring(5..) maps to PG SUBSTRING FROM 6 since Sesam offsets are 0-based and PG is 1-based)
+    model: snk_wasteconsumption_miljoprofil
+    given:
+      - input: ref('stg_energinet_wasteconsumption')
+        rows:
+          - { _id: "N24901-MP1-202105-1502 Papp", BuildingId: "N24901", MeteringpointId: "MP1", Mnd: 202105, Type: "1502 Papp",              unit: "kg",   Sum: 50.5 }
+          - { _id: "N24901-MP2-202105-Ingen",     BuildingId: "N24901", MeteringpointId: "MP2", Mnd: 202105, Type: "(Ingen sortering)",     unit: "kg",   Sum: 10 }
+    expect:
+      rows:
+        - { UniqueId: "N24901-MP1-202105-1502 Papp", ByggNummer: "N24901", EksternId: "N24901-MP1-202105-1502 Papp", TypeKode: "1502",              Beskrivelse: "Papp",              Mnd: 202105, Sum: 50.5, System: "Energinet" }
+        - { UniqueId: "N24901-MP2-202105-Ingen",     ByggNummer: "N24901", EksternId: "N24901-MP2-202105-Ingen",     TypeKode: "(Ingen sortering)", Beskrivelse: "(Ingen sortering)", Mnd: 202105, Sum: 10,   System: "Energinet" }
+
+  - name: snk_maaltall_miljoprofil__sesam_parity
+    description: >
+      Verifies Id construction (Type alone if Region null, Region-Type otherwise)
+      and decimal cast for Value. Stg source carries Maaltall as VARCHAR — sink casts to DECIMAL.
+    model: snk_maaltall_miljoprofil
+    given:
+      - input: ref('stg_energinet_maaltall')
+        rows:
+          - { _id: "Vann",                  region: null,      Type: "Vann",           Maaltall: "80" }
+          - { _id: "Danmark-Sorteringsgrad", region: "Danmark", Type: "Sorteringsgrad", Maaltall: "55" }
+    expect:
+      rows:
+        - { Id: "Vann",                  Region: null,      Type: "Vann",           Value: 80 }
+        - { Id: "Danmark-Sorteringsgrad", Region: "Danmark", Type: "Sorteringsgrad", Value: 55 }

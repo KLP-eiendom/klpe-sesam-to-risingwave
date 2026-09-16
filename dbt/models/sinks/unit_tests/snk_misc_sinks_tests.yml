@@ -1,0 +1,242 @@
+unit_tests:
+  # Sesam usercustomer-bq parity: kunde_id = USER-webhook side contactId only (su_contactId),
+  # retired excluded, valid email.
+  - name: snk_usercustomer_bq__sesam_parity
+    model: snk_usercustomer_bq
+    given:
+      - input: ref('mrt_global_user')
+        rows:
+          - {
+              personId: 15133,
+              bruker_id: "tor.fossum@example.com",
+              su_contactId: 9,
+              retired: false,
+              _deleted: false,
+              contactNumber: "C-00042",
+            }
+          # csuser-only row (no user-webhook contactId) -> dropped
+          - {
+              personId: 35074,
+              bruker_id: "kari.test@example.com",
+              su_contactId: null,
+              retired: false,
+              _deleted: false,
+              contactNumber: "C-00099",
+            }
+          # retired -> dropped
+          - {
+              personId: 10010,
+              bruker_id: "advokat@example.com",
+              su_contactId: 5571,
+              retired: true,
+              _deleted: false,
+              contactNumber: null,
+            }
+    expect:
+      rows:
+        - {
+            so_id: "15133",
+            bruker_id: "tor.fossum@example.com",
+            kunde_id: "9",
+            kundenummer: "C-00042",
+          }
+
+  - name: snk_leverandorvurdering_bq__sesam_parity
+    model: snk_leverandorvurdering_bq
+    given:
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - {
+              contactId: 16445,
+              adm: "True",
+              aarsregnskap: "Ja",
+              betalingsanmerkning: "Upåklagelig",
+              bransje: "Engroshandel med arbeidsklær",
+              bransje_so: "Advokat",
+              dunsnr: null,
+              d365kommentar: null,
+              dv: "False",
+              driftsforhold_sistvurdert: null,
+              eu: "False",
+              evalueringskommentar: "Kredittsjekk utført Bisnode",
+              fo: "False",
+              industrikode: null,
+              industrikode_beskrivelse: null,
+              innmeldtav: "",
+              klassifiseringbeskrivelse: "Godkjent",
+              klassifiseringkode: "33",
+              kredittrating: "AA",
+              d365_leverandor_id: "500506",
+              lokasjon: "Trondheim",
+              manuellsanksjonsjekkbeskrivelse: null,
+              manuellsanksjonsjekkkode: null,
+              manuellsanksjonsjekkkommentar: null,
+              miljodokumentasjon: "0",
+              mvaregistrert: null,
+              navn: "Proffklær AS",
+              okonomiskforhold_sistvurdert: "2022-01-26 00:01:00",
+              orgnr: "920224520",
+              rammeavtale: "False",
+              revisor: null,
+              revisorkommentar: "",
+              sf: "False",
+              samfunnsansvar: "0",
+              sanksjonert: null,
+              soliditet: "0.3535",
+              sperret: false,
+              underavvikling: false,
+              unntak: null,
+              konsernintern: false,
+            }
+    expect:
+      rows:
+        - {
+            _ids: "{16445}",
+            _id: "16445",
+            leverandorvurdering_bq__adm: "{True}",
+            leverandorvurdering_bq__aarsregnskap: "{Ja}",
+            leverandorvurdering_bq__betalingsanmerkning: "{Upåklagelig}",
+            leverandorvurdering_bq__bransje: "{Engroshandel med arbeidsklær}",
+            leverandorvurdering_bq__bransje_so: "{Advokat}",
+            leverandorvurdering_bq__contactid: "{16445}",
+            leverandorvurdering_bq__d365kommentar: null,
+            leverandorvurdering_bq__dv: "{False}",
+            leverandorvurdering_bq__driftsforhold_sistvurdert: "{}",
+            leverandorvurdering_bq__dunsnr: null,
+            leverandorvurdering_bq__eu: "{False}",
+            leverandorvurdering_bq__evalueringskommentar: "{Kredittsjekk utført Bisnode}",
+            leverandorvurdering_bq__fo: "{False}",
+            leverandorvurdering_bq__industrikode: null,
+            leverandorvurdering_bq__industrikode_beskrivelse: null,
+            leverandorvurdering_bq__innmeldtav: '{""}',
+            leverandorvurdering_bq__klassifiseringbeskrivelse: "{Godkjent}",
+            leverandorvurdering_bq__klassifiseringkode: "{33}",
+            leverandorvurdering_bq__kredittrating: "{AA}",
+            leverandorvurdering_bq__leverandorid: "500506",
+            leverandorvurdering_bq__lokasjon: "{Trondheim}",
+            leverandorvurdering_bq__manuellsanksjonsjekkbeskrivelse: null,
+            leverandorvurdering_bq__manuellsanksjonsjekkkode: null,
+            leverandorvurdering_bq__manuellsanksjonsjekkkommentar: null,
+            leverandorvurdering_bq__miljodokumentasjon: "{0}",
+            leverandorvurdering_bq__mvaregistrert: null,
+            leverandorvurdering_bq__navn: "{Proffklær AS}",
+            leverandorvurdering_bq__okonomiskforhold_sistvurdert: "{2022-01-26 00:01:00+00:00}",
+            leverandorvurdering_bq__orgnummer: "{920224520}",
+            leverandorvurdering_bq__rammeavtale: "{False}",
+            leverandorvurdering_bq__revisor: null,
+            leverandorvurdering_bq__revisorkommentar: "",
+            leverandorvurdering_bq__sf: "{False}",
+            leverandorvurdering_bq__samfunnsansvar: "{0}",
+            leverandorvurdering_bq__sanksjonert: null,
+            leverandorvurdering_bq__soliditet: "{0.3535}",
+            leverandorvurdering_bq__sperret: false,
+            leverandorvurdering_bq__underavvikling: false,
+            leverandorvurdering_bq__unntak: "{}",
+            leverandorvurdering_bq__konsernintern: false,
+            _deleted: null,
+            _updated: null,
+          }
+
+  - name: snk_user_leko__pass_through
+    model: snk_user_leko
+    given:
+      - input: ref('mrt_user_leko')
+        rows:
+          - { id: 1, email: "test@example.com" }
+    expect:
+      rows:
+        - { id: 1, email: "test@example.com" }
+
+  - name: snk_kontrakt_leko__sesam_parity
+    model: snk_kontrakt_leko
+    given:
+      - input: ref('mrt_leko_kontrakt')
+        rows:
+          - "#id": "ID1"
+            payload: '{"_id":"C1","contractId":"CID1","id":"ID1","startDate":"2020-01-01 00:00:00","endDate":"2025-01-01 00:00:00"}'
+    expect:
+      rows:
+        - "#id": "ID1"
+          payload: '{"_id":"C1","contractId":"CID1","id":"ID1","startDate":"2020-01-01 00:00:00","endDate":"2025-01-01 00:00:00"}'
+
+  - name: snk_energiattest_bqeos__sesam_parity
+    model: snk_energiattest_bqeos
+    given:
+      - input: ref('mrt_global_property')
+        rows:
+          - {
+              bygg_avdeling_id: "D20201",
+              andelfossilt: 40,
+              energiforbruk: 100,
+              b_navn: "Bygg Navn",
+              EnergyCategory: "A",
+            }
+          # null EnergyCategory must STILL be emitted (Sesam keeps it; EnergiKarakter just nulls).
+          # COALESCE defaults AndelFossilEl / EnergiForbruk to 0.
+          - {
+              bygg_avdeling_id: "N21001",
+              andelfossilt: null,
+              energiforbruk: null,
+              b_navn: "Paleet kontor",
+              EnergyCategory: null,
+            }
+    expect:
+      rows:
+        - {
+            ByggNummer: "D20201",
+            AndelFossilEl: 40,
+            EnergiForbruk: 100,
+            Navn: "Bygg Navn",
+            EnergiKarakter: "A",
+          }
+        - {
+            ByggNummer: "N21001",
+            AndelFossilEl: 0,
+            EnergiForbruk: 0,
+            Navn: "Paleet kontor",
+            EnergiKarakter: null,
+          }
+
+  - name: mrt_superoffice_project_juridiskselskap__sesam_parity
+    model: mrt_superoffice_project_juridiskselskap
+    given:
+      - input: ref('mrt_global_project')
+        rows:
+          - { projectId: 608, name: "N21102 - Project", type: "Eiendom" }
+      - input: ref('mrt_global_property')
+        rows:
+          - {
+              bygg_avdeling_id: "N21102",
+              bf_firma_navn: "KLP Ibsenkvartalet AS",
+              bf_orgnummer: "987988142",
+              GnrBnr: "208/529",
+              b_adresse: "C.J. Hambros Plass 2\nOSLO\nNOR"
+            }
+    expect:
+      rows:
+        - { projectId: 608, navn: "KLP Ibsenkvartalet AS", orgnummer: "987988142", gaardbruksnummer: "208/529", adresse: "C.J. Hambros Plass 2\nOSLO\nNOR" }
+
+  - name: snk_prosjekt_juridiskselskap_superoffice__sesam_parity
+    model: snk_prosjekt_juridiskselskap_superoffice
+    given:
+      - input: ref('mrt_superoffice_project_juridiskselskap')
+        rows:
+          - {
+              projectId: 608,
+              projectName: "N21102 - Project",
+              projectType: "Eiendom",
+              navn: "KLP Ibsenkvartalet AS",
+              orgnummer: "987988142",
+              gaardbruksnummer: "208/529",
+              adresse: "C.J. Hambros Plass 2\nOSLO\nNOR"
+            }
+    expect:
+      rows:
+        - {
+            projectId: 608,
+            type: "Eiendom",
+            navn: "KLP Ibsenkvartalet AS",
+            orgnummer: "987988142",
+            gaardbruksnummer: "208/529",
+            adresse: "C.J. Hambros Plass 2\nOSLO\nNOR"
+          }

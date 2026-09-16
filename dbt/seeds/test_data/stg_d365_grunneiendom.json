@@ -1,0 +1,28 @@
+{
+  "entities": [
+    {
+      "_id": "N5190",
+      "OWNERSHIPCODE": 1,
+      "REGISTRATIONSTATUS": "",
+      "TITLECODE": "",
+      "eiendom_id": "N5190",
+      "eiendom_navn": "Jonsvollskvartalet",
+      "eiendom_type": "Næring",
+      "firma_id": "",
+      "gyldig_fra": "2020-11-27",
+      "gyldig_til": "2154-12-31"
+    },
+    {
+      "_id": "N9324",
+      "OWNERSHIPCODE": 1,
+      "REGISTRATIONSTATUS": "",
+      "TITLECODE": "",
+      "eiendom_id": "N9324",
+      "eiendom_navn": "Alfaset 3, Industrivei 1",
+      "eiendom_type": "Næring",
+      "firma_id": "N930",
+      "gyldig_fra": "1905-01-01",
+      "gyldig_til": "2154-12-31"
+    }
+  ]
+}

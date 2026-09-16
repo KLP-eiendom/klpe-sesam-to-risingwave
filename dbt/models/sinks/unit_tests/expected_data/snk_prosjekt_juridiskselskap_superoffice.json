@@ -1,0 +1,29 @@
+[
+  {
+    "#id": "608",
+    "ProjectId": 608,
+    "Type": "Eiendom",
+    "Navn": "KLP Ibsenkvartalet AS",
+    "Orgnummer": "987988142",
+    "Gaardbruksnummer": "208/529",
+    "Adresse": "C.J. Hambros Plass 2\nOSLO\nNOR"
+  },
+  {
+    "#id": "3",
+    "ProjectId": 3,
+    "Type": "NO:\"Eiendom\";",
+    "Navn": null,
+    "Orgnummer": null,
+    "Gaardbruksnummer": null,
+    "Adresse": null
+  },
+  {
+    "#id": "4",
+    "ProjectId": 4,
+    "Type": "NO:\"Eiendom\";",
+    "Navn": null,
+    "Orgnummer": null,
+    "Gaardbruksnummer": null,
+    "Adresse": null
+  }
+]

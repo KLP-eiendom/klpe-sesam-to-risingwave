@@ -1,0 +1,551 @@
+unit_tests:
+  - name: snk_purring_kundeportal__sesam_parity
+    model: snk_purring_kundeportal
+    given:
+      - input: ref('mrt_global_purring')
+        rows:
+          - {
+              id: "n249600017",
+              kunde_nummer: "600626",
+              purring_nummer: "600017",
+              kid: "6006266000174",
+              forfallsdato: "2025-05-21 00:00:00",
+              faktura_dato: "2025-05-07 00:00:00",
+              pdf_filnavn: "n249600017.pdf",
+              status: "0",
+              purring_kode: "1",
+              fil_finnes: true
+            }
+    expect:
+      rows:
+        - {
+            Id: "n249600017",
+            KundeNummer: "600626",
+            FakturaNummer: "600017",
+            Kid: "6006266000174",
+            ForfallsDato: "2025-05-21 00:00:00",
+            FakturaDato: "2025-05-07 00:00:00",
+            PdfFileName: "n249600017.pdf",
+            Status: 0,
+            Type: 1,
+          }
+
+  - name: snk_ticketcategory_kundeportal__sesam_parity
+    model: snk_ticketcategory_kundeportal
+    given:
+      - input: ref('mrt_global_ticketcategory')
+        rows:
+          - {
+              navn: "Bestilling adgangskort",
+              sakskategoriid: 2,
+              parent: -1,
+              system: "superoffice",
+              type: "support",
+              kode: null,
+              created: "2020-01-01 10:00:00",
+              updated: true,
+              lastupdated: "2021-01-01 10:00:00",
+            }
+    expect:
+      rows:
+        - {
+            Navn: "Bestilling adgangskort",
+            SakskategoriId: 2,
+            Parent: -1,
+            System: "superoffice",
+            Type: "support",
+            Kode: null,
+            Created: "2020-01-01 10:00:00",
+            LastUpdated: "2021-01-01 10:00:00",
+          }
+
+  - name: snk_ticketmessageattachment_kundeportal__sesam_parity
+    description: >
+      Attachments can arrive via either source of the FULL OUTER JOIN — the
+      superoffice-ticketmessage-update webhook (camelCase attachment fields,
+      e.g. attachmentId) or the ticket webhook's embedded TicketMessages[]
+      (PascalCase, e.g. AttachmentId) — both must be handled.
+    model: snk_ticketmessageattachment_kundeportal
+    given:
+      - input: ref('mrt_superoffice_ticketmessage_update')
+        rows:
+          - {
+              ticketmessageid: 500,
+              externalid: "500:superoffice-ticketmessage",
+              slevel: "External",
+              createdat: "2021-01-01 10:00:00",
+              _deleted: false,
+              ticketattachments: '[{"attachmentId": 1080, "contentType": "image/png", "name": "test.png", "attSize": 1024}]',
+            }
+      - input: ref('mrt_superoffice_ticketmessage')
+        rows:
+          - {
+              ticketmessageid: 600,
+              externalid: "600:superoffice-ticketmessage",
+              slevel: "External",
+              createdat: "2022-02-02 11:00:00",
+              _deleted: false,
+              ticketattachments: '[{"AttachmentId": 1090, "ContentType": "application/pdf", "Name": "doc.pdf", "AttSize": 2048}]',
+            }
+          # Attachment on an Internal message: filter is inherited from the parent
+          # message's Slevel, so this attachment must never reach Kundeportal. DROP.
+          - {
+              ticketmessageid: 610,
+              externalid: "610:superoffice-ticketmessage",
+              slevel: "Internal",
+              createdat: "2022-02-02 11:00:00",
+              _deleted: false,
+              ticketattachments: '[{"AttachmentId": 1095, "ContentType": "application/pdf", "Name": "internal-only.pdf", "AttSize": 4096}]',
+            }
+    expect:
+      rows:
+        - {
+            EksternId: "1080:superoffice-ticketmessageattachment",
+            EksternSaksmeldingId: "500:superoffice-ticketmessage",
+            Type: "image/png",
+            FileName: "test.png",
+            FileSize: 1024,
+            Created: "2021-01-01 10:00:00",
+            LastUpdated: "2021-01-01 10:00:00",
+          }
+        - {
+            EksternId: "1090:superoffice-ticketmessageattachment",
+            EksternSaksmeldingId: "600:superoffice-ticketmessage",
+            Type: "application/pdf",
+            FileName: "doc.pdf",
+            FileSize: 2048,
+            Created: "2022-02-02 11:00:00",
+            LastUpdated: "2022-02-02 11:00:00",
+          }
+
+  - name: snk_ticketmessageattachment_kundeportal__float_attsize
+    description: >
+      SuperOffice sometimes sends AttSize as a float-formatted string (e.g. "50.0")
+      instead of a plain integer. A direct ::BIGINT cast fails ("invalid digit found
+      in string") — must go through ::NUMERIC first so both forms parse cleanly.
+    model: snk_ticketmessageattachment_kundeportal
+    given:
+      - input: ref('mrt_superoffice_ticketmessage_update')
+        rows:
+          - {
+              ticketmessageid: 800,
+              externalid: "800:superoffice-ticketmessage",
+              slevel: "External",
+              createdat: "2021-01-01 10:00:00",
+              _deleted: false,
+              ticketattachments: '[{"attachmentId": 1300, "contentType": "application/pdf", "name": "float-size.pdf", "attSize": "50.0"}]',
+            }
+      - input: ref('mrt_superoffice_ticketmessage')
+        rows: []
+    expect:
+      rows:
+        - {
+            EksternId: "1300:superoffice-ticketmessageattachment",
+            EksternSaksmeldingId: "800:superoffice-ticketmessage",
+            Type: "application/pdf",
+            FileName: "float-size.pdf",
+            FileSize: 50,
+            Created: "2021-01-01 10:00:00",
+            LastUpdated: "2021-01-01 10:00:00",
+          }
+
+  - name: snk_ticketmessageattachment_kundeportal__strips_non_bmp_filename
+    description: >
+      Kundeportal's VedleggSak.FileName column isn't utf8mb4, so 4-byte UTF-8
+      characters (emoji, etc.) in an attachment name must be stripped before
+      the JDBC sink writes it, or MySQL rejects the row ("Incorrect string value").
+    model: snk_ticketmessageattachment_kundeportal
+    given:
+      - input: ref('mrt_superoffice_ticketmessage_update')
+        rows:
+          - {
+              ticketmessageid: 700,
+              externalid: "700:superoffice-ticketmessage",
+              slevel: "External",
+              createdat: "2021-01-01 10:00:00",
+              _deleted: false,
+              ticketattachments: '[{"attachmentId": 1200, "contentType": "application/pdf", "name": "😊 bilde.pdf", "attSize": 512}]',
+            }
+      - input: ref('mrt_superoffice_ticketmessage')
+        rows: []
+    expect:
+      rows:
+        - {
+            EksternId: "1200:superoffice-ticketmessageattachment",
+            EksternSaksmeldingId: "700:superoffice-ticketmessage",
+            Type: "application/pdf",
+            FileName: " bilde.pdf",
+            FileSize: 512,
+            Created: "2021-01-01 10:00:00",
+            LastUpdated: "2021-01-01 10:00:00",
+          }
+
+  - name: snk_ticketstatus_kundeportal__sesam_parity
+    description: >
+      Real staging shape: _id is the synthetic poller key '<id>_superoffice',
+      status holds the English status code ('Active'), name the localized label
+      ('Aktiv'). Sesam ticketstatus-kundeportal maps Kode=status, Navn=name,
+      System='superoffice' (constant). Kode must NOT be _id.
+    model: snk_ticketstatus_kundeportal
+    given:
+      - input: ref('stg_superoffice_ticketstatus')
+        rows:
+          - {
+              ticketStatusId: 1,
+              _id: "1_superoffice",
+              name: "Aktiv",
+              status: "Active",
+            }
+    expect:
+      rows:
+        - {
+            SakstatusId: 1,
+            Kode: "Active",
+            Navn: "Aktiv",
+            System: "superoffice",
+          }
+
+
+  - name: snk_portalusage_sistaktiv_kundeportal__sesam_parity
+    model: snk_portalusage_sistaktiv_kundeportal
+    given:
+      - input: ref('stg_influx_portalusage_sistaktiv')
+        rows:
+          - { _id: "600047", kundenummer: "600047", domene: null, sist_aktivitet_dato: "2023-09-01 00:00:00", antall_innlogginger: 5, platform: null }
+      - input: ref('mrt_global_customer')
+        rows:
+          - { kundenummer: "600047", contactid: 30, navn: "Test Kunde", mva_nummer: null }
+    expect:
+      rows:
+        - { Kundenummer: "600047", SoContactId: 30, SistAktivDato: "2023-09-01 00:00:00" }
+
+  - name: snk_dokumentkontraktslinjeavsjekk_kundeportal__sesam_parity
+    model: snk_dokumentkontraktslinjeavsjekk_kundeportal
+    given:
+      - input: ref('stg_forvalter_dokumentkontraktslinjeavsjekk')
+        rows:
+          - { DokumentId: "530791:superoffice-document", KontraktLinjeId: "5637350079", DokumentAvsjekkDokumentId: "530791:superoffice-document", Created: "0001-01-01 00:00:00", LastUpdated: "2022-05-09 12:28:32" }
+    expect:
+      rows:
+        - { DokumentId: "530791:superoffice-document", KontraktlinjeId: "5637350079", LastUpdated: "2022-05-09 12:28:32" }
+
+  - name: snk_contract_kundeportal__sesam_parity
+    model: snk_contract_kundeportal
+    given:
+      - input: ref('stg_d365_kontrakt')
+        rows:
+          - {
+              _id: "600015.20.N201",
+              kontrakt_id: "600015.20",
+              kundenummer: "600015",
+              kontrakt_navn: "OsloMet Storbyuniversitet",
+              byggnummer: "N20101",
+              gyldig_fra: null,
+              gyldig_til: null,
+              fra_dato: null,
+              opphoersdato: null,
+              kontrakt_dato: "2016-03-17 00:00:00",
+              leie: 1408771.485147996,
+              felleskost: 290864.49,
+              eiendomsskatt: 45114.21,
+              status_kode: 2,
+              status_navn: "Aktiv",
+              lokal_valuta: "NOK",
+              utleier_id: null,
+              kontraktstatus: null,
+              byggtype: null,
+              lopende: null,
+              borett_fra_dato: null,
+              borett_til_dato: null,
+            }
+    expect:
+      rows:
+        - {
+            KontraktId: "600015.20.N201",
+            Kontraktsnummer: "600015.20",
+            Kundenummer: "600015",
+            Navn: "OsloMet Storbyuniversitet",
+            Bygningsnummer: "N20101",
+            GyldigFra: null,
+            GyldigTil: null,
+            KontraktFra: null,
+            KontraktTil: null,
+            Kontraktsdato: "2016-03-17 00:00:00",
+            ArligLeie: 1408771.485147996,
+            ArligFellesKostnad: 290864.49,
+            ArligEiendomsskatt: 45114.21,
+            StatusKode: 2,
+            StatusTekst: "Aktiv",
+            LokalValuta: "NOK",
+            Visningsnavn: "600015.20 OsloMet Storbyuniversitet",
+            Created: "1970-01-01 00:00:00",
+            LastUpdated: "1970-01-01 00:00:00"
+          }
+
+  - name: snk_contract_details_kundeportal__sesam_parity
+    description: >
+      The kontrakt join must resolve to the ONE owning utleier via cl.firma
+      (LOWER(concat(kontrakt_nummer,'.',firma)) = LOWER(kontrakt._id)), NOT fan out across
+      every utleier variant of the kontrakt_id. Decoy kontrakt 600015.20.N999 (wrong building
+      WRONG99) shares kontrakt_id 600015.20 — lines with firma 'N201' must resolve to N20101,
+      never WRONG99 (the ByggNummer assertions catch a regression to the loose kontrakt_id join).
+      Also covers the FristOppsigelse CASE (D% building branch) and the leie_kost_gruppe_id=2 filter.
+      KontraktNummer = concat(kontrakt_nummer,'.',UPPER(firma)); RentalObjectName = leie_objekt_navn;
+      RentalQty = 0 when leie_enhet='m2' else leie_antall (mirrors Sesam contract-details-kundeportal).
+    model: snk_contract_details_kundeportal
+    given:
+      - input: ref('stg_d365_contract_line')
+        rows:
+          - _id: "5637150425"
+            unik_id: 5637150425
+            kontrakt_nummer: "600015.20"
+            firma: "N201"
+            leie_enhet: "m2"
+            leie_antall: 41005
+            leie_objekt_navn: "Hotell/kongress"
+            status_kode: 2
+            leie_art_gruppe_n1: "Leie"
+            gyldig_til: "2031-01-19 00:00:00"
+            frist_oppsigelse_leietaker: "09"
+            frist_oppsigelse_utleier: "09"
+            lopende: "nei"
+            FirstPossibleTerminationDate: "2030-01-01 00:00:00"
+            FirstPossibleTerminationDateLessor: "2030-01-01 00:00:00"
+          - _id: "D-BUILDING-TEST"
+            unik_id: 999999
+            kontrakt_nummer: "D.KONTRAKT"
+            firma: "D208"
+            status_kode: 2
+            leie_art_gruppe_n1: "Leie"
+            frist_oppsigelse_leietaker: "06"
+            frist_oppsigelse_utleier: "06"
+            gyldig_til: "2031-01-19 00:00:00"
+            lopende: "ja"
+            FirstPossibleTerminationDate: "2029-12-31 00:00:00"
+            FirstPossibleTerminationDateLessor: "2029-12-31 00:00:00"
+          - _id: "NON-RENTAL-TEST"
+            unik_id: 777777
+            kontrakt_nummer: "600015.20"
+            firma: "N201"
+            leie_enhet: "stk"
+            leie_antall: 3
+            leie_objekt_navn: "Parkering P3"
+            status_kode: 2
+            leie_art_gruppe_n1: "FK"
+            frist_oppsigelse_leietaker: "09"
+            gyldig_til: "2026-06-30 00:00:00"
+          - _id: "LOPENDE-TEST"
+            unik_id: 888888
+            kontrakt_nummer: "600015.20"
+            firma: "N201"
+            status_kode: 2
+            leie_art_gruppe_n1: "Leie"
+            lopende: "ja"
+          # leie_kost_gruppe_id = 2 => filtered out (Sesam contract-details-kundeportal); NULL is kept.
+          - _id: "KOSTGRUPPE2-TEST"
+            unik_id: 555555
+            kontrakt_nummer: "600015.20"
+            firma: "N201"
+            status_kode: 2
+            leie_art_gruppe_n1: "Leie"
+            lopende: "nei"
+            leie_kost_gruppe_id: 2
+            gyldig_til: "2031-01-19 00:00:00"
+      - input: ref('stg_d365_kontrakt')
+        rows:
+          - _id: "600015.20.N201"
+            kontrakt_id: "600015.20"
+            utleier_id: "N201"
+            kundenummer: "600015"
+            byggnummer: "N20101"
+          # decoy: same kontrakt_id, different utleier/building — must NOT be picked
+          - _id: "600015.20.N999"
+            kontrakt_id: "600015.20"
+            utleier_id: "N999"
+            kundenummer: "600015"
+            byggnummer: "WRONG99"
+          - _id: "D.KONTRAKT.D208"
+            kontrakt_id: "D.KONTRAKT"
+            utleier_id: "D208"
+            kundenummer: "600015"
+            byggnummer: "D20801"
+    expect:
+      rows:
+        - UniqueId: "5637150425"
+          ByggNummer: "N20101"
+          KontraktNummer: "600015.20.N201"
+          RentalObjectName: "Hotell/kongress"
+          RentalQty: 0
+          FristOppsigelseLeietaker: "2030-04-19 00:00:00"
+          FristOppsigelseUtleier: "2030-04-19 00:00:00"
+        - UniqueId: "D-BUILDING-TEST"
+          ByggNummer: "D20801"
+          KontraktNummer: "D.KONTRAKT.D208"
+          RentalObjectName: null
+          RentalQty: 0
+          FristOppsigelseLeietaker: "2029-12-31 00:00:00"
+          FristOppsigelseUtleier: "2029-12-31 00:00:00"
+        - UniqueId: "NON-RENTAL-TEST"
+          ByggNummer: "N20101"
+          KontraktNummer: "600015.20.N201"
+          RentalObjectName: "Parkering P3"
+          RentalQty: 3
+          FristOppsigelseLeietaker: null
+          FristOppsigelseUtleier: null
+        - UniqueId: "LOPENDE-TEST"
+          ByggNummer: "N20101"
+          KontraktNummer: "600015.20.N201"
+          RentalObjectName: null
+          RentalQty: 0
+          FristOppsigelseLeietaker: null
+          FristOppsigelseUtleier: null
+
+  - name: snk_kunde_orgnummer_kundeportal__sesam_parity
+    model: snk_kunde_orgnummer_kundeportal
+    given:
+      - input: ref('mrt_global_customer')
+        rows:
+          # OrgNummer must be the SO orgnr Sesam writes — NOT the dirty d365 mva_nummer.
+          - { kundenummer: "600000", navn: "Ingeniørene Seim & Hultgreen A/S", mva_nummer: "NO840799522MVA", contactid: 7, orgnr: "840 799 522", category: "Kunde" }
+          - { kundenummer: "600015", navn: "OsloMet Storbyuniversitet",        mva_nummer: "997058925",      contactid: 3, orgnr: "997058925",   category: null }
+          # d365-only customer (no SO contact -> orgnr NULL): Sesam never emits these -> DROP.
+          - { kundenummer: "600047", navn: "Statsbygg",                        mva_nummer: "971278374",      contactid: null, orgnr: null,       category: null }
+          # expired SO contact (category ~ Utgått): Sesam excludes -> DROP.
+          - { kundenummer: "600099", navn: "Utgått Kunde AS",                  mva_nummer: "912345678",      contactid: 99, orgnr: "912 345 678", category: "Utgått" }
+          # empty KundeNavn: Sesam requires KundeNavn non-empty -> DROP.
+          - { kundenummer: "600100", navn: "",                                 mva_nummer: "923456789",      contactid: 100, orgnr: "923 456 789", category: "Kunde" }
+          # contactsimple category is fine, but the SO "contact" entity (poller) is Utgått: Sesam checks
+          # both sources independently -> DROP. Regression test for the contactCategory fallback.
+          - { kundenummer: "600101", navn: "Utgått Via Contact AS",            mva_nummer: "934567890",      contactid: 101, orgnr: "934 567 890", category: "Kunde", contactCategory: "Utgått" }
+    expect:
+      rows:
+        - { KundeNummer: "600000", KundeNavn: "Ingeniørene Seim & Hultgreen A/S", OrgNummer: "840 799 522", SoContactId: 7, Created: "1970-01-01 00:00:00", LastUpdated: "1970-01-01 00:00:00" }
+        - { KundeNummer: "600015", KundeNavn: "OsloMet Storbyuniversitet",        OrgNummer: "997058925",   SoContactId: 3, Created: "1970-01-01 00:00:00", LastUpdated: "1970-01-01 00:00:00" }
+
+  - name: snk_kunde_orgnummer_kundeportal__dedup_duplicate_orgnr
+    description: >
+      Two distinct customer entities (different kundenummer, different SO contacts)
+      occasionally share the same physical orgnr (subsidiaries, legacy duplicates).
+      The target Kunde_Orgnummer table's upsert key is OrgNummer alone, so without a
+      dedup RW silently overwrites non-deterministically. Keep the highest contactId.
+    model: snk_kunde_orgnummer_kundeportal
+    given:
+      - input: ref('mrt_global_customer')
+        rows:
+          - { kundenummer: "400043", navn: "Region Stockholm SLSO", contactid: 15713, orgnr: "232100-0016", category: "Kunde" }
+          - { kundenummer: "90004354", navn: "CAMM Stockholm", contactid: 12024, orgnr: "232100-0016", category: "Kunde" }
+    expect:
+      rows:
+        - { KundeNummer: "400043", KundeNavn: "Region Stockholm SLSO", OrgNummer: "232100-0016", SoContactId: 15713, Created: "1970-01-01 00:00:00", LastUpdated: "1970-01-01 00:00:00" }
+
+
+  # Sesam usercustomer-kundeportal parity: PK (SoContactId, BrukerId); contactid not null/0,
+  # valid email, dedup keeps lowest personId per (contact, email) pair.
+  - name: snk_usercustomer_kundeportal__sesam_parity
+    model: snk_usercustomer_kundeportal
+    given:
+      - input: ref('mrt_global_user')
+        rows:
+          - { personid: 14542, contactid: 2, bruker_id: "siri.kristoffersen@example.com", email: "siri.kristoffersen@example.com", firstName: "Siri", lastName: "Kristoffersen", retired: false, _deleted: false, registered: "1970-01-01 00:00:00", updated: "1970-01-01 00:00:00" }
+          - { personid: 14543, contactid: 2, bruker_id: "per.olsen@example.com",              email: "per.olsen@example.com",              firstName: "Per",  lastName: "Olsen",         retired: false, _deleted: false, registered: "1970-01-01 00:00:00", updated: "1970-01-01 00:00:00" }
+          - { personid: 14546, contactid: 3, bruker_id: "eva.lunde@example.com",          email: "eva.lunde@example.com",          firstName: "Eva",   lastName: "Lunde",         retired: false, _deleted: false, registered: "1970-01-01 00:00:00", updated: "1970-01-01 00:00:00" }
+          # same (contactid, bruker_id) pair with HIGHER personId -> dropped by pair dedup
+          - { personid: 99999, contactid: 3, bruker_id: "eva.lunde@example.com",          email: "eva.lunde@example.com",          firstName: "Eva",   lastName: "Dup",           retired: false, _deleted: false, registered: "1970-01-01 00:00:00", updated: "1970-01-01 00:00:00" }
+          # contactid 0 -> dropped (Sesam: SoContactId != 0)
+          - { personid: 15926, contactid: 0, bruker_id: "service@example.com",                  email: "service@example.com",                  firstName: "service", lastName: "SOservice",  retired: false, _deleted: false, registered: "1970-01-01 00:00:00", updated: "1970-01-01 00:00:00" }
+    expect:
+      rows:
+        - { SuperOfficeId: 14542, Created: "2024-01-01 00:00:00", LastUpdated: "2024-01-01 00:00:00", SoContactId: 2, BrukerId: "siri.kristoffersen@example.com" }
+        - { SuperOfficeId: 14543, Created: "2024-01-01 00:00:00", LastUpdated: "2024-01-01 00:00:00", SoContactId: 2, BrukerId: "per.olsen@example.com" }
+        - { SuperOfficeId: 14546, Created: "2024-01-01 00:00:00", LastUpdated: "2024-01-01 00:00:00", SoContactId: 3, BrukerId: "eva.lunde@example.com" }
+
+  - name: snk_contract_garanti_kundeportal__sesam_parity
+    model: snk_contract_garanti_kundeportal
+    given:
+      - input: ref('stg_d365_garanti')
+        rows:
+          - {
+              garanti_id: 19827319,
+              garanti_nummer: "45114",
+              kontrakt_id: "600015.20",
+              firma_id: "n201",
+              klassifiseringstype: "Depositum",
+              bygg_avdeling_id: "N20100",
+              garantibelop: 12338731
+            }
+    expect:
+      rows:
+        - {
+            GarantiId: "19827319",
+            GarantiNummer: "45114",
+            KontraktId: "600015.20.N201",
+            Klassifiseringstype: "Depositum",
+            ByggNummer: "N20100",
+            Amount: 12338731
+          }
+
+  - name: mrt_superoffice_personinterest__sesam_parity
+    model: mrt_superoffice_personinterest
+    given:
+      - input: ref('mrt_superoffice_user')
+        rows:
+          - {
+              personId: 17589,
+              email: "kontakt@example.com",
+              personInterestIds: '"NO:\"Kontraktsansvarlig\";NO:\"Test\";"',
+              registered: "2013-01-30 11:56:21",
+              updated: "2013-01-30 11:56:28",
+              _deleted: false
+            }
+      - input: ref('stg_superoffice_personinterest')
+        rows:
+          - { personid: 17589, name: "Kontraktsansvarlig", persintid: 12 }
+          - { personid: 17589, name: "Test", persintid: 13 }
+    expect:
+      rows:
+        - { SuperOfficeId: 17589, BrukerId: "kontakt@example.com", Name: "Kontraktsansvarlig", PersIntId: 12 }
+        - { SuperOfficeId: 17589, BrukerId: "kontakt@example.com", Name: "Test", PersIntId: 13 }
+
+  - name: snk_personinterest_kundeportal__sesam_parity
+    model: snk_personinterest_kundeportal
+    given:
+      - input: ref('mrt_superoffice_personinterest')
+        rows:
+          - {
+              SuperOfficeId: 17589,
+              BrukerId: "kontakt@example.com",
+              Name: "Kontraktsansvarlig",
+              PersIntId: 12,
+              Registered: "2013-01-30 11:56:21",
+              Updated: "2013-01-30 11:56:28"
+            }
+          - {
+              SuperOfficeId: 17589,
+              BrukerId: "kontakt@example.com",
+              Name: "Test",
+              PersIntId: 13,
+              Registered: "2013-01-30 11:56:21",
+              Updated: "2013-01-30 11:56:28"
+            }
+    expect:
+      rows:
+        - {
+            BrukerId: "kontakt@example.com",
+            PersIntId: 12,
+            Name: "Kontraktsansvarlig",
+            SuperOfficeId: 17589,
+            Registered: "2013-01-30 11:56:21",
+            Created: "2013-01-30 11:56:21",
+            Updated: "2013-01-30 11:56:28",
+            LastUpdated: "2013-01-30 11:56:28"
+          }
+        - {
+            BrukerId: "kontakt@example.com",
+            PersIntId: 13,
+            Name: "Test",
+            SuperOfficeId: 17589,
+            Registered: "2013-01-30 11:56:21",
+            Created: "2013-01-30 11:56:21",
+            Updated: "2013-01-30 11:56:28",
+            LastUpdated: "2013-01-30 11:56:28"
+          }

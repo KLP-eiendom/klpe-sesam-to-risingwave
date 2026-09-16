@@ -1,0 +1,9 @@
+{
+  "mart": "mrt_verified_personkonvolutt",
+  "id_field": [
+    "PersonEpost",
+    "KonvoluttId",
+    "Type"
+  ],
+  "blacklist": []
+}

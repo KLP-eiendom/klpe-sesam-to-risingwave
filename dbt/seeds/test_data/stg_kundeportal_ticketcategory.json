@@ -1,0 +1,36 @@
+{
+  "entities": [
+    {
+      "_id": "7",
+      "Id": 7,
+      "SakskategoriId": 2,
+      "Navn": "Administration",
+      "System": "superoffice",
+      "Type": "property"
+    },
+    {
+      "_id": "97",
+      "Id": 97,
+      "SakskategoriId": 9,
+      "Navn": "Lys",
+      "System": "superoffice",
+      "Type": "support"
+    },
+    {
+      "_id": "99",
+      "Id": 99,
+      "SakskategoriId": 13,
+      "Navn": "Annet",
+      "System": "superoffice",
+      "Type": "support"
+    },
+    {
+      "_id": "103",
+      "Id": 103,
+      "SakskategoriId": 12,
+      "Navn": "Sikkerhet",
+      "System": "superoffice",
+      "Type": "support"
+    }
+  ]
+}

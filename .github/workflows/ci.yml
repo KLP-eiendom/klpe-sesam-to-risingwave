@@ -1,0 +1,62 @@
+name: CI
+
+run-name: "CI → ${{ github.head_ref || github.ref_name }}"
+
+# Compile validation for the ten .NET apps under src/cloud-run/ (plus the
+# shared RisingWavePollerCommon library). `solution_path: .` makes
+# backend-ci.yml restore and build the whole KdiRisingWave.sln, so a break in
+# any project fails the PR.
+#
+# There are NO .NET tests in this repo — `tests/` holds SQL pipeline-validation
+# scripts, and the dbt unit/data tests run in dbt-ci.yml against an ephemeral
+# RisingWave. backend-ci.yml discovers test projects by filename
+# (*Test.csproj / *Tests.csproj), finds none, warns and exits 0, so this is
+# compile-only by construction rather than by a flag. Azure's `CI -
+# KdiRisingWave` (def 282) ran `--filter Test` against the same empty set, so
+# nothing is lost.
+#
+# Azure ran that definition on a weekday 02:00 schedule. It is deliberately NOT
+# reproduced: a scheduled rebuild of unchanged code proves nothing and consumes
+# one of the five shared example-project-runner slots. Dependency drift is caught by
+# the next real PR.
+#
+# dbt/** is excluded — it ships no .NET code and has its own pipeline.
+
+on:
+  pull_request:
+    branches: [main, release]
+    paths-ignore:
+      - ".claude/**"
+      - ".agents/**"
+      - ".gemini/**"
+      - "**/*.md"
+      - "docs/**"
+      - ".vscode/**"
+      - ".editorconfig"
+      - ".gitignore"
+      - "LICENSE"
+      - ".github/actions/**"
+      - "dbt/**"
+      - ".github/workflows/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    uses: "klpkonsern/klpe-actions/.github/workflows/backend-ci.yml@v2"
+    with:
+      solution_path: "."
+      # Only used for the published build artifact. The data API is the one
+      # long-running service here, so it is the useful thing to keep; the
+      # compile check above already covers all eleven projects.
+      # A .sln cannot be used: `dotnet publish <sln> --output` is rejected
+      # (NETSDK1194).
+      project_file: "src/cloud-run/risingwave-data-api/RisingWaveDataApi.csproj"
+      build_configuration: Debug
+    secrets: inherit

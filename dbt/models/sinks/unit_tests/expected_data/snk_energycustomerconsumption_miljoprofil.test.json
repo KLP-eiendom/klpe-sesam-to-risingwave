@@ -1,0 +1,4 @@
+{
+  "id_field": ["ByggNummer", "KundeNummer", "Mnd", "Type", "Unit"],
+  "blacklist": ["UniqueId"]
+}

@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kdi-pubsub-writer
+  namespace: default
+  labels:
+    app: kdi-pubsub-writer
+    component: integrations
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate # Ensures only one writer runs at any time to avoid duplicate message pulling
+  selector:
+    matchLabels:
+      app: kdi-pubsub-writer
+  template:
+    metadata:
+      labels:
+        app: kdi-pubsub-writer
+    spec:
+      containers:
+      - name: pubsub-writer
+        image: ghcr.io/example-org/kdi-risingwv-pubsub-writer:version
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: "200m"
+            memory: "256Mi"
+          requests:
+            cpu: "50m"
+            memory: "128Mi"
+        volumeMounts:
+        - mountPath: "/var/secrets/google"
+          name: kdi-serviceaccount-credentials
+        - mountPath: /etc/ssl/certs/tls_ca.pem
+          name: ca-pemstore
+          subPath: tls_ca.pem
+          readOnly: false
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/google/credentials.json
+        envFrom:
+        - configMapRef:
+            name: vault-kdi-options-config
+        - configMapRef:
+            name: region-config
+        - configMapRef:
+            name: dotnet-config
+        - secretRef:
+            name: vault-options-secret
+      volumes:
+      - name: kdi-serviceaccount-credentials
+        secret:
+          secretName: gcp.kdi.files
+      - name: ca-pemstore
+        configMap:
+          name: ca-pemstore

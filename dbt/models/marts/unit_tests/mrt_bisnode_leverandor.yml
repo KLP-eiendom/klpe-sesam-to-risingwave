@@ -1,0 +1,176 @@
+version: 2
+
+unit_tests:
+  - name: mrt_bisnode_leverandor__old_norwegian_format
+    description: >
+      Legacy Norwegian-keyed payload (identifikasjon / navnAdresse / grunnfakta / rating).
+      Rows in this format may still exist in the staging table until a full-refresh.
+    model: mrt_bisnode_leverandor
+    given:
+      - input: ref('stg_bisnode_leverandor')
+        rows:
+          - payload: >
+              {
+                "identifikasjon": { "orgnr": 831234202, "dunsnr": 518876776 },
+                "navnAdresse": {
+                  "navn": "DEMO OPPLYSNING",
+                  "gateAdresse": "Økerveien 145",
+                  "gatePostnr": 580,
+                  "gatePoststed": "Oslo",
+                  "kodeType": "A",
+                  "kodeTekst": "Aktivt",
+                  "telefon": "23456789"
+                },
+                "grunnfakta": {
+                  "etablertAr": 1990,
+                  "registrertDato": "1988-11-25T00:00:00",
+                  "selskFormKode": "AVD",
+                  "selskFormTekst": "Avdeling",
+                  "registrertMVA": false
+                },
+                "rating": {
+                  "rating1": "IKKE RATET",
+                  "ratingBeskrivelse": "Selskapsform",
+                  "limit": 0
+                }
+              }
+    expect:
+      rows:
+        - orgnr: "831234202"
+          dunsnr: 518876776
+          navn: "DEMO OPPLYSNING"
+          gateAdresse: "Økerveien 145"
+          gatePostnr: 580
+          gatePoststed: "Oslo"
+          kodeType: "A"
+          kodeTekst: "Aktivt"
+          telefon: "23456789"
+          etablertAr: 1990
+          registrertDato: "1988-11-25T00:00:00"
+          selskFormKode: "AVD"
+          selskFormTekst: "Avdeling"
+          registrertMVA: false
+          rating1: "IKKE RATET"
+          ratingBeskrivelse: "Selskapsform"
+          ratingLimit: 0
+
+  - name: mrt_bisnode_leverandor__new_english_format_no
+    description: >
+      New Bisnode Global API format for a Norwegian company: registrationNumber in identifiers,
+      legalForm with flat localCode/description fields.
+    model: mrt_bisnode_leverandor
+    given:
+      - input: ref('stg_bisnode_leverandor')
+        rows:
+          - payload: >
+              {
+                "companyInformation": {
+                  "identifiers": { "registrationNumber": "842852102", "dunsNumber": "517821141" },
+                  "companyName": {
+                    "registeredName": { "name": "BARE SKRAP DA" }
+                  },
+                  "contactPoints": {
+                    "registeredAddress": {
+                      "streetAddress": { "street": "SKRAPV 27", "postalCode": "7412", "town": "TRONDHEIM", "countryCode": "NO" }
+                    },
+                    "electronicContactPoints": {
+                      "phoneNumbers": [{ "fullNumber": "23456789" }]
+                    }
+                  },
+                  "legalForm": { "localCode": "DA", "description": "General Partnership Shared liab." },
+                  "status": { "value": "ACTIVE" },
+                  "registrationInformation": {
+                    "foundationDate": { "year": 1998, "month": 1, "day": 1 },
+                    "registrationDate": { "year": 2000, "month": 8, "day": 11 }
+                  },
+                  "generalCompanyData": { "registeredInVat": false }
+                },
+                "risk": {
+                  "creditRatings": {
+                    "currentCreditRating": { "code": "IkkeRatet", "description": "Rating is not done due to legal form or activity code" }
+                  },
+                  "ratingCreditLimits": {
+                    "currentRatingCreditLimit": { "amount": { "amount": "0", "currency": "NOK" } }
+                  }
+                }
+              }
+    expect:
+      rows:
+        - orgnr: "842852102"
+          dunsnr: 517821141
+          navn: "BARE SKRAP DA"
+          gateAdresse: "SKRAPV 27"
+          gatePostnr: 7412
+          gatePoststed: "TRONDHEIM"
+          kodeType: "ACTIVE"
+          kodeTekst: "General Partnership Shared liab."
+          telefon: "23456789"
+          etablertAr: 1998
+          registrertDato: "2000-08-11"
+          selskFormKode: "DA"
+          selskFormTekst: "General Partnership Shared liab."
+          registrertMVA: false
+          rating1: "IkkeRatet"
+          ratingBeskrivelse: "Rating is not done due to legal form or activity code"
+          ratingLimit: 0
+
+  - name: mrt_bisnode_leverandor__new_english_format_intl
+    description: >
+      New Bisnode Global API format for a non-Norwegian company (e.g. Danish): vatNumber in identifiers
+      instead of registrationNumber, legalForm with current.code/current.description sub-object.
+    model: mrt_bisnode_leverandor
+    given:
+      - input: ref('stg_bisnode_leverandor')
+        rows:
+          - payload: >
+              {
+                "companyInformation": {
+                  "identifiers": { "vatNumber": "795312324", "dunsNumber": "122381976" },
+                  "companyName": {
+                    "registeredName": { "name": "Multicerv ApS" }
+                  },
+                  "contactPoints": {
+                    "registeredAddress": {
+                      "streetAddress": { "street": "Frørup Byvej 18", "postalCode": "1172", "town": "København K", "countryCode": "DK" }
+                    },
+                    "electronicContactPoints": {
+                      "phoneNumbers": [{ "fullNumber": "21 00 00 17" }]
+                    }
+                  },
+                  "legalForm": {
+                    "current": { "code": "LIMITED_COMPANY", "description": "Private company ltd" }
+                  },
+                  "status": { "value": "ACTIVE" },
+                  "registrationInformation": {
+                    "foundationDate": { "year": 2005, "month": 3, "day": 8 }
+                  },
+                  "generalCompanyData": { "countryCode": "DK" }
+                },
+                "risk": {
+                  "creditRatings": {
+                    "currentCreditRating": { "code": "AA", "description": "Good creditworthiness" }
+                  },
+                  "ratingCreditLimits": {
+                    "currentRatingCreditLimit": { "amount": { "amount": "117000", "currency": "DKK" } }
+                  }
+                }
+              }
+    expect:
+      rows:
+        - orgnr: "795312324"
+          dunsnr: 122381976
+          navn: "Multicerv ApS"
+          gateAdresse: "Frørup Byvej 18"
+          gatePostnr: 1172
+          gatePoststed: "København K"
+          kodeType: "ACTIVE"
+          kodeTekst: "Private company ltd"
+          telefon: "21 00 00 17"
+          etablertAr: 2005
+          registrertDato: ~
+          selskFormKode: "LIMITED_COMPANY"
+          selskFormTekst: "Private company ltd"
+          registrertMVA: ~
+          rating1: "AA"
+          ratingBeskrivelse: "Good creditworthiness"
+          ratingLimit: 117000

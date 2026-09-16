@@ -1,0 +1,13 @@
+{
+  "mart": "mrt_global_ticketcategory",
+  "blacklist": [
+    "created",
+    "lastupdated",
+    "updated"
+  ],
+  "id_field": [
+    "SakskategoriId",
+    "System",
+    "Type"
+  ]
+}

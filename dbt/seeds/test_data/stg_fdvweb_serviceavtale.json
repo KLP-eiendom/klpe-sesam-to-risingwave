@@ -1,0 +1,27 @@
+{
+  "entities": [
+    {
+      "_id": "bygg53_5",
+      "annet": "Alarmabonnement per år 38 280,-\nHeisabonnement per år 41 028,- \nVedlikeholdsprogram pr år 19 659 ,-\nVekterutrykning per gang 650,-\n",
+      "ansvarlig": "",
+      "byggId": "bygg53",
+      "bygningsdel": "54;",
+      "firma": "Securitas avd. trondheim",
+      "fornyelse": "autonmatisk- 1 år av gangen ",
+      "garantidato": null,
+      "id": 5,
+      "navn": "Utrykning/ alarmoverføring",
+      "nummer": "",
+      "omfang": "Denne avtalen inneholder mottak av tekniske alarmer, heisalarmer og innbruddsalarmer. Servicetelefon, vedlikeholdsprogram, vakthold og utrykningstjeneste.  ",
+      "oppfolgingsdato": "2017-04-14T00:00:00",
+      "oppsigelsesfrist": "3mnd.",
+      "pris": "0,0000",
+      "prisFrekvens": "",
+      "prisregulering": "",
+      "startdato": null,
+      "type": "Andre tjenester",
+      "utlopsdato": "2016-11-01T00:00:00",
+      "varighet": "2 år"
+    }
+  ]
+}

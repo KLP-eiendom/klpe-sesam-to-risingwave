@@ -1,0 +1,5 @@
+{
+  "mart": "mrt_d365_kunde_kontrakt_leie",
+  "blacklist": [],
+  "id_field": "kundenummer"
+}

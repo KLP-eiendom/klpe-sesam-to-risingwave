@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BigQueryEntityPoller": {
+      "commandName": "Project",
+      "commandLineArgs": "--table stg_d365_leverandoromsetning"
+    }
+  }
+}

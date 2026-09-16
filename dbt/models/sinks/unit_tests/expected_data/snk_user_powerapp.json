@@ -1,0 +1,38 @@
+[
+  {
+    "#id": "siri.kristoffersen@example.com",
+    "brukerId": null,
+    "epost": "siri.kristoffersen@example.com",
+    "navn": "Siri Kristoffersen"
+  },
+  {
+    "#id": "per.olsen@example.com",
+    "brukerId": "EK",
+    "epost": "per.olsen@example.com",
+    "navn": "Per Olsen"
+  },
+  {
+    "#id": "eva.lunde@example.com",
+    "brukerId": null,
+    "epost": "eva.lunde@example.com",
+    "navn": "Eva Lunde"
+  },
+  {
+    "#id": "kari.nordmann@example.com",
+    "brukerId": "HEN",
+    "epost": "kari.nordmann@example.com",
+    "navn": "Kari Nordmann"
+  },
+  {
+    "#id": "marit.hansen@example.com",
+    "brukerId": "KMA",
+    "epost": "marit.hansen@example.com",
+    "navn": "Marit Hansen"
+  },
+  {
+    "#id": "odd.edvard.lund@example.com",
+    "brukerId": "OEL",
+    "epost": "odd.edvard.lund@example.com",
+    "navn": "Odd Edvard Lund"
+  }
+]

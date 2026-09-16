@@ -1,0 +1,10 @@
+{
+  "mart": "mrt_energinet_energyconsumption",
+  "id_field": ["ByggNummer", "Mnd", "Type", "Unit"],
+  "blacklist": [
+    "created",
+    "lastupdated",
+    "UniqueId",
+    "eksternid"
+  ]
+}

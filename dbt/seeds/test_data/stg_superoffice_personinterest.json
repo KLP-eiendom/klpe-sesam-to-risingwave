@@ -1,0 +1,46 @@
+{
+  "entities": [
+    {
+      "_id": "14544-12",
+      "personid": 14544,
+      "persintid": 12,
+      "name": "Kontraktsansvarlig"
+    },
+    {
+      "_id": "14544-15",
+      "personid": 14544,
+      "persintid": 15,
+      "name": "Kundearrangement"
+    },
+    {
+      "_id": "17589-12",
+      "personid": 17589,
+      "persintid": 12,
+      "name": "Kontraktsansvarlig"
+    },
+    {
+      "_id": "17589-13",
+      "personid": 17589,
+      "persintid": 13,
+      "name": "Test"
+    },
+    {
+      "_id": "17675-1",
+      "personid": 17675,
+      "persintid": 1,
+      "name": "Julekort"
+    },
+    {
+      "_id": "17398-12",
+      "personid": 17398,
+      "persintid": 12,
+      "name": "Kontraktsansvarlig"
+    },
+    {
+      "_id": "17398-14",
+      "personid": 17398,
+      "persintid": 14,
+      "name": "Kundeportal"
+    }
+  ]
+}

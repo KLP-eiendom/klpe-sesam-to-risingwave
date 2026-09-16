@@ -1,0 +1,67 @@
+[
+  {
+    "#id": "N22701-Fjernvarme-kWh-202106-600005",
+    "UniqueId": "N22701-Fjernvarme-kWh-202106-600005",
+    "ByggNummer": "N22701",
+    "KundeNummer": "600005",
+    "Mnd": 202106,
+    "Type": "Fjernvarme",
+    "Unit": "kWh",
+    "Sum": 100.0,
+    "System": "Energinet",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N22701-Fjernvarme-kWh-202105-600005",
+    "UniqueId": "N22701-Fjernvarme-kWh-202105-600005",
+    "ByggNummer": "N22701",
+    "KundeNummer": "600005",
+    "Mnd": 202105,
+    "Type": "Fjernvarme",
+    "Unit": "kWh",
+    "Sum": 37020.0,
+    "System": "Energinet",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N22701-El-kWh-202105-600005",
+    "UniqueId": "N22701-El-kWh-202105-600005",
+    "ByggNummer": "N22701",
+    "KundeNummer": "600005",
+    "Mnd": 202105,
+    "Type": "El",
+    "Unit": "kWh",
+    "Sum": 105256.8,
+    "System": "Energinet",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N24901-El-kWh-202105-600001",
+    "UniqueId": "N24901-El-kWh-202105-600001",
+    "ByggNummer": "N24901",
+    "KundeNummer": "600001",
+    "Mnd": 202105,
+    "Type": "El",
+    "Unit": "kWh",
+    "Sum": 6989.200012208,
+    "System": "Energinet",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N24901-El-kWh-202106-600001",
+    "UniqueId": "N24901-El-kWh-202106-600001",
+    "ByggNummer": "N24901",
+    "KundeNummer": "600001",
+    "Mnd": 202106,
+    "Type": "El",
+    "Unit": "kWh",
+    "Sum": 286.0,
+    "System": "Energinet",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  }
+]

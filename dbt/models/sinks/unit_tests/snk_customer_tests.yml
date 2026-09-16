@@ -1,0 +1,198 @@
+unit_tests:
+  - name: snk_kunder_kundeportal__sesam_parity
+    model: snk_kunder_kundeportal
+    given:
+      - input: ref('mrt_global_customer')
+        rows:
+          - {
+              kundenummer: "10000",
+              adresse: "Customer St 1",
+              navn_alias: null,
+              navn: "Customer One",
+              contactId: 1,
+              emailAddress: "test@example.com",
+              kontakt_epost: null,
+              kundegruppe: "Retail",
+              region_id: null,
+              opprettet_dato: null,
+              registeredDate: null,
+              postnummer: "0661",
+              kontakt_tlf: null,
+              url: "http://so-url.com",
+              category: null,
+            }
+          - {
+              kundenummer: "10001",
+              adresse: "Earth St 🌎",
+              navn_alias: "Alias 🌎",
+              navn: "Customer 🌎 Two",
+              contactId: 2,
+              emailAddress: "test2@example.com",
+              kontakt_epost: null,
+              kundegruppe: "Retail",
+              region_id: null,
+              opprettet_dato: null,
+              registeredDate: null,
+              postnummer: "0661",
+              kontakt_tlf: "+47 21000001📞",
+              url: "http://so-url.com/🌎",
+              category: null,
+            }
+          # contactsimple category is fine, but the SO "contact" entity (poller) is Utgått: Sesam checks
+          # both sources independently -> DROP. Regression test for the contactCategory fallback.
+          - {
+              kundenummer: "10002",
+              navn: "Utgått Via Contact AS",
+              contactId: 3,
+              category: null,
+              contactCategory: "Utgått",
+            }
+    expect:
+      rows:
+        - {
+            Kundenummer: "10000",
+            Adresse: "Customer St 1",
+            Alias: null,
+            EanNummer: null,
+            Epost: "test@example.com",
+            Kundegruppe: "Retail",
+            Land: null,
+            Navn: "Customer One",
+            OpprettetDato: null,
+            Postkode: "0661",
+            Telefon: null,
+            Url: "http://so-url.com",
+            Valuta: null,
+            Visningsnavn: "Customer One",
+            AktivtLeieForhold: 0,
+            SoContactId: 1,
+            Created: "1970-01-01 00:00:00",
+            LastUpdated: "1970-01-01 00:00:00",
+          }
+        - {
+            Kundenummer: "10001",
+            Adresse: "Earth St ",
+            Alias: "Alias ",
+            EanNummer: null,
+            Epost: "test2@example.com",
+            Kundegruppe: "Retail",
+            Land: null,
+            Navn: "Customer  Two",
+            OpprettetDato: null,
+            Postkode: "0661",
+            Telefon: "+47 21000001",
+            Url: "http://so-url.com/",
+            Valuta: null,
+            Visningsnavn: "Customer  Two",
+            AktivtLeieForhold: 0,
+            SoContactId: 2,
+            Created: "1970-01-01 00:00:00",
+            LastUpdated: "1970-01-01 00:00:00",
+          }
+
+  - name: snk_customer_bq__sesam_parity
+    model: snk_customer_bq
+    given:
+      - input: ref('mrt_global_customer')
+        rows:
+          - {
+              kundenummer: "600000",
+              navn: "Ingeniørene Seim & Hultgreen A/S",
+              gate_adresse: "Pilestredet 75C",
+              postnummer: "0354",
+              city: "OSLO",
+              emailAddress: null,
+              kundegruppe: "200",
+              country: "NOR",
+              contactId: 7,
+            }
+    expect:
+      rows:
+        - {
+            Id: "7",
+            Nummer: "600000",
+            Navn: "Ingeniørene Seim & Hultgreen A/S",
+            GateAdresse: "Pilestredet 75C",
+            PostNummer: "0354",
+            Poststed: "OSLO",
+            Epost: null,
+            Kundegruppe: "200",
+            Land: "NOR",
+            SuperOfficeContactId: "7",
+          }
+
+  - name: snk_customer_forvalter__sesam_parity
+    model: snk_customer_forvalter
+    given:
+      - input: ref('mrt_global_customer')
+        rows:
+          - {
+              kundenummer: "600000",
+              navn: "Ingeniørene Seim & Hultgreen A/S",
+              gate_adresse: "Pilestredet 75C",
+              postnummer: "0354",
+              city: "OSLO",
+              emailAddress: null,
+              country: "NOR",
+              contactId: 7,
+              Created: "1970-01-01 00:00:00",
+              LastUpdated: "1970-01-01 00:00:00",
+            }
+    expect:
+      rows:
+        - {
+            Id: "7",
+            Nummer: "600000",
+            Navn: "Ingeniørene Seim & Hultgreen A/S",
+            GateAdresse: "Pilestredet 75C",
+            PostNummer: "0354",
+            By: "OSLO",
+            Epost: null,
+            Land: "NOR",
+            SuperOfficeContactId: 7,
+          }
+
+  - name: snk_customer_forvalter__dedup_duplicate_kundenummer
+    model: snk_customer_forvalter
+    given:
+      - input: ref('mrt_global_customer')
+        rows:
+          - {
+              kundenummer: "250001",
+              navn: "NTNU, Inst. for energi- og prosessteknikk",
+              contactId: 6327,
+              Created: "1970-01-01 00:00:00",
+              LastUpdated: "1970-01-01 00:00:00",
+            }
+          - {
+              kundenummer: "250001",
+              navn: "Ingeniørnytt AS",
+              contactId: 6453,
+              Created: "1970-01-01 00:00:00",
+              LastUpdated: "1970-01-01 00:00:00",
+            }
+          - {
+              kundenummer: "",
+              navn: "Blank Nummer Customer",
+              contactId: 9999,
+              Created: "1970-01-01 00:00:00",
+              LastUpdated: "1970-01-01 00:00:00",
+            }
+    expect:
+      rows:
+        - {
+            Id: "6453",
+            Nummer: "250001",
+            Navn: "Ingeniørnytt AS",
+            SuperOfficeContactId: 6453,
+          }
+
+  - name: snk_customer_leko__pass_through
+    model: snk_customer_leko
+    given:
+      - input: ref('mrt_customer_leko')
+        rows:
+          - { Id: 15368, name: "Test Customer" }
+    expect:
+      rows:
+        - { Id: 15368, name: "Test Customer" }

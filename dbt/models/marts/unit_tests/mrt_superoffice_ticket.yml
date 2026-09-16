@@ -1,0 +1,122 @@
+version: 2
+
+unit_tests:
+  - name: mrt_superoffice_ticket__sesam_cases
+    description: >
+      Verifies that mrt_superoffice_ticket correctly extracts typed columns from the
+      JSONB payload column of stg_superoffice_ticket.
+      Uses 3 test cases derived from the Sesam superoffice-ticket pipe test entities:
+        TicketId 300  — Active, Status Open, Category Administration, Person ContactId=2
+        TicketId 255  — Active/Open, NumReplies=1, TimeToReply=114 (>0), HasAttachment=false
+        TicketId 2551 — Slevel=Internal, ClosedAt zero-date (0001-01-01) → cast to valid TS,
+                        same structure as 255 but different slevel
+      Zero-date "0001-01-01T00:00:00Z" is stored as-is in JSONB and cast to TIMESTAMPTZ by the mart.
+    model: mrt_superoffice_ticket
+    given:
+      - input: ref('stg_superoffice_ticket')
+        rows:
+          - payload: >-
+              {"TicketId": 300, "Title": "Test Sak som ikke finnes i kundeportal ennå",
+               "BaseStatus": "Active", "ReadStatus": "Red", "Slevel": "Unknown",
+               "Author": "", "Origin": "Unknown",
+               "CreatedAt": "2020-07-23T11:12:05Z", "LastChanged": "2020-07-23T11:12:06Z",
+               "ClosedAt": "0001-01-01T00:00:00Z", "Deadline": "2020-07-23T11:12:05Z",
+               "NumMessages": 1, "NumReplies": 0, "AlertLevel": 1,
+               "TimeToClose": 0, "TimeToReply": 0, "HasAttachment": false,
+               "Person": {"ContactId": 2, "PersonId": 14543},
+               "Category": {"Name": "Administration", "TicketCategoryId": 2},
+               "Status": {"Name": "Open", "TicketStatusId": 1}}
+          - payload: >-
+              {"TicketId": 255, "Title": "Integration test of Ticket create with message",
+               "BaseStatus": "Active", "ReadStatus": "Red", "Slevel": "Unknown",
+               "Author": "", "Origin": "Unknown",
+               "CreatedAt": "2020-07-23T10:12:21Z", "LastChanged": "2020-07-23T12:06:46Z",
+               "ClosedAt": "0001-01-01T00:00:00Z", "Deadline": "2020-07-23T10:12:21Z",
+               "NumMessages": 2, "NumReplies": 1, "AlertLevel": 1,
+               "TimeToClose": 0, "TimeToReply": 114, "HasAttachment": false,
+               "Person": {"ContactId": 2, "PersonId": 14543},
+               "Category": {"Name": "Administration", "TicketCategoryId": 2},
+               "Status": {"Name": "Open", "TicketStatusId": 1}}
+          - payload: >-
+              {"TicketId": 2551, "Title": "Integration test of Ticket  with message, but internal",
+               "BaseStatus": "Active", "ReadStatus": "Red", "Slevel": "Internal",
+               "Author": "", "Origin": "Unknown",
+               "CreatedAt": "2020-07-23T10:12:21Z", "LastChanged": "2020-07-23T12:06:46Z",
+               "ClosedAt": "0001-01-01T00:00:00Z", "Deadline": "2020-07-23T10:12:21Z",
+               "NumMessages": 2, "NumReplies": 1, "AlertLevel": 1,
+               "TimeToClose": 0, "TimeToReply": 114, "HasAttachment": false,
+               "Person": {"ContactId": 2, "PersonId": 14543},
+               "Category": {"Name": "Administration", "TicketCategoryId": 2},
+               "Status": {"Name": "Open", "TicketStatusId": 1}}
+
+    expect:
+      rows:
+        - ticketId: 300
+          title: "Test Sak som ikke finnes i kundeportal ennå"
+          baseStatus: Active
+          readStatus: Red
+          slevel: Unknown
+          author: ""
+          origin: Unknown
+          createdAt: "2020-07-23T11:12:05+00:00"
+          lastChanged: "2020-07-23T11:12:06+00:00"
+          closedAt: "0001-01-01T00:00:00+00:00"
+          deadline: "2020-07-23T11:12:05+00:00"
+          numMessages: 1
+          numReplies: 0
+          alertLevel: 1
+          timeToClose: 0
+          timeToReply: 0
+          hasAttachment: false
+          contactId: 2
+          personId: 14543
+          categoryName: Administration
+          ticketCategoryId: 2
+          statusName: Open
+          ticketStatusId: 1
+        - ticketId: 255
+          title: "Integration test of Ticket create with message"
+          baseStatus: Active
+          readStatus: Red
+          slevel: Unknown
+          author: ""
+          origin: Unknown
+          createdAt: "2020-07-23T10:12:21+00:00"
+          lastChanged: "2020-07-23T12:06:46+00:00"
+          closedAt: "0001-01-01T00:00:00+00:00"
+          deadline: "2020-07-23T10:12:21+00:00"
+          numMessages: 2
+          numReplies: 1
+          alertLevel: 1
+          timeToClose: 0
+          timeToReply: 114
+          hasAttachment: false
+          contactId: 2
+          personId: 14543
+          categoryName: Administration
+          ticketCategoryId: 2
+          statusName: Open
+          ticketStatusId: 1
+        - ticketId: 2551
+          title: "Integration test of Ticket  with message, but internal"
+          baseStatus: Active
+          readStatus: Red
+          slevel: Internal
+          author: ""
+          origin: Unknown
+          createdAt: "2020-07-23T10:12:21+00:00"
+          lastChanged: "2020-07-23T12:06:46+00:00"
+          closedAt: "0001-01-01T00:00:00+00:00"
+          deadline: "2020-07-23T10:12:21+00:00"
+          numMessages: 2
+          numReplies: 1
+          alertLevel: 1
+          timeToClose: 0
+          timeToReply: 114
+          hasAttachment: false
+          contactId: 2
+          personId: 14543
+          categoryName: Administration
+          ticketCategoryId: 2
+          statusName: Open
+          ticketStatusId: 1

@@ -1,0 +1,130 @@
+version: 2
+
+unit_tests:
+  - name: mrt_fdvweb_energy_categorization__sesam_cases
+    description: >
+      Verifies energy grade and heating category computation from fdvweb building data.
+      Scenarios:
+        bygg97  — Kontorbygg, energiskalaid=0, energiforbruk=75 → grade A (threshold 84),
+                  andelfossilt=20 → heating '1'
+        bygg107 — Kontorbygg, energiskalaid=1, energiforbruk=50 → grade A (threshold 90),
+                  andelfossilt=1 → heating '1'
+        bygg77  — Hoteller, energiskalaid=1, energiforbruk=1334 → exceeds max threshold (415) → grade G,
+                  andelfossilt=100 → heating '5'
+        bygg53  — Forretningsbygg, energiskalaid=1, energiforbruk=146.1 → grade B (threshold 160),
+                  andelfossilt=30 → heating '1' (boundary: <=30)
+        bygg9   — Kontorbygg, energiskalaid=null → no seed match → grade G (fallback),
+                  andelfossilt=40 → heating '2'
+        bygg41  — Kontorbygg, energiskalaid=0, energiforbruk=204.1 → threshold 215>=204.1 → grade D,
+                  andelfossilt=33.5 → heating '2' (>30 and <=47.5)
+        bygg86  — empty bygningskategori → building_category=null, energiforbruk=0, andelfossilt=0
+                  → filtered out entirely by WHERE (neither energiforbruk>0 nor andelfossilt>0)
+    model: mrt_fdvweb_energy_categorization
+    given:
+      - input: ref('stg_fdvweb_building')
+        rows:
+          - _id: bygg97
+            eiendnr: '018'
+            bygningskategori: 'Kontorbygg'
+            energiforbruk: 75
+            energiskalaid: 0
+            andelfossilt: 20
+          - _id: bygg107
+            eiendnr: '279'
+            bygningskategori: 'Kontorbygg'
+            energiforbruk: 50
+            energiskalaid: 1
+            andelfossilt: 1
+          - _id: bygg77
+            eiendnr: '021'
+            bygningskategori: 'Hoteller'
+            energiforbruk: 1334
+            energiskalaid: 1
+            andelfossilt: 100
+          - _id: bygg53
+            eiendnr: '019'
+            bygningskategori: 'Forretningsbygg'
+            energiforbruk: 146.1
+            energiskalaid: 1
+            andelfossilt: 30
+          - _id: bygg9
+            eiendnr: '221'
+            bygningskategori: 'Kontorbygg'
+            energiforbruk: 131.6
+            energiskalaid: null
+            andelfossilt: 40
+          - _id: bygg41
+            eiendnr: '065'
+            bygningskategori: 'Kontorbygg'
+            energiforbruk: 204.1
+            energiskalaid: 0
+            andelfossilt: 33.5
+          - _id: bygg86
+            eiendnr: 'D521'
+            bygningskategori: ''
+            energiforbruk: 0
+            energiskalaid: null
+            andelfossilt: 0
+
+      - input: ref('fdvweb_helper_energy')
+        format: csv
+        rows: |
+          id,energiskalaid,buildingcategoryname,value,grade,arealkorrektsjon
+          175,0,Kontorbygning,84,A,
+          176,0,Kontorbygning,126,B,
+          177,0,Kontorbygning,168,C,
+          178,0,Kontorbygning,215,D,
+          179,0,Kontorbygning,263,E,
+          180,0,Kontorbygning,395,F,
+          19,1,Kontorbygning,90,A,
+          20,1,Kontorbygning,115,B,
+          21,1,Kontorbygning,145,C,
+          22,1,Kontorbygning,180,D,
+          23,1,Kontorbygning,220,E,
+          24,1,Kontorbygning,275,F,
+          49,1,Hotellbygning,140,A,
+          50,1,Hotellbygning,190,B,
+          51,1,Hotellbygning,240,C,
+          52,1,Hotellbygning,290,D,
+          53,1,Hotellbygning,340,E,
+          54,1,Hotellbygning,415,F,
+          61,1,Forretningsbygning,115,A,
+          62,1,Forretningsbygning,160,B,
+          63,1,Forretningsbygning,210,C,
+          64,1,Forretningsbygning,255,D,
+          65,1,Forretningsbygning,300,E,
+          66,1,Forretningsbygning,375,F,
+
+    expect:
+      rows:
+        # bygg97 — energiskalaid=0, Kontorbygning, 75kWh → threshold 84 >= 75 → A; andelfossilt=20 → '1'
+        - bygg_avdeling_id: '018'
+          EnergyUsage: 75
+          EnergyCategory: A
+          HeatingCategory: '1'
+        # bygg107 — energiskalaid=1, Kontorbygning, 50kWh → threshold 90 >= 50 → A; andelfossilt=1 → '1'
+        - bygg_avdeling_id: '279'
+          EnergyUsage: 50
+          EnergyCategory: A
+          HeatingCategory: '1'
+        # bygg77 — Hotellbygning, energiskalaid=1, 1334kWh → exceeds max 415 → G; andelfossilt=100 → '5'
+        - bygg_avdeling_id: '021'
+          EnergyUsage: 1334
+          EnergyCategory: G
+          HeatingCategory: '5'
+        # bygg53 — Forretningsbygning, energiskalaid=1, 146.1kWh → threshold 160 >= 146.1 → B; andelfossilt=30 → '1'
+        - bygg_avdeling_id: '019'
+          EnergyUsage: 146.1
+          EnergyCategory: B
+          HeatingCategory: '1'
+        # bygg9 — energiskalaid=null, no seed match → G fallback; andelfossilt=40 → '2'
+        - bygg_avdeling_id: '221'
+          EnergyUsage: 131.6
+          EnergyCategory: G
+          HeatingCategory: '2'
+        # bygg41 — energiskalaid=0, Kontorbygning, 204.1kWh → threshold 215 >= 204.1 → D; andelfossilt=33.5 → '2'
+        - bygg_avdeling_id: '065'
+          EnergyUsage: 204.1
+          EnergyCategory: D
+          HeatingCategory: '2'
+        # bygg86 — energiforbruk=0, andelfossilt=0 → filtered out; not in output

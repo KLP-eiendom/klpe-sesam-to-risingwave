@@ -1,0 +1,220 @@
+unit_tests:
+  - name: snk_faktura_forvalter__sesam_parity
+    description: >
+      Mirrors Sesam faktura-forvalter: only electronically-sent invoices
+      (faktura_sendt_elektronisk = 1) dated after 2008-01-01 are emitted.
+      Negative rows — a paper invoice (elektronisk = 0) and a pre-2008 invoice —
+      are both filtered out.
+    model: snk_faktura_forvalter
+    given:
+      - input: ref('mrt_global_invoice')
+        rows:
+          - {
+              _id: "n204100193",
+              kunde_nummer: "601124",
+              faktura_nummer: "100193",
+              forfallsdato: "2021-03-01 00:00:00",
+              fakturadato: "2021-03-01 00:00:00",
+              betalt_dato: null,
+              sum: 8176.25,
+              siste_innbetaling: null,
+              sum_innbetalt: 0,
+              sum_utestaaende: 8176.25,
+              sum_utestaaende_forsinket: 8176.25,
+              sum_utestaaende_forsinket_dager: -100,
+              kontraktsnummer: "601124.01",
+              faktura_sendt_elektronisk: 1,
+              Created: "1970-01-01 00:00:00",
+              LastUpdated: "1970-01-01 00:00:00",
+            }
+          # negative sum_innbetalt (D365 stores payments as negative) => ABS to positive, mirroring Sesam
+          - {
+              _id: "NEG-INNBETALT",
+              kunde_nummer: "601124",
+              faktura_nummer: "100194",
+              forfallsdato: "2021-04-01 00:00:00",
+              fakturadato: "2021-04-01 00:00:00",
+              betalt_dato: "2021-04-15 00:00:00",
+              sum: 50000,
+              siste_innbetaling: "2021-04-15 00:00:00",
+              sum_innbetalt: -50000,
+              sum_utestaaende: 0,
+              sum_utestaaende_forsinket: 0,
+              sum_utestaaende_forsinket_dager: 0,
+              kontraktsnummer: "601124.01",
+              faktura_sendt_elektronisk: 1,
+              Created: "1970-01-01 00:00:00",
+              LastUpdated: "1970-01-01 00:00:00",
+            }
+          # paper invoice (faktura_sendt_elektronisk = 0) => filtered out
+          - {
+              _id: "PAPER-INVOICE",
+              kunde_nummer: "601124",
+              faktura_nummer: "999001",
+              fakturadato: "2021-03-01 00:00:00",
+              sum: 100,
+              faktura_sendt_elektronisk: 0,
+            }
+          # pre-2008 invoice (fakturadato <= 2008-01-01) => filtered out
+          - {
+              _id: "PRE2008-INVOICE",
+              kunde_nummer: "601124",
+              faktura_nummer: "999002",
+              fakturadato: "2007-06-01 00:00:00",
+              sum: 200,
+              faktura_sendt_elektronisk: 1,
+            }
+    expect:
+      rows:
+        - {
+            Id: "n204100193",
+            KundeNummer: "601124",
+            FakturaNummer: "100193",
+            ForfallsDato: "2021-03-01 00:00:00",
+            FakturaDato: "2021-03-01 00:00:00",
+            BetaltDato: null,
+            Sum: 8176.25,
+            SisteInnbetaling: null,
+            SumInnbetalt: 0,
+            SumUtestaaende: 8176.25,
+            SumUtestaaendeForsinket: 8176.25,
+            SumUtestaaendeForsinketAvrundet: 8176,
+            SumUtestaaendeForsinketDager: -100,
+            KontraktsNummer: "601124.01",
+            Created: "1970-01-01 00:00:00",
+            LastUpdated: "1970-01-01 00:00:00",
+          }
+        - {
+            Id: "NEG-INNBETALT",
+            KundeNummer: "601124",
+            FakturaNummer: "100194",
+            ForfallsDato: "2021-04-01 00:00:00",
+            FakturaDato: "2021-04-01 00:00:00",
+            BetaltDato: "2021-04-15 00:00:00",
+            Sum: 50000,
+            SisteInnbetaling: "2021-04-15 00:00:00",
+            SumInnbetalt: 50000,
+            SumUtestaaende: 0,
+            SumUtestaaendeForsinket: 0,
+            SumUtestaaendeForsinketAvrundet: 0,
+            SumUtestaaendeForsinketDager: 0,
+            KontraktsNummer: "601124.01",
+            Created: "1970-01-01 00:00:00",
+            LastUpdated: "1970-01-01 00:00:00",
+          }
+
+  - name: snk_faktura_kundeportal__sesam_parity
+    description: >
+      Mirrors Sesam faktura-kundeportal: only electronically-sent invoices
+      (faktura_sendt_elektronisk = 1) dated after 2008-01-01 are emitted.
+      Negative rows — a paper invoice (elektronisk = 0) and a pre-2008 invoice —
+      are both filtered out.
+    model: snk_faktura_kundeportal
+    given:
+      - input: ref('mrt_global_invoice')
+        rows:
+          - {
+              _id: "n204100193",
+              kunde_nummer: "601124",
+              faktura_nummer: "100193",
+              kid: "123456789",
+              forfallsdato: "2021-03-01 00:00:00",
+              fakturadato: "2021-03-01 00:00:00",
+              betalt_dato: null,
+              sum: 8176.25,
+              pdf_filnavn: "100193.pdf",
+              fil_finnes: true,
+              siste_innbetaling: null,
+              sum_innbetalt: 0,
+              sum_utestaaende: 8176.25,
+              sum_utestaaende_forsinket: 8176.25,
+              sum_utestaaende_forsinket_dager: -100,
+              kontraktsnummer: "601124.01",
+              bygg_nummer: "B001",
+              faktura_sendt_elektronisk: 1,
+              Created: "1970-01-01 00:00:00",
+              LastUpdated: "1970-01-01 00:00:00",
+            }
+          # negative sum_innbetalt (D365 stores payments as negative) => ABS to positive, mirroring Sesam
+          - {
+              _id: "NEG-INNBETALT",
+              kunde_nummer: "601124",
+              faktura_nummer: "100194",
+              kid: null,
+              forfallsdato: "2021-04-01 00:00:00",
+              fakturadato: "2021-04-01 00:00:00",
+              betalt_dato: "2021-04-15 00:00:00",
+              sum: 50000,
+              pdf_filnavn: "100194.pdf",
+              fil_finnes: false,
+              siste_innbetaling: "2021-04-15 00:00:00",
+              sum_innbetalt: -50000,
+              sum_utestaaende: 0,
+              sum_utestaaende_forsinket: 0,
+              sum_utestaaende_forsinket_dager: 0,
+              kontraktsnummer: "601124.01",
+              bygg_nummer: null,
+              faktura_sendt_elektronisk: 1,
+              Created: "1970-01-01 00:00:00",
+              LastUpdated: "1970-01-01 00:00:00",
+            }
+          # paper invoice (faktura_sendt_elektronisk = 0) => filtered out
+          - {
+              _id: "PAPER-INVOICE",
+              kunde_nummer: "601124",
+              faktura_nummer: "999001",
+              fakturadato: "2021-03-01 00:00:00",
+              sum: 100,
+              faktura_sendt_elektronisk: 0,
+            }
+          # pre-2008 invoice (fakturadato <= 2008-01-01) => filtered out
+          - {
+              _id: "PRE2008-INVOICE",
+              kunde_nummer: "601124",
+              faktura_nummer: "999002",
+              fakturadato: "2007-06-01 00:00:00",
+              sum: 200,
+              faktura_sendt_elektronisk: 1,
+            }
+    expect:
+      rows:
+        - {
+            Id: "n204100193",
+            KundeNummer: "601124",
+            FakturaNummer: "100193",
+            Kid: "123456789",
+            ForfallsDato: "2021-03-01 00:00:00",
+            FakturaDato: "2021-03-01 00:00:00",
+            BetaltDato: null,
+            Sum: 8176.25,
+            PdfFileName: "100193.pdf",
+            SisteInnbetaling: null,
+            SumInnbetalt: 0,
+            SumUtestaaende: 8176.25,
+            SumUtestaaendeForsinket: 8176.25,
+            SumUtestaaendeForsinketDager: -100,
+            KontraktsNummer: "601124.01",
+            ByggNummer: "B001",
+            Created: "1970-01-01 00:00:00",
+            LastUpdated: "1970-01-01 00:00:00",
+          }
+        - {
+            Id: "NEG-INNBETALT",
+            KundeNummer: "601124",
+            FakturaNummer: "100194",
+            Kid: null,
+            ForfallsDato: "2021-04-01 00:00:00",
+            FakturaDato: "2021-04-01 00:00:00",
+            BetaltDato: "2021-04-15 00:00:00",
+            Sum: 50000,
+            PdfFileName: "",
+            SisteInnbetaling: "2021-04-15 00:00:00",
+            SumInnbetalt: 50000,
+            SumUtestaaende: 0,
+            SumUtestaaendeForsinket: 0,
+            SumUtestaaendeForsinketDager: 0,
+            KontraktsNummer: "601124.01",
+            ByggNummer: null,
+            Created: "1970-01-01 00:00:00",
+            LastUpdated: "1970-01-01 00:00:00",
+          }

@@ -1,0 +1,10 @@
+unit_tests:
+  - name: mrt_verified_envelope__basic
+    model: mrt_verified_envelope
+    given:
+      - input: ref('stg_verified_envelope')
+        rows:
+          - { payload: '{"id": "test1", "sender": {"email": "test@example.com"}}' }
+    expect:
+      rows:
+        - { id: "test1", sender_email: "test@example.com" }

@@ -1,0 +1,152 @@
+[
+  {
+    "#id": "14546-eva.lunde@example.com",
+    "Id": "14546-eva.lunde@example.com",
+    "SoPersonId": 14546,
+    "SoContactId": 3,
+    "Epost": "eva.lunde@example.com",
+    "Navn": "Eva Lunde",
+    "Kundenummer": "600015",
+    "Created": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "14543-per.olsen@example.com",
+    "Id": "14543-per.olsen@example.com",
+    "SoPersonId": 14543,
+    "SoContactId": 2,
+    "Epost": "per.olsen@example.com",
+    "Navn": "Per Olsen",
+    "Kundenummer": "101219",
+    "Created": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "17757-hoan.phung@example.com",
+    "Id": "17757-hoan.phung@example.com",
+    "SoPersonId": 17757,
+    "SoContactId": 8,
+    "Epost": "hoan.phung@example.com",
+    "Navn": "hoan Hoan.Phung@example.com",
+    "Kundenummer": "501234",
+    "Created": "2013-03-01 15:27:47"
+  },
+  {
+    "#id": "17626-camilla.bakken@example.com",
+    "Id": "17626-camilla.bakken@example.com",
+    "SoPersonId": 17626,
+    "SoContactId": 6,
+    "Epost": "camilla.bakken@example.com",
+    "Navn": "Camilla Bakken",
+    "Kundenummer": "103960",
+    "Created": "2013-02-04 15:59:28"
+  },
+  {
+    "#id": "15133-tor.fossum@example.com",
+    "Id": "15133-tor.fossum@example.com",
+    "SoPersonId": 15133,
+    "SoContactId": 9,
+    "Epost": "tor.fossum@example.com",
+    "Navn": "Tor Richard Fossum",
+    "Kundenummer": "90002123",
+    "Created": "2011-12-08 20:28:32"
+  },
+  {
+    "#id": "16701-marit.gundersen@example.com",
+    "Id": "16701-marit.gundersen@example.com",
+    "SoPersonId": 16701,
+    "SoContactId": 12,
+    "Epost": "marit.gundersen@example.com",
+    "Navn": "Marit Gundersen",
+    "Kundenummer": null,
+    "Created": "2012-08-20 09:50:07"
+  },
+  {
+    "#id": "34770-jon.arild@example.com",
+    "Id": "34770-jon.arild@example.com",
+    "SoPersonId": 34770,
+    "SoContactId": 11251,
+    "Epost": "jon.arild@example.com",
+    "Navn": "John Arild Myhrvold",
+    "Kundenummer": null,
+    "Created": "2020-10-14 11:20:30"
+  },
+  {
+    "#id": "17398-anders.lien@example.com",
+    "Id": "17398-anders.lien@example.com",
+    "SoPersonId": 17398,
+    "SoContactId": 10,
+    "Epost": "anders.lien@example.com",
+    "Navn": "Anders Lien",
+    "Kundenummer": null,
+    "Created": "2013-01-02 10:03:26"
+  },
+  {
+    "#id": "19880-bjorn@example.com",
+    "Id": "19880-bjorn@example.com",
+    "SoPersonId": 19880,
+    "SoContactId": 5,
+    "Epost": "bjorn@example.com",
+    "Navn": "Anne-Live Bjørnstad",
+    "Kundenummer": "107061",
+    "Created": "2014-03-17 09:52:07"
+  },
+  {
+    "#id": "55555-tone.paulsen@example.com",
+    "Id": "55555-tone.paulsen@example.com",
+    "SoPersonId": 55555,
+    "SoContactId": 6,
+    "Epost": "tone.paulsen@example.com",
+    "Navn": "Tone Lise Paulsen",
+    "Kundenummer": "103960",
+    "Created": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "16736-jan.johansen@example.com",
+    "Id": "16736-jan.johansen@example.com",
+    "SoPersonId": 16736,
+    "SoContactId": 11,
+    "Epost": "jan.johansen@example.com",
+    "Navn": "Jan Johansen",
+    "Kundenummer": null,
+    "Created": "2012-08-29 10:14:15"
+  },
+  {
+    "#id": "15925-tone.paulsen@example.com",
+    "Id": "15925-tone.paulsen@example.com",
+    "SoPersonId": 15925,
+    "SoContactId": 3,
+    "Epost": "tone.paulsen@example.com",
+    "Navn": "Tone Lise Paulsen",
+    "Kundenummer": "600015",
+    "Created": "2012-03-27 10:13:58"
+  },
+  {
+    "#id": "14544-eva.lunde@example.com",
+    "Id": "14544-eva.lunde@example.com",
+    "SoPersonId": 14544,
+    "SoContactId": 2,
+    "Epost": "eva.lunde@example.com",
+    "Navn": "Eva Lunde",
+    "Kundenummer": "101219",
+    "Created": "2011-11-11 15:38:25"
+  },
+  {
+    "#id": "14542-siri.kristoffersen@example.com",
+    "Id": "14542-siri.kristoffersen@example.com",
+    "SoPersonId": 14542,
+    "SoContactId": 2,
+    "Epost": "siri.kristoffersen@example.com",
+    "Navn": "Siri Kristoffersen",
+    "Kundenummer": "101219",
+    "Created": "2011-11-11 15:37:52"
+  },
+  {
+    "#id": "24274-hilde.marie.juliussen@example.com",
+    "Id": "24274-hilde.marie.juliussen@example.com",
+    "SoPersonId": 24274,
+    "SoContactId": 2,
+    "Epost": "hilde.marie.juliussen@example.com",
+    "Navn": "Hilde Marie Juliussen",
+    "Kundenummer": "101219",
+    "Created": "2015-11-11 13:29:28"
+  }
+]

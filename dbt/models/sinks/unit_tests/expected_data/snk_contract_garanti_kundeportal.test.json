@@ -1,0 +1,4 @@
+{
+  "id_field": "GarantiId",
+  "blacklist": ["Created", "LastUpdated"]
+}

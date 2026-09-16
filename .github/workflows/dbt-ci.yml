@@ -1,0 +1,147 @@
+name: dbt CI
+
+run-name: "dbt CI → ${{ github.head_ref || github.ref_name }}"
+
+# Builds and tests the whole dbt DAG against a THROWAWAY RisingWave started in
+# this job. Nothing here reaches a shared cluster, so concurrent PRs cannot
+# collide and no secret is required.
+#
+# Why this is possible at all — the `ci` target is self-contained by design:
+#   * all 71 sink models guard on `target.name not in ('localdev', 'ci')` and
+#     materialise as plain VIEWs, so no JDBC / Pub/Sub / BigQuery connection is
+#     ever opened (dbt/TESTING.md § "E2E Sink Fallbacks");
+#   * the Camunda postgres-CDC source is guarded the same way and degrades to
+#     `SELECT 1 WHERE FALSE`;
+#   * the 12 `connector = 'webhook'` staging tables are PASSIVE — RisingWave
+#     exposes an endpoint and waits; it never dials out. RW_WEBHOOK_SECRET
+#     defaults to "" in the model, so an unset secret is fine here;
+#   * no model references `{{ source(...) }}` — sources.yml's Forvalter /
+#     Kundeportal MySQL CDC entries are lineage documentation only;
+#   * there is no packages.yml, so `dbt deps` would be a no-op.
+# Verified end-to-end before this workflow was written: seed 1, staging 60,
+# full run 173/173, verify_e2e 71/71, dbt test 119/119 — against an empty
+# instance with no network egress.
+#
+# This deliberately does NOT reproduce what Azure did. Azure's `CI - Dbt`
+# pointed DBT_RW_HOST at the *dev* RisingWave Cloud instance with
+# DBT_RW_DBNAME=ci and opened by running scripts/drop_all.sql against it, so
+# every PR shared one database and raced every other PR. A fresh container has
+# nothing to drop, which is why there is no cleanup step below.
+#
+# ubuntu-latest on purpose: no cluster, GCP or internal-network need, and the
+# 5-runner example-project-runner ARC pool is a scarce shared resource.
+
+on:
+  pull_request:
+    branches: [main, release]
+    paths:
+      - "dbt/**"
+      - ".github/workflows/dbt-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dbt-ci-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+env:
+  # Pinned to the same tag docker-compose.yml uses, so CI and a developer's
+  # local stack run identical engines. Never :latest — a silent RisingWave
+  # upgrade would turn an unrelated PR red.
+  RISINGWAVE_IMAGE: risingwavelabs/risingwave:v3.0.2
+  DBT_RW_HOST: localhost
+  DBT_RW_USER: root
+  DBT_RW_PASSWORD: ""
+  DBT_RW_DBNAME: ci
+
+jobs:
+  dbt-ci:
+    name: dbt build + test (ephemeral RisingWave)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    env:
+      DBT_PROFILES_DIR: ${{ github.workspace }}/dbt
+
+    defaults:
+      run:
+        working-directory: ./dbt
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dbt + RisingWave adapter
+        run: |
+          pip install --quiet dbt-core dbt-postgres dbt-risingwave psycopg2-binary
+          dbt --version
+
+      # A service container cannot be given a command, and this image needs
+      # `playground` — so start it explicitly instead.
+      - name: Start ephemeral RisingWave
+        working-directory: .
+        run: |
+          docker run -d --name rw-ci \
+            -p 4566:4566 -p 5691:5691 \
+            -e RUST_LOG=warn \
+            "$RISINGWAVE_IMAGE" playground
+
+      - name: Wait for RisingWave and create the ci database
+        working-directory: .
+        run: |
+          python - <<'PY'
+          import sys, time, psycopg2
+          last = None
+          for attempt in range(60):
+              try:
+                  conn = psycopg2.connect(
+                      host="localhost", port=4566, user="root",
+                      dbname="dev", connect_timeout=3,
+                  )
+                  conn.autocommit = True
+                  conn.cursor().execute("CREATE DATABASE IF NOT EXISTS ci;")
+                  print(f"RisingWave ready after {attempt + 1} attempt(s); ci database ensured")
+                  sys.exit(0)
+              except Exception as exc:  # noqa: BLE001 - report the last failure verbatim
+                  last = exc
+                  time.sleep(5)
+          print(f"::error::RisingWave never became ready. Last error: {last}")
+          sys.exit(1)
+          PY
+
+      - name: dbt seed
+        run: dbt seed --target ci
+
+      # Staging first so the loader has tables to write into; the marts and
+      # sinks are built afterwards, on top of the loaded fixtures.
+      - name: dbt run — staging models
+        run: dbt run --target ci --select "staging.*"
+
+      - name: Load E2E test data
+        run: python scripts/load_test_data.py
+
+      - name: dbt run — full DAG
+        run: dbt run --target ci
+
+      - name: Verify E2E results
+        run: python scripts/verify_e2e.py
+
+      - name: dbt test — unit + data tests
+        run: dbt test --target ci
+
+      - name: RisingWave logs (on failure)
+        if: failure()
+        working-directory: .
+        run: docker logs --tail 200 rw-ci || true
+
+      - name: Stop ephemeral RisingWave
+        if: always()
+        working-directory: .
+        run: docker rm -f rw-ci || true

@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kdi-sink-error-collector
+  namespace: default
+  labels:
+    app: kdi-sink-error-collector
+    component: monitoring
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: kdi-sink-error-collector
+  template:
+    metadata:
+      labels:
+        app: kdi-sink-error-collector
+    spec:
+      containers:
+      - name: sink-error-collector
+        image: ghcr.io/example-org/kdi-risingwv-sink-error-collector:version
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "128Mi"
+          requests:
+            cpu: "25m"
+            memory: "64Mi"
+        volumeMounts:
+        - mountPath: "/var/secrets/google"
+          name: kdi-serviceaccount-credentials
+        - mountPath: /etc/ssl/certs/tls_ca.pem
+          name: ca-pemstore
+          subPath: tls_ca.pem
+          readOnly: false
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/google/credentials.json
+        envFrom:
+        - configMapRef:
+            name: vault-kdi-options-config
+        - configMapRef:
+            name: region-config
+        - configMapRef:
+            name: dotnet-config
+        - secretRef:
+            name: vault-options-secret
+      volumes:
+      - name: kdi-serviceaccount-credentials
+        secret:
+          secretName: gcp.kdi.files
+      - name: ca-pemstore
+        configMap:
+          name: ca-pemstore

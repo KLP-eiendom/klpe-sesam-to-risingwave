@@ -1,0 +1,128 @@
+version: 2
+
+models:
+
+  - name: mrt_bisnode_leverandor
+    description: >
+      Parsed Bisnode company credit data from the bisnode-leverandor webhook.
+      One row per staging record — the staging table's own identity (PK) is the
+      dunsNumber-anchored id mirroring Sesam's bisnode-leverandor._id, not orgnr.
+    columns:
+      - name: orgnr
+        description: >
+          Registration/VAT number (text — Bisnode Global API identifiers are not always
+          purely numeric), COALESCE(registrationNumber, vatNumber, legacy identifikasjon.orgnr).
+          Business join key, not the staging table's PK.
+        data_tests:
+          - not_null
+          - unique
+      - name: dunsnr
+        description: "Bisnode DUNS number — required for downstream joins in mrt_kredittvurdering_superoffice"
+        data_tests:
+          - not_null
+
+  - name: mrt_kredittvurdering_superoffice
+    description: >
+      Credit assessment view for SuperOffice. Joins SuperOffice contacts with Bisnode credit data
+      and sanctions screening. Feeds snk_kredittvurdering_superoffice → SuperOffice user-defined
+      fields endpoint (ContactId, Kredittrating, Soliditet, etc.).
+    columns:
+      - name: ContactId
+        quote: true
+        description: >
+          SuperOffice contact ID. Guaranteed not null by the INNER JOIN on
+          mrt_superoffice_contactsimple (WHERE contactId IS NOT NULL AND contactId > 0).
+          A not_null failure here means the join condition changed or the source model is broken.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('mrt_superoffice_contactsimple')
+                field: contactId
+
+      - name: Dunsnr
+        quote: true
+        description: >
+          Bisnode DUNS number. Guaranteed not null by WHERE bl.dunsnr IS NOT NULL in the model.
+          A not_null failure here means the filter was removed or the bisnode payload structure changed.
+        data_tests:
+          - not_null
+
+      - name: Kredittrating
+        quote: true
+        description: >
+          Bisnode credit rating code. Coalesced from risk.creditRatings path (new format) and
+          rating.rating1 (old format). accepted_values failure means a new rating code appeared
+          in Bisnode data that the model does not account for.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['AAA', 'AA', 'A', 'B', 'C', 'D', 'IKKE RATET']
+
+      - name: MvaRegistrert
+        quote: true
+        description: >
+          VAT registration status. Set to 'ja' when activeInVat or vatNumber is present in the
+          payload; NULL otherwise. Never an empty string or other value.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['ja']
+
+      - name: Underavvikling
+        quote: true
+        description: >
+          Hardcoded FALSE — the D365 leverandorsperre/underAvvikling source is not yet in
+          RisingWave. accepted_values failure means the hardcoded value was accidentally changed
+          or the column was wired to a real source that produces unexpected values.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [false]
+
+  - name: mrt_verified_envelope
+    description: "Verified.eu webhook data."
+
+  - name: mrt_global_ticketcategory
+    description: "Unified ticket categories from SuperOffice and Kundeportal."
+    columns:
+      - name: id
+      - name: completed
+      - name: aborted
+      - name: expired
+      - name: published
+      - name: created
+      - name: modified
+      - name: expiration
+      - name: publishDate
+      - name: automaticReminders
+      - name: descriptor
+      - name: greeting
+      - name: sender_email
+  - name: mrt_superoffice_ticket
+    description: "SuperOffice tickets with extracted fields."
+    columns:
+      - name: ticketId
+      - name: ticketMessages
+      - name: title
+      - name: baseStatus
+      - name: readStatus
+      - name: slevel
+      - name: author
+      - name: origin
+      - name: createdAt
+      - name: lastChanged
+      - name: closedAt
+      - name: deadline
+      - name: numMessages
+      - name: numReplies
+      - name: alertLevel
+      - name: timeToClose
+      - name: timeToReply
+      - name: hasAttachment
+      - name: contactId
+      - name: personId
+      - name: categoryName
+      - name: ticketCategoryId
+      - name: statusName
+      - name: ticketStatusId

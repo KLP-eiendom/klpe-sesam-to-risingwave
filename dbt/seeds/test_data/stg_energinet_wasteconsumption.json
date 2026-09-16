@@ -1,0 +1,74 @@
+{
+  "entities": [
+    {
+      "_id": "N24901--1200 Papir, papp og kartong-202102",
+      "BuildingId": "N24901",
+      "MeteringpointId": null,
+      "Mnd": 202102,
+      "MndString": "202102",
+      "Sum": 150,
+      "Type": "1200 Papir, papp og kartong",
+      "unit": "kg"
+    },
+    {
+      "_id": "N22701--1200 Papir, papp og kartong-202103",
+      "BuildingId": "N22701",
+      "MeteringpointId": null,
+      "Mnd": 202103,
+      "MndString": "202103",
+      "Sum": 100,
+      "Type": "1200 Papir, papp og kartong",
+      "unit": "kg"
+    },
+    {
+      "_id": "N22701--1300 Glass-202101",
+      "BuildingId": "N22701",
+      "MeteringpointId": null,
+      "Mnd": 202101,
+      "MndString": "202101",
+      "Sum": 10,
+      "Type": "1300 Glass",
+      "unit": "kg"
+    },
+    {
+      "_id": "N22701--1200 Papir, papp og kartong-202102",
+      "BuildingId": "N22701",
+      "MeteringpointId": null,
+      "Mnd": 202102,
+      "MndString": "202102",
+      "Sum": 110,
+      "Type": "1200 Papir, papp og kartong",
+      "unit": "kg"
+    },
+    {
+      "_id": "N24901--9900 Blandet avfall-202103",
+      "BuildingId": "N24901",
+      "MeteringpointId": null,
+      "Mnd": 202103,
+      "MndString": "202103",
+      "Sum": 1010,
+      "Type": "9900 Blandet avfall",
+      "unit": "kg"
+    },
+    {
+      "_id": "N22701--1300 Glass-202103",
+      "BuildingId": "N22701",
+      "MeteringpointId": null,
+      "Mnd": 202103,
+      "MndString": "202103",
+      "Sum": 10,
+      "Type": "1300 Glass",
+      "unit": "kg"
+    },
+    {
+      "_id": "N22701--9900 Blandet avfall-202102",
+      "BuildingId": "N22701",
+      "MeteringpointId": null,
+      "Mnd": 202102,
+      "MndString": "202102",
+      "Sum": 210,
+      "Type": "9900 Blandet avfall",
+      "unit": "kg"
+    }
+  ]
+}

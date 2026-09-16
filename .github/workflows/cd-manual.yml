@@ -1,0 +1,246 @@
+name: CD · manual
+run-name: >-
+  Manual → ${{ inputs.environment }}
+  ${{ inputs.image_tag && format('· {0}', inputs.image_tag) || format('← {0}', github.ref_name) }}
+
+# ── workflow_dispatch: rollback, redeploy, or build a branch ─────────────────
+#   • production: deploy an existing version — empty image_tag → the latest
+#     released semver that actually has an image; set image_tag → that version
+#     / rollback. Content is always `release`, whichever branch this is
+#     dispatched from.
+#   • development / staging: empty image_tag → build the branch chosen in
+#     "Use workflow from" (short-SHA tag) and deploy it; set image_tag → deploy
+#     that existing image.
+# Two of the job groups are always skipped — that is which path ran.
+# Companions: release-check.yml, cd-release.yml, cd-development.yml.
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment"
+        type: choice
+        options: [development, staging, production]
+        default: development
+      image_tag:
+        description: >
+          PRODUCTION: leave empty to deploy the latest released semver, or set a
+          tag to deploy/rollback to it. DEVELOPMENT/STAGING: leave empty to build
+          & deploy the branch selected above, or set an existing tag (a semver or
+          a short SHA that exists in that environment's GCR project) to deploy it.
+        type: string
+        default: ""
+
+jobs:
+  # ── The single source of truth for what this repo deploys ─────────────────
+  # `all` — every app, used for development and for manual dispatch.
+  # `promotable` — apps that exist beyond dev, used for staging and
+  # production. Kept as a separate output from `all` so an app that should
+  # stop (or start) at dev-only can be included or excluded here without
+  # touching every build/deploy/promote job below.
+  #
+  # ubuntu-latest and no `if:`: this job gates every other one through `needs`,
+  # so it must run for all three trigger shapes. It is seconds of a cheap
+  # runner and never touches the ARC pool.
+  apps:
+    name: Resolve app matrix
+    runs-on: ubuntu-latest
+    outputs:
+      all: ${{ steps.list.outputs.all }}
+      promotable: ${{ steps.list.outputs.promotable }}
+    steps:
+      - id: list
+        shell: bash
+        run: |
+          # image        → GCR repository, and what backend-worker-cd calls worker_name
+          # job_stem     → Cloud Run job name WITHOUT the -<env> suffix (jobs are
+          #                suffixed per environment: -dev / -test / -prod)
+          # service      → Cloud Run service name (NOT suffixed, and NOT the image
+          #                name: image kdi-risingwv-data-api runs as service
+          #                kdi-risingwave-data-api)
+          # manifest     → kubernetes/<env>/<manifest>.yml stem, gke only
+          # deployments  → Deployment name to wait on, gke only
+          cat > all.json <<'JSON'
+          [
+            {"key":"bigquery-poller",   "image":"kdi-risingwv-bigquery-entity-poller",   "dir":"src/cloud-run/bigquery-entity-poller",   "target":"cloudrun-job",     "job_stem":"kdi-risingwv-bigquery-entity-poller",   "service":"", "region":"europe-west1",  "manifest":"", "deployments":""},
+            {"key":"eiendom-poller",    "image":"kdi-risingwv-eiendom-entity-poller",    "dir":"src/cloud-run/eiendom-entity-poller",    "target":"cloudrun-job",     "job_stem":"kdi-risingwv-eiendom-entity-poller",    "service":"", "region":"europe-west1",  "manifest":"", "deployments":""},
+            {"key":"fdvweb-poller",     "image":"kdi-risingwv-fdvweb-entity-poller",     "dir":"src/cloud-run/fdvweb-entity-poller",     "target":"cloudrun-job",     "job_stem":"kdi-risingwv-fdvweb-entity-poller",     "service":"", "region":"europe-west1",  "manifest":"", "deployments":""},
+            {"key":"mysql-poller",      "image":"kdi-risingwv-mysql-entity-poller",      "dir":"src/cloud-run/mysql-entity-poller",      "target":"cloudrun-job",     "job_stem":"kdi-risingwv-mysql-entity-poller",      "service":"", "region":"europe-west1",  "manifest":"", "deployments":""},
+            {"key":"superoffice-poller","image":"kdi-risingwv-superoffice-entity-poller","dir":"src/cloud-run/superoffice-entity-poller","target":"cloudrun-job",     "job_stem":"kdi-risingwv-superoffice-entity-poller","service":"", "region":"europe-west1",  "manifest":"", "deployments":""},
+            {"key":"webhook-dedup",     "image":"kdi-risingwv-webhook-dedup-cleanup",    "dir":"src/cloud-run/webhook-dedup-cleanup",    "target":"cloudrun-job",     "job_stem":"kdi-risingwv-webhook-dedup-cleanup",    "service":"", "region":"europe-west1",  "manifest":"", "deployments":""},
+            {"key":"data-api",          "image":"kdi-risingwv-data-api",                 "dir":"src/cloud-run/risingwave-data-api",      "target":"cloudrun-service", "job_stem":"", "service":"kdi-risingwave-data-api", "region":"europe-north1", "manifest":"", "deployments":""},
+            {"key":"pubsub-writer",     "image":"kdi-risingwv-pubsub-writer",            "dir":"src/cloud-run/pubsub-writer",            "target":"gke",              "job_stem":"", "service":"", "region":"",              "manifest":"kdi-pubsub-writer",       "deployments":"kdi-pubsub-writer"},
+            {"key":"sink-error",        "image":"kdi-risingwv-sink-error-collector",     "dir":"src/cloud-run/sink-error-collector",     "target":"gke",              "job_stem":"", "service":"", "region":"",              "manifest":"kdi-sink-error-collector","deployments":"kdi-sink-error-collector"},
+            {"key":"dalux-poller",      "image":"kdi-risingwv-dalux-entity-poller",      "dir":"src/cloud-run/dalux-entity-poller",      "target":"cloudrun-job",     "job_stem":"kdi-risingwv-dalux-entity-poller",      "service":"", "region":"europe-west1",  "manifest":"", "deployments":""}
+          ]
+          JSON
+
+          # Fail loudly rather than emit a matrix GitHub would silently reject.
+          python3 -c "import json,sys; json.load(open('all.json'))" \
+            || { echo '::error::all.json is not valid JSON'; exit 1; }
+
+          {
+            echo "all=$(jq -c '.' all.json)"
+            echo "promotable=$(jq -c '.' all.json)"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "### Deployables" >> "$GITHUB_STEP_SUMMARY"
+          echo "| app | target | dev | staging/prod |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          jq -r '.[] | "| \(.key) | \(.target) | yes | yes |"' \
+            all.json >> "$GITHUB_STEP_SUMMARY"
+
+  # ════════════════════════════════════════════════════════════════════════════
+  # workflow_dispatch
+  # ════════════════════════════════════════════════════════════════════════════
+
+  resolve-production-tag:
+    name: Production · resolve tag
+    needs: [apps]
+    if: inputs.environment == 'production'
+    # example-project-runner, not ubuntu-latest: this now probes GCR, which needs
+    # the service-account key the ARC pod mounts. It is seconds, and a
+    # production dispatch is already going to use the pool for the deploy.
+    runs-on: example-project-runner
+    outputs:
+      image_tag: ${{ steps.resolve.outputs.image_tag }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Auth to GCP
+        # gcloud authenticates as its ACTIVE ACCOUNT, which is empty until this
+        # runs — GOOGLE_APPLICATION_CREDENTIALS alone is not enough, and the
+        # resulting error reads as a missing IAM grant rather than missing auth.
+        run: gcloud auth activate-service-account --key-file=/var/secrets/google/credentials.json
+      - id: resolve
+        name: Resolve the tag to deploy
+        env:
+          GIVEN: ${{ inputs.image_tag }}
+          GCR_REGISTRY: ${{ secrets.GCR_REGISTRY }}
+          PROMOTABLE: ${{ needs.apps.outputs.promotable }}
+        run: |
+          # An explicitly typed tag is never second-guessed — this is the
+          # rollback path, and the human said what they wanted.
+          if [ -n "$GIVEN" ]; then
+            echo "Using the tag given: $GIVEN"
+            echo "image_tag=$GIVEN" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # No tag given: take the newest semver that ACTUALLY HAS AN IMAGE.
+          #
+          # `tag-release` cuts a tag for every merge into `release`, including
+          # one with nothing deployable (a dbt- or workflow-only promotion,
+          # which the `changes` gate now skips building). So the newest tag is
+          # no longer guaranteed to have been built, and blindly taking it
+          # would fail at "Verify image exists" — on the rollback path, at the
+          # worst possible moment. Walk back until an image is found.
+          #
+          # example-project-alm is the production image project; mirrors
+          # backend-worker-cd.yml's resolve-infra mapping, keep in lockstep.
+          IMAGE_BASE="$GCR_REGISTRY/example-project-alm/$(printf '%s' "$PROMOTABLE" | jq -r '.[0].image')"
+          echo "Probing $IMAGE_BASE"
+
+          TAG=""
+          for candidate in $(git tag --list 'v[0-9]*.[0-9]*.[0-9]*' --sort=-v:refname | head -20); do
+            if gcloud container images describe "$IMAGE_BASE:$candidate" >/dev/null 2>&1; then
+              TAG="$candidate"
+              break
+            fi
+            echo "  $candidate — no image, skipping (tagged but never built)"
+          done
+
+          if [ -z "$TAG" ]; then
+            echo "::error::No semver tag in the last 20 has a built image for $IMAGE_BASE. Pass image_tag explicitly."
+            exit 1
+          fi
+          echo "No image_tag given; using the latest released semver WITH an image: $TAG"
+          echo "image_tag=$TAG" >> "$GITHUB_OUTPUT"
+
+  # Rollback / escape hatch. `forward_only` is deliberately absent so an older
+  # tag can be deployed. Still parks on the production environment's reviewer
+  # rule; self-review is permitted estate-wide, so an on-call engineer can
+  # approve their own rollback without waking a colleague.
+  deploy-production-manual:
+    needs: [apps, resolve-production-tag]
+    if: inputs.environment == 'production'
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.apps.outputs.promotable) }}
+    name: Production · deploy (${{ matrix.app.key }})
+    permissions:
+      contents: write
+      deployments: write
+    uses: "klpkonsern/klpe-actions/.github/workflows/backend-worker-cd.yml@v2"
+    with:
+      environment: production
+      deploy_target: ${{ matrix.app.target }}
+      worker_name: ${{ matrix.app.image }}
+      image_tag: ${{ needs.resolve-production-tag.outputs.image_tag }}
+      job_name: ${{ matrix.app.job_stem && format('{0}-prod', matrix.app.job_stem) || '' }}
+      service_name: ${{ matrix.app.service }}
+      region: ${{ matrix.app.region }}
+      manifest_name: ${{ matrix.app.manifest }}
+      deployments: ${{ matrix.app.deployments }}
+      shared_dependencies: ${{ matrix.app.target == 'gke' && 'configmap/ca-pemstore configmap/dotnet-config configmap/region-config configmap/vault-kdi-options-config secret/gcp.kdi.files secret/vault-options-secret' || '' }}
+      mode: deploy
+    secrets: inherit
+
+  build-manual:
+    needs: apps
+    if: >-
+      inputs.environment != 'production'
+      && inputs.image_tag == ''
+    strategy:
+      fail-fast: false
+      matrix:
+        # A manual STAGING dispatch must use the promotable list, or it could
+        # try to deploy an app that has no staging Cloud Run job to update.
+        app: ${{ fromJSON(inputs.environment == 'staging' && needs.apps.outputs.promotable || needs.apps.outputs.all) }}
+    name: ${{ inputs.environment }} · build (${{ matrix.app.key }})
+    uses: "klpkonsern/klpe-actions/.github/workflows/backend-worker-cd.yml@v2"
+    with:
+      environment: ${{ inputs.environment }}
+      deploy_target: ${{ matrix.app.target }}
+      worker_name: ${{ matrix.app.image }}
+      dockerfile: ${{ matrix.app.dir }}/Dockerfile
+      project_dir: ${{ matrix.app.dir }}
+      configuration: ${{ inputs.environment == 'staging' && 'Release' || 'Debug' }}
+      mode: build
+    secrets: inherit
+
+  deploy-manual:
+    needs: [apps, build-manual]
+    # `always()` so an explicit image_tag (which skips build-manual) still
+    # deploys; the skipped-dependency case is what would otherwise cancel this.
+    if: >-
+      always()
+      && inputs.environment != 'production'
+      && needs.build-manual.result != 'failure'
+      && needs.apps.result == 'success'
+    strategy:
+      fail-fast: false
+      matrix:
+        # Must match build-manual's list exactly — see the note there.
+        app: ${{ fromJSON(inputs.environment == 'staging' && needs.apps.outputs.promotable || needs.apps.outputs.all) }}
+    name: ${{ inputs.environment }} · deploy (${{ matrix.app.key }})
+    permissions:
+      contents: read
+      deployments: write
+    uses: "klpkonsern/klpe-actions/.github/workflows/backend-worker-cd.yml@v2"
+    with:
+      environment: ${{ inputs.environment }}
+      deploy_target: ${{ matrix.app.target }}
+      worker_name: ${{ matrix.app.image }}
+      image_tag: ${{ inputs.image_tag != '' && inputs.image_tag || needs.build-manual.outputs.image_tag }}
+      job_name: ${{ matrix.app.job_stem && format('{0}-{1}', matrix.app.job_stem, inputs.environment == 'staging' && 'test' || 'dev') || '' }}
+      service_name: ${{ matrix.app.service }}
+      region: ${{ matrix.app.region }}
+      manifest_name: ${{ matrix.app.manifest }}
+      deployments: ${{ matrix.app.deployments }}
+      shared_dependencies: ${{ matrix.app.target == 'gke' && 'configmap/ca-pemstore configmap/dotnet-config configmap/region-config configmap/vault-kdi-options-config secret/gcp.kdi.files secret/vault-options-secret' || '' }}
+      mode: deploy
+    secrets: inherit

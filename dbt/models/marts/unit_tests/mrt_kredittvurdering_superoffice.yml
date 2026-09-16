@@ -1,0 +1,123 @@
+version: 2
+
+unit_tests:
+  - name: mrt_kredittvurdering_superoffice__sesam_5_cases
+    description: >
+      Converts the 5 Sesam kredittvurdering-superoffice-rest-endpoint test cases to dbt.
+      Scenarios covered: AA and A ratings, Sanksjonert true vs null,
+      RevisorKommentar set vs null, varying Soliditet (via egenkapitalandel path).
+      Known differences from Sesam: Underavvikling is always FALSE (D365 source not yet
+      in RisingWave); empty auditorsReservations produces NULL RevisorKommentar (Sesam
+      stored empty string ""); Betalingsanmerkning uses correct spelling (Sesam had typo
+      "Betanmerkning"). Orgnr values are synthetic (10001-10005) to keep fixtures minimal.
+    model: mrt_kredittvurdering_superoffice
+    given:
+      - input: ref('mrt_superoffice_contactsimple')
+        rows:
+          - contactId: 7867
+            nameDepartment: null
+            orgnr: '10001'
+            stop: null
+          - contactId: 17828
+            nameDepartment: null
+            orgnr: '10002'
+            stop: null
+          - contactId: 10589
+            nameDepartment: null
+            orgnr: '10003'
+            stop: null
+          - contactId: 15368
+            nameDepartment: null
+            orgnr: '10004'
+            stop: null
+          - contactId: 20326
+            nameDepartment: null
+            orgnr: '10005'
+            stop: null
+
+      - input: ref('stg_bisnode_leverandor')
+        rows:
+          # ContactId 7867 — AA rating, ikke sanksjonert, revisorkommentar satt
+          - payload: >-
+              {"identifikasjon": {"orgnr": 10001, "dunsnr": 562231845}, "risk": {"creditRatings": {"currentCreditRating": {"code": "AA", "partJudgements": {"abilityToPay": {"description": "Akseptabel"}}}}}, "companyInformation": {"generalCompanyData": {"activeInVat": true}}, "management": {"auditors": {"currentAuditors": [{"function": 30, "entity": {"name": "DELOITTE AS"}}]}}, "finance": {"financialStatements": {"auditorsReservations": [{"auditorsReservationDescription": "Årsoppgjøret er ikke avgitt innen lovens frist"}], "keyFigures": [{"closingPeriod": {"year": 2023}, "egenkapitalandel": 0.1747}]}}}
+          # ContactId 17828 — AA rating, sanksjonert, høy soliditet
+          - payload: >-
+              {"identifikasjon": {"orgnr": 10002, "dunsnr": 352798393}, "risk": {"creditRatings": {"currentCreditRating": {"code": "AA", "partJudgements": {"abilityToPay": {"description": "Very good"}}}}}, "companyInformation": {"generalCompanyData": {"activeInVat": true}}, "management": {"auditors": {"currentAuditors": [{"function": 30, "entity": {"name": "Ernst & Young AB"}}]}}, "finance": {"financialStatements": {"auditorsReservations": [], "keyFigures": [{"closingPeriod": {"year": 2023}, "egenkapitalandel": 0.68}]}}}
+          # ContactId 10589 — A rating, sanksjonert
+          - payload: >-
+              {"identifikasjon": {"orgnr": 10003, "dunsnr": 347194036}, "risk": {"creditRatings": {"currentCreditRating": {"code": "A", "partJudgements": {"abilityToPay": {"description": "Upåklagelig"}}}}}, "companyInformation": {"generalCompanyData": {"activeInVat": true}}, "management": {"auditors": {"currentAuditors": [{"function": 30, "entity": {"name": "REVISORKOLLEGIET AS"}}]}}, "finance": {"financialStatements": {"auditorsReservations": [], "keyFigures": [{"closingPeriod": {"year": 2023}, "egenkapitalandel": 0.2615}]}}}
+          # ContactId 15368 — A rating, sanksjonert, utenlandsk revisor
+          - payload: >-
+              {"identifikasjon": {"orgnr": 10004, "dunsnr": 306216508}, "risk": {"creditRatings": {"currentCreditRating": {"code": "A", "partJudgements": {"abilityToPay": {"description": "Veletablert"}}}}}, "companyInformation": {"generalCompanyData": {"activeInVat": true}}, "management": {"auditors": {"currentAuditors": [{"function": 30, "entity": {"name": "Deloitte Statsautoriseret Revisionspartnerselskab"}}]}}, "finance": {"financialStatements": {"auditorsReservations": [], "keyFigures": [{"closingPeriod": {"year": 2023}, "egenkapitalandel": 0.2494}]}}}
+          # ContactId 20326 — A rating, ikke sanksjonert, lav soliditet
+          - payload: >-
+              {"identifikasjon": {"orgnr": 10005, "dunsnr": 354173262}, "risk": {"creditRatings": {"currentCreditRating": {"code": "A", "partJudgements": {"abilityToPay": {"description": "Satisfactory - notes on record"}}}}}, "companyInformation": {"generalCompanyData": {"activeInVat": true}}, "management": {"auditors": {"currentAuditors": [{"function": 30, "entity": {"name": "Ernst & Young AB"}}]}}, "finance": {"financialStatements": {"auditorsReservations": [], "keyFigures": [{"closingPeriod": {"year": 2023}, "egenkapitalandel": 0.051}]}}}
+
+      - input: ref('stg_bisnode_sanksjoner')
+        rows:
+          # orgnr 10002, 10003, 10004 are sanctioned (noOfSanctionMatches > 0)
+          # orgnr 10001 and 10005 have no row here → LEFT JOIN null → Sanksjonert = null
+          - payload: >-
+              {"companyInput": {"regNo": "10002"}, "screeningSummary": {"noOfSanctionMatches": 1, "obmsSummary": {"withSanctionMatches": 0}}}
+          - payload: >-
+              {"companyInput": {"regNo": "10003"}, "screeningSummary": {"noOfSanctionMatches": 1, "obmsSummary": {"withSanctionMatches": 0}}}
+          - payload: >-
+              {"companyInput": {"regNo": "10004"}, "screeningSummary": {"noOfSanctionMatches": 1, "obmsSummary": {"withSanctionMatches": 0}}}
+
+    expect:
+      rows:
+        - ContactId: 7867
+          Dunsnr: 562231845
+          Orgnummer: '10001'
+          Kredittrating: AA
+          Betalingsanmerkning: Akseptabel
+          Soliditet: 0.1747
+          MvaRegistrert: ja
+          Revisor: DELOITTE AS
+          RevisorKommentar: "Årsoppgjøret er ikke avgitt innen lovens frist"
+          Sanksjonert: null
+          Underavvikling: false
+        - ContactId: 17828
+          Dunsnr: 352798393
+          Orgnummer: '10002'
+          Kredittrating: AA
+          Betalingsanmerkning: Very good
+          Soliditet: 0.68
+          MvaRegistrert: ja
+          Revisor: Ernst & Young AB
+          RevisorKommentar: null
+          Sanksjonert: true
+          Underavvikling: false
+        - ContactId: 10589
+          Dunsnr: 347194036
+          Orgnummer: '10003'
+          Kredittrating: A
+          Betalingsanmerkning: Upåklagelig
+          Soliditet: 0.2615
+          MvaRegistrert: ja
+          Revisor: REVISORKOLLEGIET AS
+          RevisorKommentar: null
+          Sanksjonert: true
+          Underavvikling: false
+        - ContactId: 15368
+          Dunsnr: 306216508
+          Orgnummer: '10004'
+          Kredittrating: A
+          Betalingsanmerkning: Veletablert
+          Soliditet: 0.2494
+          MvaRegistrert: ja
+          Revisor: Deloitte Statsautoriseret Revisionspartnerselskab
+          RevisorKommentar: null
+          Sanksjonert: true
+          Underavvikling: false
+        - ContactId: 20326
+          Dunsnr: 354173262
+          Orgnummer: '10005'
+          Kredittrating: A
+          Betalingsanmerkning: "Satisfactory - notes on record"
+          Soliditet: 0.051
+          MvaRegistrert: ja
+          Revisor: Ernst & Young AB
+          RevisorKommentar: null
+          Sanksjonert: null
+          Underavvikling: false

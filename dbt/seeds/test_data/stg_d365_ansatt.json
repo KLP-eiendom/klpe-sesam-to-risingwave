@@ -1,0 +1,36 @@
+{
+  "entities": [
+    {
+      "_id": "odd.edvard.lund@example.com",
+      "bruker_id": "OEL",
+      "epost": "odd.edvard.lund@example.com",
+      "fult_navn": "Odd Edvard Lund",
+      "phone": "+47 22 00 00 00",
+      "spraak_id": "nb-NO"
+    },
+    {
+      "_id": "per.olsen@example.com",
+      "bruker_id": "EK",
+      "epost": "per.olsen@example.com",
+      "fult_navn": "Per Olsen",
+      "phone": "+47 22 00 00 00",
+      "spraak_id": "nb-NO"
+    },
+    {
+      "_id": "kari.nordmann@example.com",
+      "bruker_id": "HEN",
+      "epost": "kari.nordmann@example.com",
+      "fult_navn": "Kari Nordmann",
+      "phone": "+47 22 00 00 00",
+      "spraak_id": "nb-NO"
+    },
+    {
+      "_id": "marit.hansen@example.com",
+      "bruker_id": "KMA",
+      "epost": "marit.hansen@example.com",
+      "fult_navn": "Marit Hansen",
+      "phone": "+47 22 00 00 00",
+      "spraak_id": "nb-NO"
+    }
+  ]
+}

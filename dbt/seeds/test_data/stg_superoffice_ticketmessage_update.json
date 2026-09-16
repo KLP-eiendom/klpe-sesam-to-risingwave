@@ -1,0 +1,21 @@
+{
+  "entities": [
+    {
+      "_id": "460",
+      "_deleted": false,
+      "slevel": "External",
+      "ticketId": 300,
+      "ticketMessageId": 460,
+      "createdAt": "2020-07-23 11:12:06",
+      "ticketAttachments": [
+        {
+          "attachmentId": 1080,
+          "contentType": "image/jpeg",
+          "name": "test.jpg",
+          "attSize": 1234
+        }
+      ]
+    }
+  ],
+  "table_type": "webhook"
+}

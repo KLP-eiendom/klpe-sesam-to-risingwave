@@ -1,0 +1,5 @@
+{
+  "mart": "mrt_global_contract_details",
+  "blacklist": ["byggid", "kundeid"],
+  "id_field": "Id"
+}

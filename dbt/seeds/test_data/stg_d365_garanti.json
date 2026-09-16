@@ -1,0 +1,25 @@
+{
+  "entities": [
+    {
+      "_id": "19827319",
+      "garanti_id": 19827319,
+      "garanti_nummer": "45114",
+      "kontrakt_id": "600015.20",
+      "garantist_id": 12313,
+      "firma_id": "n201",
+      "garantist_navn": "test",
+      "varslingsdato": "2015-12-22T00:00:00",
+      "garantitype": 0,
+      "klassifiseringstype": "Depositum",
+      "klassifiseringskategori": "",
+      "gyldig_fra": "2015-12-22T00:00:00",
+      "gyldig_til": "2031-01-19T00:00:00",
+      "merknad": "",
+      "garantibelop": 12338731,
+      "pris_gyldigfra": "2015-12-22T00:00:00",
+      "pris_gyldigtil": "2031-01-19T00:00:00",
+      "bygg_avdeling_id": "N20100",
+      "Referanse": ""
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+unit_tests:
+  - name: snk_ticketmessage_kundeportal__sesam_parity
+    model: snk_ticketmessage_kundeportal
+    given:
+      - input: ref('mrt_superoffice_ticketmessage_update')
+        rows:
+          - {
+              ticketmessageid: 417,
+              ticketid: 300,
+              externalid: "417:superoffice-ticketmessage",
+              parentticketid: "300:superoffice-ticket",
+              htmlbody: "This is a test.",
+              body: "Text version of test",
+              createdat: "2020-07-23 11:12:06",
+              personid: 123,
+              slevel: "External",
+              _deleted: false,
+            }
+          - {
+              ticketmessageid: 418,
+              ticketid: 342,
+              externalid: "418:superoffice-ticketmessage",
+              parentticketid: "342:superoffice-ticket",
+              htmlbody: "",
+              body: "This is another test.",
+              createdat: "2020-07-23 11:12:06",
+              personid: 124,
+              slevel: "External",
+              _deleted: false,
+            }
+          # Internal message: Sesam's ticketmessage-kundeportal DTL filters
+          # ["neq", "Internal", "_S.Slevel"] -> must never reach Kundeportal. DROP.
+          - {
+              ticketmessageid: 419,
+              ticketid: 350,
+              externalid: "419:superoffice-ticketmessage",
+              parentticketid: "350:superoffice-ticket",
+              htmlbody: "Internal note, not for customer eyes.",
+              body: "Internal note, not for customer eyes.",
+              createdat: "2020-07-23 11:12:06",
+              personid: 125,
+              slevel: "Internal",
+              _deleted: false,
+            }
+      - input: ref('mrt_superoffice_ticketmessage')
+        rows: []
+      - input: ref('mrt_superoffice_user')
+        rows: []
+    expect:
+      rows:
+        - {
+            "#id": "417",
+            EksternId: "417:superoffice-ticketmessage",
+            EksternSakId: "300:superoffice-ticket",
+            Melding: "This is a test.",
+            Created: "2020-07-23 11:12:06",
+            LastUpdated: "2020-07-23 11:12:06",
+            OpprettetAv: "123",
+          }
+        - {
+            "#id": "418",
+            EksternId: "418:superoffice-ticketmessage",
+            EksternSakId: "342:superoffice-ticket",
+            Melding: "This is another test.",
+            Created: "2020-07-23 11:12:06",
+            LastUpdated: "2020-07-23 11:12:06",
+            OpprettetAv: "124",
+          }

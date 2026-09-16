@@ -1,0 +1,30 @@
+[
+  {
+    "#id": 17828,
+    "leverandornummer": "502393",
+    "omsetning_belop_i_aar": -54863.0,
+    "omsetning_belop_i_fjor": -14863.0,
+    "contactid": 17828,
+    "MvaRegistrert": "ja",
+    "Revisor": "Söderberg, Katrine",
+    "Sperret": false,
+    "D365Kommentar": null,
+    "UnderAvvikling": null,
+    "Engangsleverandor": null,
+    "Konsernintern": true
+  },
+  {
+    "#id": 7867,
+    "leverandornummer": "502003",
+    "omsetning_belop_i_aar": 1000000.0,
+    "omsetning_belop_i_fjor": 900000.0,
+    "contactid": 7867,
+    "MvaRegistrert": null,
+    "Revisor": "DELOITTE AS",
+    "Sperret": false,
+    "D365Kommentar": "UPS føres opp som en forbudt leverandør i våre leverandørlister etter at de har utsatt oss for svindelforsøk. Andre tjenesteleverandører bør anvendes hvis mulig. ",
+    "UnderAvvikling": false,
+    "Engangsleverandor": null,
+    "Konsernintern": false
+  }
+]

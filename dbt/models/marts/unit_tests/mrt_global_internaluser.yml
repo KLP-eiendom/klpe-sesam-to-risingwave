@@ -1,0 +1,50 @@
+version: 2
+
+unit_tests:
+  - name: mrt_global_internaluser__filtering
+    model: mrt_global_internaluser
+    given:
+      - input: ref('stg_d365_ansatt')
+        rows:
+          - { _id: 'E1', bruker_id: 'U1', epost: 'employee1@example.com', fult_navn: 'Employee 1' }
+          - { _id: 'E2', bruker_id: 'U2', epost: 'invalid/email@example.com', fult_navn: 'Employee 2' } # Filtered (/)
+      - input: ref('mrt_superoffice_user')
+        rows:
+          - { personId: 1001, contactId: 100, email: 'employee1@example.com', fullName: 'Employee 1 SO' }
+          - { personId: 1002, contactId: 200, email: 'external@example.com', fullName: 'External with Interest' }
+          - { personId: 1003, contactId: 300, email: 'external_no_interest@example.com', fullName: 'External No Interest' }
+      - input: ref('mrt_superoffice_contactsimple')
+        rows:
+          - { contactId: 100, interests: '[]' }
+          - { contactId: 200, interests: '[{"name": "NO:\"Forvalterdashboard\";", "selected": true}]' }
+          - { contactId: 300, interests: '[]' }
+    expect:
+      rows:
+        - { email: 'employee1@example.com', fult_navn: 'Employee 1', is_employee: true }
+        - { email: 'external@example.com', fult_navn: 'External with Interest', is_employee: false }
+
+  - name: mrt_global_internaluser__dedup_and_dates
+    model: mrt_global_internaluser
+    given:
+      - input: ref('stg_d365_ansatt')
+        rows:
+          - { _id: 'E1', bruker_id: 'HB5', epost: 'hans.bakke@example.com', fult_navn: 'Hans Bakke' }
+      - input: ref('mrt_superoffice_user')
+        rows:
+          - { personId: 1001, contactId: 82, email: 'hans.bakke@example.com', fullName: 'Hans Bakke Old', retired: true, personRegisteredDate: '2020-01-01 00:00:00' }
+          - { personId: 45954, contactId: 82, email: 'hans.bakke@example.com', fullName: 'Hans Bakke Active', retired: false, personRegisteredDate: '2026-07-28 13:32:40', personUpdatedDate: '2026-08-24 14:01:41' }
+      - input: ref('mrt_superoffice_contactsimple')
+        rows:
+          - { contactId: 82, interests: '[]' }
+    expect:
+      rows:
+        - {
+            email: 'hans.bakke@example.com',
+            personId: 45954,
+            bruker_id: 'HB5',
+            fult_navn: 'Hans Bakke',
+            so_registeredDate: '2026-07-28 13:32:40',
+            so_updatedDate: '2026-08-24 14:01:41',
+            is_employee: true
+          }
+

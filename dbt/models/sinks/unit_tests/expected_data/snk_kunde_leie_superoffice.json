@@ -1,0 +1,37 @@
+[
+  {
+    "#id": "600000",
+    "kundenummer": "600000",
+    "updatedDate": "2020-04-16 14:35:29+00:00",
+    "kundeAarsinntekt": 0.0,
+    "kundeLeieareal": 0.0
+  },
+  {
+    "#id": "600001",
+    "kundenummer": "600001",
+    "updatedDate": null,
+    "kundeAarsinntekt": 0.0,
+    "kundeLeieareal": 0.0
+  },
+  {
+    "#id": "600015",
+    "kundenummer": "600015",
+    "updatedDate": "2020-04-16 14:35:29+00:00",
+    "kundeAarsinntekt": 2817543.0,
+    "kundeLeieareal": 0.0
+  },
+  {
+    "#id": "600047",
+    "kundenummer": "600047",
+    "updatedDate": null,
+    "kundeAarsinntekt": 0.0,
+    "kundeLeieareal": 0.0
+  },
+  {
+    "#id": "600314",
+    "kundenummer": "600314",
+    "updatedDate": null,
+    "kundeAarsinntekt": 0.0,
+    "kundeLeieareal": 0.0
+  }
+]

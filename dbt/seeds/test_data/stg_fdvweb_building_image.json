@@ -1,0 +1,58 @@
+{
+  "entities": [
+    {
+      "_id": "bygg60-Lysaker torg 35 fasade",
+      "bildearkivLink": "https://web52.fdvweb.no/bygg-felles/bildearkiv/16783656_600X600.jpg",
+      "bildearkivTekst": "Lysaker torg 35 fasade",
+      "byggNavnId": "bygg60"
+    },
+    {
+      "_id": "bygg39-VG bygget fra Akersgt mot Grensen_600X600",
+      "bildearkivLink": "https://web52.fdvweb.no/bygg-felles/bildearkiv/VG bygget fra Akersgt mot Grensen_600X600.jpg",
+      "bildearkivTekst": "VG bygget fra Akersgt mot Grensen_600X600",
+      "byggNavnId": "bygg39"
+    },
+    {
+      "_id": "Bygg3-Fasade",
+      "bildearkivLink": "https://web52.fdvweb.no/bygg-felles/bildearkiv/Dronning_Eufemiasgate_10-006_600X600.JPG",
+      "bildearkivTekst": "Fasade",
+      "byggNavnId": "Bygg3"
+    },
+    {
+      "_id": "bygg54-Fasade",
+      "bildearkivLink": "https://web52.fdvweb.no/bygg-felles/bildearkiv/D288 redigert_600X600.jpg",
+      "bildearkivTekst": "Fasade",
+      "byggNavnId": "bygg54"
+    },
+    {
+      "_id": "bygg9-Fasade",
+      "bildearkivLink": "https://web52.fdvweb.no/bygg-felles/bildearkiv/Lensmannslia_4-007_600X600 (1).jpg",
+      "bildearkivTekst": "Fasade",
+      "byggNavnId": "bygg9"
+    },
+    {
+      "_id": "bygg98-Fasade",
+      "bildearkivLink": "https://web52.fdvweb.no/bygg-felles/bildearkiv/Screen Shot 02-19-19 at 09.00 AM (1)_600X600.PNG",
+      "bildearkivTekst": "Fasade",
+      "byggNavnId": "bygg98"
+    },
+    {
+      "_id": "Bygg36-DSC_0029",
+      "bildearkivLink": "https://web52.fdvweb.no/bygg-felles/bildearkiv/DSC_0029_600X600.jpg",
+      "bildearkivTekst": "DSC_0029",
+      "byggNavnId": "Bygg36"
+    },
+    {
+      "_id": "Bygg36-DSC_0030",
+      "bildearkivLink": "https://web52.fdvweb.no/bygg-felles/bildearkiv/DSC_0030_600X600.jpg",
+      "bildearkivTekst": "DSC_0030",
+      "byggNavnId": "Bygg36"
+    },
+    {
+      "_id": "Bygg36-",
+      "byggNavnId": "Bygg36",
+      "bildearkivLink": "https://web52.fdvweb.no/bygg-felles/bildearkiv/",
+      "bildearkivTekst": "PB6-8"
+    }
+  ]
+}

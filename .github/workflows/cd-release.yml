@@ -1,0 +1,368 @@
+name: CD · release
+run-name: Release → staging → production
+
+# ── push → release: staging, tag, gated production promotion ─────────────────
+# A merged promotion PR IS a push to `release`, so this run is attributed to
+# release and executes THIS copy of the file at the merged tip. The version is
+# resolved from the merged PR's label (release-version-check, push mode); with
+# no PR or no label the run fails closed — nothing builds, nothing is tagged.
+#
+# Companions: release-check.yml (the pre-merge label gate), cd-development.yml
+# (push → main), cd-manual.yml (workflow_dispatch: rollback / branch builds).
+#
+# Semver tag is determined by the PR label (major / minor / patch / first-release).
+#
+# ── This repo ships TEN deployable .NET apps ─────────────────────────────────
+# Every one of them is built and deployed by backend-worker-cd.yml; only
+# `deploy_target` differs. They all use `runtime: dotnet` (the default), which
+# publishes into <project_dir>/out — exactly what each `COPY out .` Dockerfile
+# here expects.
+#
+#   7 x cloudrun-job     the entity pollers + the dedup cleanup, europe-west1.
+#   1 x cloudrun-service kdi-risingwave-data-api, europe-NORTH1.
+#   2 x gke              kdi-pubsub-writer and kdi-sink-error-collector,
+#                        Deployments on the WEST cluster (cluster-<env>1),
+#                        namespace default.
+#
+# TERRAFORM (a separate internal infrastructure repo) owns every Cloud Run job
+# and the service — their command, env, volumes, VPC access and Cloud Scheduler
+# triggers. CD passes --image and nothing else, on purpose. The terraform
+# references the BARE `:dev` / `:test` / `:prod` tag, so build mode must keep
+# publishing it.
+#
+# ── The app list lives in ONE place ──────────────────────────────────────────
+# The `apps` job below is the single source of truth, consumed by every build,
+# deploy and promote job as a matrix. This is deliberate: in Azure the same
+# list was duplicated across two build definitions and two release definitions,
+# and they drifted — an app was added to the dev build/release but never to
+# their staging counterparts. Adding an app in one place here cannot repeat
+# that.
+#
+# ── Deployment model ─────────────────────────────────────────────────────────
+# push → main          Build all 10 (Debug) → deploy to development
+# PR merged → release  Build all 10 (Release) → staging → tag →
+#                      promote to production (parks for environment approval)
+# workflow_dispatch    Deploy production using a semver tag (or rollback), or
+#                      build+deploy the selected branch to development/staging
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  push:
+    branches: [release]
+
+jobs:
+  # ── The single source of truth for what this repo deploys ─────────────────
+  # `all` — every app, used for development and for manual dispatch.
+  # `promotable` — apps that exist beyond dev, used for staging and
+  # production. Kept as a separate output from `all` so an app that should
+  # stop (or start) at dev-only can be included or excluded here without
+  # touching every build/deploy/promote job below.
+  #
+  # ubuntu-latest and no `if:`: this job gates every other one through `needs`,
+  # so it must run for all three trigger shapes. It is seconds of a cheap
+  # runner and never touches the ARC pool.
+  apps:
+    name: Resolve app matrix
+    runs-on: ubuntu-latest
+    outputs:
+      all: ${{ steps.list.outputs.all }}
+      promotable: ${{ steps.list.outputs.promotable }}
+    steps:
+      - id: list
+        shell: bash
+        run: |
+          # image        → GCR repository, and what backend-worker-cd calls worker_name
+          # job_stem     → Cloud Run job name WITHOUT the -<env> suffix (jobs are
+          #                suffixed per environment: -dev / -test / -prod)
+          # service      → Cloud Run service name (NOT suffixed, and NOT the image
+          #                name: image kdi-risingwv-data-api runs as service
+          #                kdi-risingwave-data-api)
+          # manifest     → kubernetes/<env>/<manifest>.yml stem, gke only
+          # deployments  → Deployment name to wait on, gke only
+          cat > all.json <<'JSON'
+          [
+            {"key":"bigquery-poller",   "image":"kdi-risingwv-bigquery-entity-poller",   "dir":"src/cloud-run/bigquery-entity-poller",   "target":"cloudrun-job",     "job_stem":"kdi-risingwv-bigquery-entity-poller",   "service":"", "region":"europe-west1",  "manifest":"", "deployments":""},
+            {"key":"eiendom-poller",    "image":"kdi-risingwv-eiendom-entity-poller",    "dir":"src/cloud-run/eiendom-entity-poller",    "target":"cloudrun-job",     "job_stem":"kdi-risingwv-eiendom-entity-poller",    "service":"", "region":"europe-west1",  "manifest":"", "deployments":""},
+            {"key":"fdvweb-poller",     "image":"kdi-risingwv-fdvweb-entity-poller",     "dir":"src/cloud-run/fdvweb-entity-poller",     "target":"cloudrun-job",     "job_stem":"kdi-risingwv-fdvweb-entity-poller",     "service":"", "region":"europe-west1",  "manifest":"", "deployments":""},
+            {"key":"mysql-poller",      "image":"kdi-risingwv-mysql-entity-poller",      "dir":"src/cloud-run/mysql-entity-poller",      "target":"cloudrun-job",     "job_stem":"kdi-risingwv-mysql-entity-poller",      "service":"", "region":"europe-west1",  "manifest":"", "deployments":""},
+            {"key":"superoffice-poller","image":"kdi-risingwv-superoffice-entity-poller","dir":"src/cloud-run/superoffice-entity-poller","target":"cloudrun-job",     "job_stem":"kdi-risingwv-superoffice-entity-poller","service":"", "region":"europe-west1",  "manifest":"", "deployments":""},
+            {"key":"webhook-dedup",     "image":"kdi-risingwv-webhook-dedup-cleanup",    "dir":"src/cloud-run/webhook-dedup-cleanup",    "target":"cloudrun-job",     "job_stem":"kdi-risingwv-webhook-dedup-cleanup",    "service":"", "region":"europe-west1",  "manifest":"", "deployments":""},
+            {"key":"data-api",          "image":"kdi-risingwv-data-api",                 "dir":"src/cloud-run/risingwave-data-api",      "target":"cloudrun-service", "job_stem":"", "service":"kdi-risingwave-data-api", "region":"europe-north1", "manifest":"", "deployments":""},
+            {"key":"pubsub-writer",     "image":"kdi-risingwv-pubsub-writer",            "dir":"src/cloud-run/pubsub-writer",            "target":"gke",              "job_stem":"", "service":"", "region":"",              "manifest":"kdi-pubsub-writer",       "deployments":"kdi-pubsub-writer"},
+            {"key":"sink-error",        "image":"kdi-risingwv-sink-error-collector",     "dir":"src/cloud-run/sink-error-collector",     "target":"gke",              "job_stem":"", "service":"", "region":"",              "manifest":"kdi-sink-error-collector","deployments":"kdi-sink-error-collector"},
+            {"key":"dalux-poller",      "image":"kdi-risingwv-dalux-entity-poller",      "dir":"src/cloud-run/dalux-entity-poller",      "target":"cloudrun-job",     "job_stem":"kdi-risingwv-dalux-entity-poller",      "service":"", "region":"europe-west1",  "manifest":"", "deployments":""}
+          ]
+          JSON
+
+          # Fail loudly rather than emit a matrix GitHub would silently reject.
+          python3 -c "import json,sys; json.load(open('all.json'))" \
+            || { echo '::error::all.json is not valid JSON'; exit 1; }
+
+          {
+            echo "all=$(jq -c '.' all.json)"
+            echo "promotable=$(jq -c '.' all.json)"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "### Deployables" >> "$GITHUB_STEP_SUMMARY"
+          echo "| app | target | dev | staging/prod |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          jq -r '.[] | "| \(.key) | \(.target) | yes | yes |"' \
+            all.json >> "$GITHUB_STEP_SUMMARY"
+
+  # ── Does this change anything deployable? ─────────────────────────────────
+  # ONE rule for every environment. Development and release used to disagree
+  # about the same change, which is the bug this exists to remove:
+  #
+  #   PR #10  dbt models + workflows only, merged to `release` → rebuilt all
+  #           ten images, redeployed staging, parked nine production approvals
+  #           for an artifact byte-identical to the one already running.
+  #   PR #14  one file, scripts/grant_privileges_risingwave.sql, merged to
+  #           `main` → rebuilt and redeployed all ten apps to development,
+  #           because `scripts/**` was missing from the old exclusion list —
+  #           while the release path correctly called it non-deployable.
+  #
+  # The filter lives HERE, in a job, and deliberately NOT as `paths-ignore`
+  # on the `pull_request` trigger. `check-version-label` runs off that same
+  # trigger, and a path-filtered check does not report at all — it never goes
+  # green. The moment anyone marks it a required status check, a filtered PR
+  # would deadlock this branch permanently. Gating jobs instead keeps the
+  # check reporting on every PR, and keeps the release tag being cut. The
+  # development jobs are gated on this same output, so the two paths cannot
+  # drift apart again.
+  #
+  # ⚠️ This is an ALLOWLIST: only `src/**` and `kubernetes/**` deploy. That is
+  # a deliberate narrowing — anything else is assumed not to affect the ten
+  # images, so a build-relevant path added OUTSIDE these two roots (a
+  # Directory.Build.props, a global.json, a change to KdiRisingWave.sln
+  # alone) will NOT rebuild. If that happens, either add the root here or use
+  # the manual `workflow_dispatch` below. `kubernetes/**` is in the list
+  # because a manifest change must still reach PRODUCTION: drift-check
+  # re-applies manifests on development and staging only.
+  changes:
+    name: Detect deployable changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      deployable: ${{ steps.detect.outputs.deployable }}
+    steps:
+      - id: detect
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: |
+          # workflow_dispatch is an explicit human request to build and is
+          # never second-guessed. `push` and `pull_request` are both filtered,
+          # by the SAME rule — dev and release disagreeing about the same
+          # change is exactly the bug this replaces.
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            echo "deployable=true" >> "$GITHUB_OUTPUT"
+            echo "workflow_dispatch — explicit request, treating as deployable"
+            exit 0
+          fi
+
+          # Fail OPEN throughout: if the file list cannot be read we build. The
+          # cost of a needless build is a runner; the cost of a wrongly skipped
+          # one is a change that silently never reaches an environment.
+          # The two endpoints return DIFFERENT SHAPES, and one jq expression
+          # cannot serve both: `pulls/{n}/files` returns an ARRAY, `compare`
+          # returns an OBJECT with a `.files` key. `.files` applied to an array
+          # is a jq ERROR ("expected an object but got: array"), not null — so
+          # a `(.files // .)` fallback fails on every pull_request, trips the
+          # fail-open branch below and rebuilds everything. Keep them separate.
+          if [ "$EVENT" = "pull_request" ]; then
+            SOURCE="repos/$REPO/pulls/$PR/files"
+            FILTER='.[].filename'
+          else
+            # A push: diff the pushed range. A new branch or a force-push
+            # reports an all-zero `before`, which compare cannot resolve — so
+            # build rather than guess.
+            if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+              echo "::notice::no usable before-sha for this push — assuming deployable"
+              echo "deployable=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            SOURCE="repos/$REPO/compare/$BEFORE...$AFTER"
+            FILTER='.files[].filename'
+          fi
+
+          if ! gh api --paginate "$SOURCE" --jq "$FILTER" > changed.txt; then
+            echo "::warning::could not list changed files — assuming deployable"
+            echo "deployable=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          python3 - <<'PY'
+          import os
+
+          # The only two roots that produce or deploy the ten .NET apps:
+          #   src/**        every matrix app's `dir`
+          #   kubernetes/** the manifests the two GKE apps are applied from
+          DEPLOYABLE_ROOTS = ("src/", "kubernetes/")
+
+          def deployable(path):
+              # A README beside the code changes no image — same reasoning as
+              # the `**/*.md` entry in the push trigger's paths-ignore.
+              if path.endswith(".md"):
+                  return False
+              return path.startswith(DEPLOYABLE_ROOTS)
+
+          changed = [line.strip() for line in open("changed.txt") if line.strip()]
+          hits = sorted(p for p in changed if deployable(p))
+          verdict = "true" if hits else "false"
+
+          with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
+              fh.write(f"deployable={verdict}\n")
+
+          lines = [
+              "### Deployable change detection",
+              "",
+              "| | |",
+              "|---|---|",
+              f"| Changed files | {len(changed)} |",
+              f"| Under `src/` or `kubernetes/` | {len(hits)} |",
+              f"| Verdict | `deployable={verdict}` |",
+              "",
+          ]
+          if hits:
+              lines += ["Deployable paths:", ""]
+              lines += [f"- `{p}`" for p in hits[:20]]
+              if len(hits) > 20:
+                  lines.append(f"- …and {len(hits) - 20} more")
+          else:
+              lines.append(
+                  "Nothing under `src/` or `kubernetes/`. Build and deploy are "
+                  "skipped for this environment. A merge into `release` still "
+                  "cuts its version tag."
+              )
+          print("\n".join(lines))
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as fh:
+              fh.write("\n".join(lines) + "\n")
+          PY
+
+  # ── Resolve the version from the merged PR (push mode) ────────────────────
+  # Deliberately a DIFFERENT job id from the pre-merge gate in release-check.yml
+  # so nobody reads it as the required check. No PR behind the push, or no bump
+  # label on it, fails the run closed — nothing builds and nothing is tagged.
+  resolve-version:
+    name: Release · resolve version
+    uses: "klpkonsern/klpe-actions/.github/workflows/release-version-check.yml@v2"
+    permissions:
+      contents: read
+      pull-requests: write
+    secrets: inherit
+
+  # ════════════════════════════════════════════════════════════════════════════
+  # PR merged → release: build + deploy to staging
+  # ════════════════════════════════════════════════════════════════════════════
+
+  build-staging:
+    needs: [apps, resolve-version, changes]
+    if: needs.changes.outputs.deployable == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.apps.outputs.promotable) }}
+    name: Staging · build (${{ matrix.app.key }})
+    uses: "klpkonsern/klpe-actions/.github/workflows/backend-worker-cd.yml@v2"
+    with:
+      environment: staging
+      deploy_target: ${{ matrix.app.target }}
+      worker_name: ${{ matrix.app.image }}
+      dockerfile: ${{ matrix.app.dir }}/Dockerfile
+      project_dir: ${{ matrix.app.dir }}
+      image_tag: ${{ needs.resolve-version.outputs.version }}
+      configuration: Release
+      mode: build
+    secrets: inherit
+
+  deploy-staging:
+    needs: [apps, resolve-version, build-staging, changes]
+    if: needs.changes.outputs.deployable == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.apps.outputs.promotable) }}
+    name: Staging · deploy (${{ matrix.app.key }})
+    permissions:
+      contents: read
+      deployments: write
+    uses: "klpkonsern/klpe-actions/.github/workflows/backend-worker-cd.yml@v2"
+    with:
+      environment: staging
+      deploy_target: ${{ matrix.app.target }}
+      worker_name: ${{ matrix.app.image }}
+      image_tag: ${{ needs.resolve-version.outputs.version }}
+      job_name: ${{ matrix.app.job_stem && format('{0}-test', matrix.app.job_stem) || '' }}
+      service_name: ${{ matrix.app.service }}
+      region: ${{ matrix.app.region }}
+      manifest_name: ${{ matrix.app.manifest }}
+      deployments: ${{ matrix.app.deployments }}
+      shared_dependencies: ${{ matrix.app.target == 'gke' && 'configmap/ca-pemstore configmap/dotnet-config configmap/region-config configmap/vault-kdi-options-config secret/gcp.kdi.files secret/vault-options-secret' || '' }}
+      mode: deploy
+    secrets: inherit
+
+  tag-release:
+    name: Release · tag
+    needs: [resolve-version, deploy-staging, changes]
+    if: >-
+      !cancelled() && needs.resolve-version.result == 'success' && (needs.changes.outputs.deployable != 'true'
+          || needs.deploy-staging.result == 'success')
+    permissions:
+      contents: write
+    uses: "klpkonsern/klpe-actions/.github/workflows/tag-release.yml@v2"
+    with:
+      version: ${{ needs.resolve-version.outputs.version }}
+      release_pr: ${{ needs.resolve-version.outputs.release_pr }}
+      # The tag points at the MERGE commit — what actually landed on release,
+      # for every merge method, and where every pre-existing tag sits. The PR
+      # head sha is recorded separately so the facts table reconciles with the
+      # deployment record backend-cd.yml keys on.
+      target_sha: ${{ needs.resolve-version.outputs.target_sha }}
+      source_sha: ${{ needs.resolve-version.outputs.source_sha }}
+    secrets: inherit
+
+  # ── Gated promotion: staging → production, inside this same run ───────────
+  # Parks at "Waiting for review" because backend-worker-cd.yml's deploy job
+  # declares `environment: production` and that environment carries a
+  # required-reviewer rule. Approving deploys the EXACT image staging
+  # validated — nothing is rebuilt.
+  #
+  # A pending approval expires after 30 days. Past that, use the manual
+  # production dispatch in cd-manual.yml (which is also the rollback path).
+  promote-production:
+    needs: [apps, resolve-version, deploy-staging, tag-release, changes]
+    if: needs.changes.outputs.deployable == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.apps.outputs.promotable) }}
+    name: Production · promote (${{ matrix.app.key }})
+    permissions:
+      contents: write
+      deployments: write
+    uses: "klpkonsern/klpe-actions/.github/workflows/backend-worker-cd.yml@v2"
+    with:
+      environment: production
+      deploy_target: ${{ matrix.app.target }}
+      worker_name: ${{ matrix.app.image }}
+      image_tag: ${{ needs.resolve-version.outputs.version }}
+      job_name: ${{ matrix.app.job_stem && format('{0}-prod', matrix.app.job_stem) || '' }}
+      service_name: ${{ matrix.app.service }}
+      region: ${{ matrix.app.region }}
+      manifest_name: ${{ matrix.app.manifest }}
+      deployments: ${{ matrix.app.deployments }}
+      shared_dependencies: ${{ matrix.app.target == 'gke' && 'configmap/ca-pemstore configmap/dotnet-config configmap/region-config configmap/vault-kdi-options-config secret/gcp.kdi.files secret/vault-options-secret' || '' }}
+      # Refuses a backwards deploy when several releases are parked at once.
+      # Only the gke entries can actually be compared — the guard requires a
+      # Deployment to read a running tag from — so the Cloud Run entries pass
+      # through it. Deliberately left unset on the manual dispatch in
+      # cd-manual.yml, which is the rollback path.
+      forward_only: true
+      mode: deploy
+    secrets: inherit

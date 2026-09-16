@@ -1,0 +1,7 @@
+{
+  "mart": "mrt_global_user",
+  "blacklist": [
+    "created",
+    "lastupdated"
+  ]
+}

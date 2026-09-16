@@ -1,0 +1,46 @@
+{
+  "entities": [
+    {
+      "_id": "1_superoffice",
+      "name": "Aktiv",
+      "status": "Active",
+      "ticketStatusId": 1
+    },
+    {
+      "_id": "2_superoffice",
+      "name": "Avsluttet",
+      "status": "Closed",
+      "ticketStatusId": 2
+    },
+    {
+      "_id": "3_superoffice",
+      "name": "Utsatt",
+      "status": "Postponed",
+      "ticketStatusId": 3
+    },
+    {
+      "_id": "4_superoffice",
+      "name": "Slettet",
+      "status": "Deleted",
+      "ticketStatusId": 4
+    },
+    {
+      "_id": "5_superoffice",
+      "name": "Sammenslått",
+      "status": "Merged",
+      "ticketStatusId": 5
+    },
+    {
+      "_id": "6_superoffice",
+      "name": "Venter på kunde",
+      "status": "Closed",
+      "ticketStatusId": 6
+    },
+    {
+      "_id": "7_superoffice",
+      "name": "Venter på 3dje part",
+      "status": "Postponed",
+      "ticketStatusId": 7
+    }
+  ]
+}

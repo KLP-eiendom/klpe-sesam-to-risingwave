@@ -1,0 +1,29 @@
+[
+  {
+    "#id": "822",
+    "Id": "822",
+    "Navn": "RIB",
+    "Beskrivelse": "822 - RIB",
+    "GruppeId": "8",
+    "GruppeNavn": "Generelle kostnader",
+    "GruppeBeskrivelse": "8 - Generelle kostnader"
+  },
+  {
+    "#id": "949",
+    "Id": "949",
+    "Navn": "Endring kostnadsføring",
+    "Beskrivelse": "949 - Endring kostnadsføring",
+    "GruppeId": "9",
+    "GruppeNavn": "Spesielle kostnader",
+    "GruppeBeskrivelse": "9 - Spesielle kostnader"
+  },
+  {
+    "#id": "PLED",
+    "Id": "PLED",
+    "Navn": "Prosjektledelse",
+    "Beskrivelse": "PLED - Prosjektledelse",
+    "GruppeId": "I",
+    "GruppeNavn": "Intern prosjektledelse",
+    "GruppeBeskrivelse": "I - Intern prosjektledelse"
+  }
+]
