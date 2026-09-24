@@ -1,0 +1,65 @@
+[
+  {
+    "#id": "2",
+    "SakstatusId": 2,
+    "Kode": "Closed",
+    "Navn": "Avsluttet",
+    "System": "superoffice",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "7",
+    "SakstatusId": 7,
+    "Kode": "Postponed",
+    "Navn": "Venter på 3dje part",
+    "System": "superoffice",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "4",
+    "SakstatusId": 4,
+    "Kode": "Deleted",
+    "Navn": "Slettet",
+    "System": "superoffice",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "3",
+    "SakstatusId": 3,
+    "Kode": "Postponed",
+    "Navn": "Utsatt",
+    "System": "superoffice",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "1",
+    "SakstatusId": 1,
+    "Kode": "Active",
+    "Navn": "Aktiv",
+    "System": "superoffice",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "5",
+    "SakstatusId": 5,
+    "Kode": "Merged",
+    "Navn": "Sammenslått",
+    "System": "superoffice",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "6",
+    "SakstatusId": 6,
+    "Kode": "Closed",
+    "Navn": "Venter på kunde",
+    "System": "superoffice",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  }
+]

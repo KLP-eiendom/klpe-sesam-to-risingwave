@@ -1,0 +1,1434 @@
+{
+  "entities": [
+    {
+      "regno": "965522441",
+      "bisnodeReference": "-6c33a4ac:18cfcd7d57e:-34a2",
+      "cmpBolResponses": null,
+      "cmpBolScreeningResponses": null,
+      "companyInput": {
+        "dunsNo": null,
+        "minimalSimilarityScoreLevel": 0,
+        "name": "ASK MEDIA AS",
+        "nationality": "NO",
+        "reference": "NO965522441",
+        "regNo": "965522441",
+        "useCmpBol": false
+      },
+      "dateFormat": "yyyy-MM-dd",
+      "endUser": null,
+      "isIndirectOwner": false,
+      "listsUsedForScreening": [
+        "UN_CONSOLIDATED",
+        "HMTREASURY",
+        "EU_GLOBAL"
+      ],
+      "message": "No result from PEP and/or SANCTION screening ",
+      "messages": null,
+      "nameMatchLevel": 0,
+      "ownerShare": null,
+      "ownerType": null,
+      "ownersAndBoardMembers": {
+        "beneficialOwnerStatus": null,
+        "companies": null,
+        "lastUpdated": "2024-01-14",
+        "managingDirectorRole": null,
+        "persons": [
+          {
+            "isIndirectOwner": false,
+            "message": "No result from PEP and/or SANCTION screening ",
+            "messages": null,
+            "ownerShare": null,
+            "ownerType": null,
+            "pepResults": null,
+            "personInput": null,
+            "reference": "NO965522441BOARD_MEMBER_1",
+            "sanctionResults": null,
+            "structureLevel": null,
+            "usedDataProvider": null,
+            "verifiedPerson": {
+              "address": {
+                "addressType": null,
+                "city": "OSLO",
+                "countryCode": null,
+                "countryName": null,
+                "county": null,
+                "details": null,
+                "highRiskCountry": false,
+                "municipality": null,
+                "postAddress": null,
+                "postBox": null,
+                "postCode": "0486",
+                "street": "OTHILIE TONNINGS VEI 18 A"
+              },
+              "birthCountryCode": null,
+              "birthDate": "1999-02-04",
+              "businessProhibitions": null,
+              "century": 0,
+              "children": null,
+              "citizenships": null,
+              "dateWhenAppointed": null,
+              "dateWhenAppointedUBO": null,
+              "deceasedDate": null,
+              "directorships": null,
+              "emigratedDate": null,
+              "extentOfControl": null,
+              "firstName": null,
+              "gender": null,
+              "highRiskCitizenship": false,
+              "highRiskNationality": false,
+              "identified": true,
+              "isIndirectOwner": false,
+              "lastName": null,
+              "message": null,
+              "messages": null,
+              "middleName": null,
+              "name": "VANEBO INGRID KRISTINE",
+              "natIdNo": null,
+              "nationality": "NO",
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "ownerShare": null,
+              "ownerType": null,
+              "parents": null,
+              "personAddresses": null,
+              "provider": "BISNODE",
+              "role": "3",
+              "roles": [
+                {
+                  "code": "3",
+                  "comment": null,
+                  "countryCode": null,
+                  "description": "Styremedlem",
+                  "endDate": null,
+                  "entityExternalId": null,
+                  "organization": null,
+                  "recordType": null,
+                  "roleType": null,
+                  "startDate": null,
+                  "title": null
+                }
+              ],
+              "screenableEntry": true,
+              "shares": null,
+              "spouse": null,
+              "status": null,
+              "statusDate": null,
+              "subjectReference": "24979864192187644",
+              "ultimateOwnershipPercent": 0,
+              "votePower": 0
+            },
+            "wlblResults": null
+          },
+          {
+            "isIndirectOwner": false,
+            "message": "No result from PEP and/or SANCTION screening ",
+            "messages": null,
+            "ownerShare": null,
+            "ownerType": null,
+            "pepResults": null,
+            "personInput": null,
+            "reference": "NO965522441BOARD_MEMBER_2",
+            "sanctionResults": null,
+            "structureLevel": null,
+            "usedDataProvider": null,
+            "verifiedPerson": {
+              "address": {
+                "addressType": null,
+                "city": "KONGSVINGER",
+                "countryCode": null,
+                "countryName": null,
+                "county": null,
+                "details": null,
+                "highRiskCountry": false,
+                "municipality": null,
+                "postAddress": null,
+                "postBox": null,
+                "postCode": "2214",
+                "street": "BEKKEFARET 10"
+              },
+              "birthCountryCode": null,
+              "birthDate": "1970-08-08",
+              "businessProhibitions": null,
+              "century": 0,
+              "children": null,
+              "citizenships": null,
+              "dateWhenAppointed": null,
+              "dateWhenAppointedUBO": null,
+              "deceasedDate": null,
+              "directorships": null,
+              "emigratedDate": null,
+              "extentOfControl": null,
+              "firstName": null,
+              "gender": null,
+              "highRiskCitizenship": false,
+              "highRiskNationality": false,
+              "identified": true,
+              "isIndirectOwner": false,
+              "lastName": null,
+              "message": null,
+              "messages": null,
+              "middleName": null,
+              "name": "NORDVANG BAARD ARILD",
+              "natIdNo": null,
+              "nationality": "NO",
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "ownerShare": null,
+              "ownerType": null,
+              "parents": null,
+              "personAddresses": null,
+              "provider": "BISNODE",
+              "role": "20",
+              "roles": [
+                {
+                  "code": "20",
+                  "comment": null,
+                  "countryCode": null,
+                  "description": "Daglig leder",
+                  "endDate": null,
+                  "entityExternalId": null,
+                  "organization": null,
+                  "recordType": null,
+                  "roleType": null,
+                  "startDate": null,
+                  "title": null
+                }
+              ],
+              "screenableEntry": true,
+              "shares": null,
+              "spouse": null,
+              "status": null,
+              "statusDate": null,
+              "subjectReference": "249713320148966572",
+              "ultimateOwnershipPercent": 0,
+              "votePower": 0
+            },
+            "wlblResults": null
+          },
+          {
+            "isIndirectOwner": false,
+            "message": "No result from PEP and/or SANCTION screening ",
+            "messages": null,
+            "ownerShare": null,
+            "ownerType": null,
+            "pepResults": null,
+            "personInput": null,
+            "reference": "NO965522441BOARD_MEMBER_3",
+            "sanctionResults": null,
+            "structureLevel": null,
+            "usedDataProvider": null,
+            "verifiedPerson": {
+              "address": {
+                "addressType": null,
+                "city": "KONGSVINGER",
+                "countryCode": null,
+                "countryName": null,
+                "county": null,
+                "details": null,
+                "highRiskCountry": false,
+                "municipality": null,
+                "postAddress": null,
+                "postBox": null,
+                "postCode": "2212",
+                "street": "TYRIHANSVEGEN 8"
+              },
+              "birthCountryCode": null,
+              "birthDate": "1974-02-28",
+              "businessProhibitions": null,
+              "century": 0,
+              "children": null,
+              "citizenships": null,
+              "dateWhenAppointed": null,
+              "dateWhenAppointedUBO": null,
+              "deceasedDate": null,
+              "directorships": null,
+              "emigratedDate": null,
+              "extentOfControl": null,
+              "firstName": null,
+              "gender": null,
+              "highRiskCitizenship": false,
+              "highRiskNationality": false,
+              "identified": true,
+              "isIndirectOwner": false,
+              "lastName": null,
+              "message": null,
+              "messages": null,
+              "middleName": null,
+              "name": "SØNSTELI PÅL",
+              "natIdNo": null,
+              "nationality": "NO",
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "ownerShare": null,
+              "ownerType": null,
+              "parents": null,
+              "personAddresses": null,
+              "provider": "BISNODE",
+              "role": "6",
+              "roles": [
+                {
+                  "code": "6",
+                  "comment": null,
+                  "countryCode": null,
+                  "description": "Observatør",
+                  "endDate": null,
+                  "entityExternalId": null,
+                  "organization": null,
+                  "recordType": null,
+                  "roleType": null,
+                  "startDate": null,
+                  "title": null
+                }
+              ],
+              "screenableEntry": true,
+              "shares": null,
+              "spouse": null,
+              "status": null,
+              "statusDate": null,
+              "subjectReference": "249719982588579688",
+              "ultimateOwnershipPercent": 0,
+              "votePower": 0
+            },
+            "wlblResults": null
+          },
+          {
+            "isIndirectOwner": false,
+            "message": "No result from PEP and/or SANCTION screening ",
+            "messages": null,
+            "ownerShare": null,
+            "ownerType": null,
+            "pepResults": null,
+            "personInput": null,
+            "reference": "NO965522441BOARD_MEMBER_4",
+            "sanctionResults": null,
+            "structureLevel": null,
+            "usedDataProvider": null,
+            "verifiedPerson": {
+              "address": {
+                "addressType": null,
+                "city": "FLISA",
+                "countryCode": null,
+                "countryName": null,
+                "county": null,
+                "details": null,
+                "highRiskCountry": false,
+                "municipality": null,
+                "postAddress": null,
+                "postBox": null,
+                "postCode": "2270",
+                "street": "GRANITTVEGEN 11"
+              },
+              "birthCountryCode": null,
+              "birthDate": "1966-09-16",
+              "businessProhibitions": null,
+              "century": 0,
+              "children": null,
+              "citizenships": null,
+              "dateWhenAppointed": null,
+              "dateWhenAppointedUBO": null,
+              "deceasedDate": null,
+              "directorships": null,
+              "emigratedDate": null,
+              "extentOfControl": null,
+              "firstName": null,
+              "gender": null,
+              "highRiskCitizenship": false,
+              "highRiskNationality": false,
+              "identified": true,
+              "isIndirectOwner": false,
+              "lastName": null,
+              "message": null,
+              "messages": null,
+              "middleName": null,
+              "name": "FINSTAD TOVE LISBETH",
+              "natIdNo": null,
+              "nationality": "NO",
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "ownerShare": null,
+              "ownerType": null,
+              "parents": null,
+              "personAddresses": null,
+              "provider": "BISNODE",
+              "role": "3",
+              "roles": [
+                {
+                  "code": "3",
+                  "comment": null,
+                  "countryCode": null,
+                  "description": "Styremedlem",
+                  "endDate": null,
+                  "entityExternalId": null,
+                  "organization": null,
+                  "recordType": null,
+                  "roleType": null,
+                  "startDate": null,
+                  "title": null
+                }
+              ],
+              "screenableEntry": true,
+              "shares": null,
+              "spouse": null,
+              "status": null,
+              "statusDate": null,
+              "subjectReference": "24976340183142276",
+              "ultimateOwnershipPercent": 0,
+              "votePower": 0
+            },
+            "wlblResults": null
+          },
+          {
+            "isIndirectOwner": false,
+            "message": "No result from PEP and/or SANCTION screening ",
+            "messages": null,
+            "ownerShare": null,
+            "ownerType": null,
+            "pepResults": null,
+            "personInput": null,
+            "reference": "NO965522441BOARD_MEMBER_BENEFICIAL_OWNER_OWNER_0",
+            "sanctionResults": null,
+            "structureLevel": null,
+            "usedDataProvider": null,
+            "verifiedPerson": {
+              "address": {
+                "addressType": null,
+                "city": "NAMNÅ",
+                "countryCode": null,
+                "countryName": null,
+                "county": null,
+                "details": null,
+                "highRiskCountry": false,
+                "municipality": null,
+                "postAddress": null,
+                "postBox": null,
+                "postCode": "2265",
+                "street": "Bergesidevegen 352"
+              },
+              "birthCountryCode": null,
+              "birthDate": "1969-03-12",
+              "businessProhibitions": null,
+              "century": 0,
+              "children": null,
+              "citizenships": null,
+              "dateWhenAppointed": null,
+              "dateWhenAppointedUBO": null,
+              "deceasedDate": null,
+              "directorships": null,
+              "emigratedDate": null,
+              "extentOfControl": {
+                "max": 0,
+                "min": 0,
+                "value": 90
+              },
+              "firstName": null,
+              "gender": null,
+              "highRiskCitizenship": false,
+              "highRiskNationality": false,
+              "identified": true,
+              "isIndirectOwner": false,
+              "lastName": null,
+              "message": null,
+              "messages": null,
+              "middleName": null,
+              "name": "VANEBO NILS JOHANNES",
+              "natIdNo": null,
+              "nationality": "NO",
+              "obmTypes": [
+                "BOARD_MEMBER",
+                "BENEFICIAL_OWNER",
+                "OWNER"
+              ],
+              "ownerShare": "90.0",
+              "ownerType": "DIRECT",
+              "parents": null,
+              "personAddresses": null,
+              "provider": "BISNODE",
+              "role": "1",
+              "roles": [
+                {
+                  "code": "1",
+                  "comment": null,
+                  "countryCode": null,
+                  "description": "Styrets leder",
+                  "endDate": null,
+                  "entityExternalId": null,
+                  "organization": null,
+                  "recordType": null,
+                  "roleType": null,
+                  "startDate": null,
+                  "title": null
+                }
+              ],
+              "screenableEntry": true,
+              "shares": null,
+              "spouse": null,
+              "status": null,
+              "statusDate": null,
+              "subjectReference": "24971921977675504",
+              "ultimateOwnershipPercent": 0,
+              "votePower": 0
+            },
+            "wlblResults": null
+          }
+        ]
+      },
+      "pepResults": null,
+      "reference": "NO965522441",
+      "sanctionResults": null,
+      "screeningSummary": {
+        "addedEntryTypeCount": {
+          "property1": 0,
+          "property2": 0
+        },
+        "cmpBolScreeningSummary": null,
+        "noOfAddedEntries": 5,
+        "noOfHitsOnAddedEntries": 0,
+        "noOfHitsOnMain": 0,
+        "noOfHitsOnOwnersAndBoardMembers": 0,
+        "noOfPepMatches": 0,
+        "noOfSanctionMatches": 0,
+        "noOfWlblMatches": 0,
+        "oandBReferences": null,
+        "obmsSummary": {
+          "withPepMatches": 0,
+          "withSanctionMatches": 0,
+          "withWlblMatches": 0
+        },
+        "totalScreened": 6
+      },
+      "structureLevel": null,
+      "usedDataProvider": "TRAPETS",
+      "verifiedCompany": {
+        "address": {
+          "addressType": null,
+          "city": "Kirkenær",
+          "countryCode": null,
+          "countryName": null,
+          "county": null,
+          "details": null,
+          "highRiskCountry": false,
+          "municipality": null,
+          "postAddress": "Kirkenær",
+          "postBox": "130",
+          "postCode": "2261",
+          "street": null
+        },
+        "businessProhibitions": null,
+        "dateWhenAppointed": null,
+        "dateWhenAppointedUBO": null,
+        "dunsNo": "518533039",
+        "empty": false,
+        "extentOfControl": null,
+        "highRiskNationality": false,
+        "historicalName": null,
+        "identified": true,
+        "isIndirectOwner": false,
+        "lastUpdated": "2024-01-14",
+        "legalForm": null,
+        "message": null,
+        "messages": null,
+        "name": "ASK MEDIA AS",
+        "nationality": "NO",
+        "obmTypes": null,
+        "ownerShare": null,
+        "ownerType": null,
+        "personAddresses": null,
+        "provider": "BISNODE",
+        "regNo": "965522441",
+        "role": null,
+        "roles": null,
+        "screenableEntry": true,
+        "status": "ACTIVE_COMPANY",
+        "statusDate": null,
+        "subjectReference": "2497965522441",
+        "visitingAddress": {
+          "addressType": null,
+          "city": "Kirkenær",
+          "countryCode": null,
+          "countryName": null,
+          "county": null,
+          "details": null,
+          "highRiskCountry": false,
+          "municipality": null,
+          "postAddress": null,
+          "postBox": null,
+          "postCode": "2260",
+          "street": "Solørvegen 1035"
+        },
+        "votePower": 0
+      },
+      "wlblResults": null,
+      "id": "518533039_965522441"
+    },
+    {
+      "regno": "919967870",
+      "message": "No result from PEP and/or SANCTION screening ",
+      "reference": "NO919967870",
+      "usedDataProvider": "TRAPETS",
+      "companyInput": {
+        "nationality": "NO",
+        "reference": "NO919967870",
+        "minimalSimilarityScoreLevel": 0.0,
+        "regNo": "919967870",
+        "useCmpBol": false,
+        "name": "NORDOMATIC NORGE AS"
+      },
+      "verifiedCompany": {
+        "provider": "BISNODE",
+        "nationality": "NO",
+        "address": {
+          "postCode": "0665",
+          "postAddress": "Oslo",
+          "city": "Oslo"
+        },
+        "status": "ACTIVE_COMPANY",
+        "messages": [
+          {
+            "code": "298",
+            "description": "Ingen reelle rettighetshavere over 25% funnet i Norge."
+          },
+          {
+            "code": "300",
+            "description": "100% reelle rettighetshaverandeler leder videre til DUNS 352 808 327 i utlandet (SE)."
+          }
+        ],
+        "identified": true,
+        "screenableEntry": true,
+        "subjectReference": "2497919967870",
+        "name": "NORDOMATIC NORGE AS",
+        "dunsNo": "346413042",
+        "regNo": "919967870",
+        "lastUpdated": "2024-01-06",
+        "visitingAddress": {
+          "street": "Ulvenveien 111",
+          "postCode": "0665",
+          "city": "Oslo"
+        },
+        "empty": false
+      },
+      "bisnodeReference": "3437ec39:18cd79278f2:1fb9",
+      "dateFormat": "yyyy-MM-dd",
+      "nameMatchLevel": 5,
+      "screeningSummary": {
+        "addedEntryTypeCount": {
+          "BOARD_MEMBER": 3
+        },
+        "noOfAddedEntries": 3,
+        "noOfHitsOnMain": 0,
+        "noOfHitsOnOwnersAndBoardMembers": 0,
+        "noOfHitsOnAddedEntries": 0,
+        "totalScreened": 4,
+        "noOfPepMatches": 0,
+        "noOfSanctionMatches": 0,
+        "noOfWlblMatches": 0,
+        "obmsSummary": {
+          "withPepMatches": 0,
+          "withSanctionMatches": 0,
+          "withWlblMatches": 0
+        }
+      },
+      "listsUsedForScreening": [
+        "EU_GLOBAL",
+        "HMTREASURY",
+        "UN_CONSOLIDATED"
+      ],
+      "ownersAndBoardMembers": {
+        "persons": [
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "NO",
+              "address": {
+                "street": "BIRCH-REICHENWALDS GATE 24",
+                "postCode": "0483",
+                "city": "OSLO"
+              },
+              "roles": [
+                {
+                  "code": "3",
+                  "description": "Styremedlem"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "subjectReference": "24971787686793778",
+              "birthDate": "1985-06-12",
+              "name": "SLETTEMOEN RAGNHILD HOVDE",
+              "role": "3"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "NO919967870BOARD_MEMBER_0"
+          },
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "DK",
+              "address": {
+                "street": "INAKTIV 30072022"
+              },
+              "roles": [
+                {
+                  "code": "1",
+                  "description": "Styrets leder"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "subjectReference": "249763068938645266",
+              "birthDate": "1978-08-15",
+              "name": "JUUL TOKE KJÆR",
+              "role": "1"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "NO919967870BOARD_MEMBER_1"
+          },
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "NO",
+              "address": {
+                "street": "MARKALLEEN 27 A",
+                "postCode": "1368",
+                "city": "STABEKK"
+              },
+              "roles": [
+                {
+                  "code": "3",
+                  "description": "Styremedlem"
+                },
+                {
+                  "code": "20",
+                  "description": "Daglig leder"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "subjectReference": "249719984511136288",
+              "birthDate": "1971-04-28",
+              "name": "LUNDH LARS FREDRIK",
+              "role": "3, 20"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "NO919967870BOARD_MEMBER_2"
+          }
+        ],
+        "lastUpdated": "2024-01-06"
+      },
+      "id": "346413042_919967870"
+    },
+    {
+      "regno": "926489224",
+      "message": "No result from PEP and/or SANCTION screening ",
+      "reference": "NO926489224",
+      "usedDataProvider": "TRAPETS",
+      "companyInput": {
+        "nationality": "NO",
+        "reference": "NO926489224",
+        "minimalSimilarityScoreLevel": 0.0,
+        "regNo": "926489224",
+        "useCmpBol": false,
+        "name": "Tømrermesteren AS"
+      },
+      "verifiedCompany": {
+        "provider": "BISNODE",
+        "nationality": "NO",
+        "status": "ACTIVE_COMPANY",
+        "identified": true,
+        "screenableEntry": true,
+        "subjectReference": "2497926489224",
+        "name": "TØMRERMESTEREN AS",
+        "dunsNo": "347194036",
+        "regNo": "926489224",
+        "lastUpdated": "2024-01-08",
+        "visitingAddress": {
+          "street": "Kongens Gate 15",
+          "postCode": "0153",
+          "city": "Oslo"
+        },
+        "empty": false
+      },
+      "bisnodeReference": "-6c33a4ac:18cbab77c0b:58cc",
+      "dateFormat": "yyyy-MM-dd",
+      "nameMatchLevel": 5,
+      "screeningSummary": {
+        "addedEntryTypeCount": {
+          "BOARD_MEMBER": 2,
+          "BENEFICIAL_OWNER": 4
+        },
+        "noOfAddedEntries": 2,
+        "noOfHitsOnMain": 0,
+        "noOfHitsOnOwnersAndBoardMembers": 0,
+        "noOfHitsOnAddedEntries": 0,
+        "totalScreened": 3,
+        "noOfPepMatches": 0,
+        "noOfSanctionMatches": 1,
+        "noOfWlblMatches": 0,
+        "obmsSummary": {
+          "withPepMatches": 0,
+          "withSanctionMatches": 0,
+          "withWlblMatches": 0
+        }
+      },
+      "listsUsedForScreening": [
+        "EU_GLOBAL",
+        "HMTREASURY",
+        "UN_CONSOLIDATED"
+      ],
+      "ownersAndBoardMembers": {
+        "persons": [
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "NO",
+              "address": {
+                "street": "Heimdalsgata 10 A",
+                "postCode": "0561",
+                "city": "OSLO"
+              },
+              "roles": [
+                {
+                  "code": "1",
+                  "description": "Styrets leder"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BOARD_MEMBER",
+                "BENEFICIAL_OWNER",
+                "OWNER"
+              ],
+              "isIndirectOwner": false,
+              "ownerType": "DIRECT",
+              "ownerShare": "50.0",
+              "extentOfControl": {
+                "value": 50.0
+              },
+              "subjectReference": "249714516326668556",
+              "birthDate": "1993-05-07",
+              "name": "TORBLÅ SEBASTIAN S",
+              "role": "1"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "NO926489224BOARD_MEMBER_BENEFICIAL_OWNER_OWNER_0"
+          },
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "NO",
+              "address": {
+                "street": "Skafjellveien 88",
+                "postCode": "3076",
+                "city": "SANDE I VESTFOLD"
+              },
+              "roles": [
+                {
+                  "code": "20",
+                  "description": "Daglig leder"
+                },
+                {
+                  "code": "2",
+                  "description": "Nestleder"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BOARD_MEMBER",
+                "BENEFICIAL_OWNER",
+                "OWNER"
+              ],
+              "isIndirectOwner": false,
+              "ownerType": "DIRECT",
+              "ownerShare": "50.0",
+              "extentOfControl": {
+                "value": 50.0
+              },
+              "subjectReference": "24972537566671126",
+              "birthDate": "1994-07-10",
+              "name": "KRISTIANSEN MATS",
+              "role": "20, 2"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "NO926489224BOARD_MEMBER_BENEFICIAL_OWNER_OWNER_1"
+          }
+        ],
+        "lastUpdated": "2024-01-08"
+      },
+      "id": "347194036_926489224"
+    },
+    {
+      "regno": "11394914",
+      "message": "No result from PEP and/or SANCTION screening ",
+      "reference": "DK11394914",
+      "usedDataProvider": "TRAPETS",
+      "companyInput": {
+        "nationality": "DK",
+        "reference": "DK11394914",
+        "minimalSimilarityScoreLevel": 0.0,
+        "regNo": "11394914",
+        "useCmpBol": false,
+        "name": "Forenede Service A/S"
+      },
+      "verifiedCompany": {
+        "provider": "BISNODE",
+        "nationality": "DK",
+        "status": "ACTIVE",
+        "identified": true,
+        "screenableEntry": true,
+        "subjectReference": "218311394914",
+        "name": "Forenede Service A/S",
+        "dunsNo": "306216508",
+        "regNo": "11394914",
+        "lastUpdated": "2024-01-23",
+        "legalForm": {
+          "dk": "Aktieselskab"
+        },
+        "visitingAddress": {
+          "street": "Borupvang 5E",
+          "postCode": "2750",
+          "city": "Ballerup",
+          "countryName": "Danmark",
+          "countryCode": "DK",
+          "county": "Hovedstaden"
+        },
+        "empty": false
+      },
+      "bisnodeReference": "-6c33a4ac:18cfcd7d57e:33ed",
+      "dateFormat": "yyyy-MM-dd",
+      "nameMatchLevel": 0,
+      "screeningSummary": {
+        "addedEntryTypeCount": {
+          "BOARD_MEMBER": 3,
+          "BENEFICIAL_OWNER": 2,
+          "MANAGER": 1
+        },
+        "noOfAddedEntries": 6,
+        "noOfHitsOnMain": 0,
+        "noOfHitsOnOwnersAndBoardMembers": 0,
+        "noOfHitsOnAddedEntries": 0,
+        "totalScreened": 7,
+        "noOfPepMatches": 0,
+        "noOfSanctionMatches": 0,
+        "noOfWlblMatches": 0,
+        "obmsSummary": {
+          "withPepMatches": 0,
+          "withSanctionMatches": 1,
+          "withWlblMatches": 0
+        }
+      },
+      "listsUsedForScreening": [
+        "UN_CONSOLIDATED",
+        "HMTREASURY",
+        "EU_GLOBAL"
+      ],
+      "ownersAndBoardMembers": {
+        "persons": [
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "DK",
+              "address": {
+                "street": "Brentevej 3",
+                "postCode": "2635",
+                "city": "Ishøj",
+                "countryName": "Denmark",
+                "countryCode": "DK"
+              },
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BENEFICIAL_OWNER"
+              ],
+              "ownerType": "UNDEFINED",
+              "extentOfControl": {
+                "value": 29.7
+              },
+              "subjectReference": "218311723188801550700782",
+              "name": "Pia Marianne Krogh"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "DK11394914BENEFICIAL_OWNER_4"
+          },
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "DK",
+              "address": {
+                "street": "Rådhusparken 58 0127.",
+                "postCode": "3450",
+                "city": "Allerød",
+                "countryName": "Denmark",
+                "countryCode": "DK"
+              },
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BENEFICIAL_OWNER"
+              ],
+              "ownerType": "UNDEFINED",
+              "extentOfControl": {
+                "value": 52.28
+              },
+              "subjectReference": "218378419099101550700782",
+              "name": "Kirsten Bangsbo Krogh"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "DK11394914BENEFICIAL_OWNER_5"
+          },
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "DK",
+              "address": {
+                "street": "Vejenbrødvej 9",
+                "postCode": "2980",
+                "city": "Kokkedal",
+                "countryName": "Denmark",
+                "countryCode": "DK"
+              },
+              "roles": [
+                {
+                  "code": "3",
+                  "description": "Bestyrelsesmedlem"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "subjectReference": "2183-103855699301550700782",
+              "name": "Lars Michael Folkmann",
+              "role": "3"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "DK11394914BOARD_MEMBER_1"
+          },
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "DK",
+              "address": {
+                "street": "Lundely 3",
+                "postCode": "2900",
+                "city": "Hellerup",
+                "countryName": "Denmark",
+                "countryCode": "DK"
+              },
+              "roles": [
+                {
+                  "code": "1",
+                  "description": "Bestyrelsesformand"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "subjectReference": "2183129923935001550700782",
+              "name": "Christian Bidstrup",
+              "role": "1"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "DK11394914BOARD_MEMBER_2"
+          },
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "SE",
+              "address": {
+                "countryName": "Sweden",
+                "countryCode": "SE"
+              },
+              "roles": [
+                {
+                  "code": "3",
+                  "description": "Bestyrelsesmedlem"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "subjectReference": "264282743897101550700782",
+              "name": "Madeleine Lundström",
+              "role": "3"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "DK11394914BOARD_MEMBER_3"
+          },
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "DK",
+              "address": {
+                "street": "Gammel Landevej 9",
+                "postCode": "4000",
+                "city": "Roskilde",
+                "countryName": "Denmark",
+                "countryCode": "DK"
+              },
+              "roles": [
+                {
+                  "code": "21",
+                  "description": "Administrerende Direktør"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "MANAGER"
+              ],
+              "subjectReference": "2183129151164401550700782",
+              "name": "Henrik Hylleberg Luxhøj",
+              "role": "21"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "DK11394914MANAGER_0"
+          }
+        ],
+        "lastUpdated": "2024-01-23"
+      },
+      "id": "306216508_11394914"
+    },
+    {
+      "regno": "5590161245",
+      "message": "No result from PEP and/or SANCTION screening ",
+      "reference": "SE5590161245",
+      "usedDataProvider": "TRAPETS",
+      "companyInput": {
+        "nationality": "SE",
+        "reference": "SE5590161245",
+        "minimalSimilarityScoreLevel": 0.0,
+        "regNo": "5590161245",
+        "useCmpBol": false,
+        "name": "Idun Real Estate Solutions AB"
+      },
+      "verifiedCompany": {
+        "provider": "BISNODE",
+        "nationality": "SE",
+        "identified": true,
+        "screenableEntry": true,
+        "subjectReference": "26425590161245",
+        "name": "Idun Real Estate Solutions AB",
+        "dunsNo": "352798393",
+        "regNo": "5590161245",
+        "lastUpdated": "2024-01-22",
+        "legalForm": {
+          "en": "Limited company",
+          "se": "Aktiebolag",
+          "code": "AB"
+        },
+        "empty": false
+      },
+      "bisnodeReference": "-40866c6d:18d55138e60:-1fbd",
+      "dateFormat": "yyyy-MM-dd",
+      "nameMatchLevel": 0,
+      "screeningSummary": {
+        "addedEntryTypeCount": {
+          "BOARD_MEMBER": 9
+        },
+        "noOfAddedEntries": 9,
+        "noOfHitsOnMain": 0,
+        "noOfHitsOnOwnersAndBoardMembers": 0,
+        "noOfHitsOnAddedEntries": 0,
+        "totalScreened": 8,
+        "noOfPepMatches": 0,
+        "noOfSanctionMatches": 1,
+        "noOfWlblMatches": 0,
+        "obmsSummary": {
+          "withPepMatches": 0,
+          "withSanctionMatches": 0,
+          "withWlblMatches": 0
+        }
+      },
+      "listsUsedForScreening": [
+        "EU_GLOBAL",
+        "HMTREASURY",
+        "UN_CONSOLIDATED"
+      ],
+      "ownersAndBoardMembers": {
+        "companies": [
+          {
+            "message": "Company with role code(s) [97] is not screened.",
+            "reference": "SE5590161245BOARD_MEMBER_5",
+            "verifiedCompany": {
+              "provider": "BISNODE",
+              "nationality": "SE",
+              "roles": [
+                {
+                  "code": "97",
+                  "description": "Auditor"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": false,
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "dateWhenAppointed": "2021-07-06",
+              "subjectReference": "2642556053-5873",
+              "name": "Ernst & Young AB",
+              "regNo": "556053-5873",
+              "empty": false,
+              "role": "97"
+            }
+          }
+        ],
+        "persons": [
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "SE",
+              "roles": [
+                {
+                  "code": "19",
+                  "description": "Member chairman"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "dateWhenAppointed": "2020-07-29",
+              "subjectReference": "2642195702132951",
+              "natIdNo": "195702132951",
+              "gender": "MALE",
+              "birthDate": "1957-02-13",
+              "century": 19,
+              "firstName": "Anders Ingmar",
+              "lastName": "Ingeström",
+              "name": "Ingeström, Anders Ingmar",
+              "role": "19"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "SE5590161245BOARD_MEMBER_0"
+          },
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "SE",
+              "roles": [
+                {
+                  "code": "20",
+                  "description": "Member"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "dateWhenAppointed": "2023-05-04",
+              "subjectReference": "2642196803251674",
+              "natIdNo": "196803251674",
+              "gender": "MALE",
+              "birthDate": "1968-03-25",
+              "century": 19,
+              "firstName": "Erik Oskar",
+              "lastName": "Wallin",
+              "name": "Wallin, Erik Oskar",
+              "role": "20"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "SE5590161245BOARD_MEMBER_1"
+          },
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "SE",
+              "roles": [
+                {
+                  "code": "20",
+                  "description": "Member"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "dateWhenAppointed": "2023-12-11",
+              "subjectReference": "2642196210251655",
+              "natIdNo": "196210251655",
+              "gender": "MALE",
+              "birthDate": "1962-10-25",
+              "century": 19,
+              "firstName": "Per Mikael",
+              "lastName": "Nordling",
+              "name": "Nordling, Per Mikael",
+              "role": "20"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "SE5590161245BOARD_MEMBER_2"
+          },
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "SE",
+              "roles": [
+                {
+                  "code": "20",
+                  "description": "Member"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "dateWhenAppointed": "2023-06-27",
+              "subjectReference": "2642197107260098",
+              "natIdNo": "197107260098",
+              "gender": "MALE",
+              "birthDate": "1971-07-26",
+              "century": 19,
+              "firstName": "Per Nicklas",
+              "lastName": "Wållberg Walldan",
+              "name": "Wållberg Walldan, Per Nicklas",
+              "role": "20"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "SE5590161245BOARD_MEMBER_3"
+          },
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "SE",
+              "roles": [
+                {
+                  "code": "20",
+                  "description": "Member"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "dateWhenAppointed": "2023-12-11",
+              "subjectReference": "2642197805161911",
+              "natIdNo": "197805161911",
+              "gender": "MALE",
+              "birthDate": "1978-05-16",
+              "century": 19,
+              "firstName": "Johan Erik",
+              "lastName": "Castevall",
+              "name": "Castevall, Johan Erik",
+              "role": "20"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "SE5590161245BOARD_MEMBER_4"
+          },
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "SE",
+              "roles": [
+                {
+                  "code": "95",
+                  "description": "Principally responsible auditor"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": false,
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "dateWhenAppointed": "2023-12-18",
+              "subjectReference": "2642198111237528",
+              "natIdNo": "198111237528",
+              "gender": "FEMALE",
+              "birthDate": "1981-11-23",
+              "century": 19,
+              "firstName": "Karin Hanna Katrine",
+              "lastName": "Söderberg",
+              "name": "Söderberg, Karin Hanna Katrine",
+              "role": "95"
+            },
+            "message": "Person with role code(s) [95] is not screened.",
+            "reference": "SE5590161245BOARD_MEMBER_6"
+          },
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "SE",
+              "roles": [
+                {
+                  "code": "20",
+                  "description": "Member"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "dateWhenAppointed": "2023-12-11",
+              "subjectReference": "2642196507189303",
+              "natIdNo": "196507189303",
+              "gender": "FEMALE",
+              "birthDate": "1965-07-18",
+              "century": 19,
+              "firstName": "Sheila",
+              "lastName": "Florell",
+              "name": "Florell, Sheila",
+              "role": "20"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "SE5590161245BOARD_MEMBER_7"
+          },
+          {
+            "verifiedPerson": {
+              "provider": "BISNODE",
+              "nationality": "SE",
+              "roles": [
+                {
+                  "code": "6",
+                  "description": "External mgr"
+                }
+              ],
+              "identified": true,
+              "screenableEntry": true,
+              "obmTypes": [
+                "BOARD_MEMBER"
+              ],
+              "dateWhenAppointed": "2023-05-04",
+              "subjectReference": "2642198405222491",
+              "natIdNo": "198405222491",
+              "gender": "MALE",
+              "birthDate": "1984-05-22",
+              "century": 19,
+              "firstName": "Per Nils",
+              "lastName": "Karlberg",
+              "name": "Karlberg, Per Nils",
+              "role": "6"
+            },
+            "message": "No result from PEP and/or SANCTION screening ",
+            "reference": "SE5590161245BOARD_MEMBER_8"
+          }
+        ],
+        "lastUpdated": "2024-01-22"
+      },
+      "id": "352798393_5590161245"
+    }
+  ],
+  "table_type": "webhook"
+}

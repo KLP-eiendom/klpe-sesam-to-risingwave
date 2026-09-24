@@ -1,0 +1,135 @@
+[
+  {
+    "#id": "Contract-21-08-22_12-09-327",
+    "payload": {
+      "_id": "fGthHf5Lx",
+      "contractId": "Contract-21-08-22_12-09-327",
+      "derogation": "<p>Leietaker vedtar at tvangsfravikelse kan kreves hvis husleien eller avtalte tilleggsytelser ikke blir betalt, jf tvangsfullbyrdelsesloven § 13-2 tredje ledd (a).</p><p>Leietaker vedtar at tvangsfravikelse kan kreves når leietiden har utløpt, jf tvangsfullbyrdelsesloven § 13-2 tredje ledd (b).</p>",
+      "endDate": "",
+      "id": "Contract-21-08-22_12-09-327",
+      "leaseConsistsOf": "<ul><li>Dette dokument (Hovedkontrakten)</li><li>Tegninger (Vedlegg 1)</li><li>Generelle kontraktsvilkår (Vedlegg 2)</li><li>Gjeldende vedtekter for Senterforeningen (Vedlegg 3)</li><li>Energiattest (Vedlegg 4)</li></ul><p><br></p><p>Dokumentene angitt ovenfor anses alle som integrerte deler av Leiekontrakten. Alle deler av Leiekontrakten anses som bindende for partene. Leietaker bekrefter, ved sin underskrift, å ha satt seg inn i samtlige av disse dokumentene. Leietaker bekrefter også at han vil sette seg inn i de ajourføringer av dokumentene som legges inn i Mitt Leieforhold.</p><p><br></p><p>Ved eventuell motstrid mellom Hovedkontrakten og de øvrige dokumentere, går Hovedkontrakten foran. Vedlegg 1 går ved eventuell motstrid foran Vedlegg 2. For øvrig går vedlegg 2 foran de øvrige dokumentene.</p><p><br></p><p>Nærværende leiekontrakt er å anse som en fornyelse av leieavtale mellom <strong>xxxxxx</strong> (Utleier) og <strong>xxxxxx</strong> (Leietaker) av den <strong>xxxxxx</strong>, og betingelser og bestemmelser om vedlikeholdsplikt gjelder derfor fra denne avtalen og den første opprinnelige avtalen av <strong>xxxxxx</strong>.</p><p><br></p><p>Nærværende leiekontrakt er på denne bakgrunn inngått mellom <strong>xxxxxx</strong> og <strong>xxxxxx</strong>.</p>",
+      "openingDate": "",
+      "parties": {
+        "landlord": {
+          "address": "Karl Johans gate 37-41\n",
+          "contactPerson": {
+            "email": "c/o AZETS Insight AS, Postboks 659974, 7439 Oslo",
+            "firstName": "c/o AZETS Insight AS, Postboks 659974, 7439 Oslo",
+            "lastName": "c/o AZETS Insight AS, Postboks 659974, 7439 Oslo",
+            "phone": "c/o AZETS Insight AS, Postboks 659974, 7439 Oslo"
+          },
+          "invoiceAddress": "c/o AZETS Insight AS, Postboks 659974, 7439 Oslo",
+          "name": "Nordpolen Verksted AS",
+          "organisationNo": "123456789",
+          "postalAddress": "Karl Johans gate 37-41, OSLO",
+          "type": "landlord"
+        },
+        "tenant": {
+          "accountNumber": "70580640921",
+          "address": "Jernbanetorget 6, 0154 OSLO",
+          "contactPerson": {
+            "email": "utvikler@example.com",
+            "firstName": "Susane Seel",
+            "lastName": "Bahr",
+            "phone": "+4721000007"
+          },
+          "invoiceAddress": "Postboks 400 Sentrum NO-0103 Oslo",
+          "name": "Byporten ANS",
+          "organisationNo": "954378004",
+          "postalAddress": "Postboks 400 Sentrum, 0103 Oslo",
+          "propertyManager": "KLP EIENDOM OSLO AS",
+          "tenantInfo": {
+            "_updated": 293,
+            "address": "Karl Johans gate 37-41\n",
+            "createdAt": "2020-12-10T09:54:32",
+            "id": 2296,
+            "invoiceAddress": "c/o AZETS Insight AS, Postboks 659974, 7439 Oslo",
+            "name": "Nordpolen Verksted AS",
+            "number": "10020",
+            "postalAddress": "Karl Johans gate 37-41, OSLO",
+            "updatedAt": "2021-01-07T10:06:20"
+          },
+          "type": "tenant"
+        }
+      },
+      "rentalCosts": {
+        "indexAdjustment": {
+          "basicIndex": 1642251229000,
+          "firstTimeRegulation": 1673787229000
+        },
+        "marketing": {
+          "marketingCost": "",
+          "minimumMarketingCost": 937500
+        },
+        "paymentProvision": "quarterly",
+        "rent": {
+          "minimumRent": "2500000",
+          "minimumTurnover": "",
+          "turnoverRent": ""
+        },
+        "shared": {
+          "storageCosts": "",
+          "storeCosts": ""
+        }
+      },
+      "rentalPeriod": {
+        "end": "",
+        "opening": "",
+        "options": {
+          "type": "renewal",
+          "years": ""
+        },
+        "rentalOptions": "",
+        "start": ""
+      },
+      "rentalProperties": {
+        "description": "<p>Beskrivelse av hvordan lokalet er inndelt:</p><p>Beskrivelse av gulv:</p><p>Beskrivelse av innvendige veggflater:</p><p>Beskrivelse av dører og fasader mot butikktorg/fellesarealer/eventuelle yttervinduer:</p><p>Beskrivelse av himling:</p><p>Beskrivelse av belysning: (leietakers ansvar og kostnad)</p><p>Beskrivelse av el stikk: (Lokalet er utstyrt med normal utrustning av belysning og stikkontakter for vanlig butikkdrift som påvist)</p><p>Beskrivelse av sanitær: Det er/ er ikke fremført vann og avløp til ett punkt i leiearealet</p><p>Beskrivelse av fancoil i lokalet:</p><p>Beskrivelse av annet:</p>",
+        "property": {
+          "address": "Jernbanetorget 6, 0154 OSLO",
+          "commonAreal": "40",
+          "exclusiveAreal": "100",
+          "includeStorage": "true",
+          "level": "1",
+          "localNumber": "",
+          "municipality": "Oslo",
+          "parcelNumber": "208/911",
+          "shoppingMallName": "Byporten - Kjøpesenter",
+          "storageUnit": {
+            "address": "Jernbanetorget 6, 0154 OSLO",
+            "commonAreal": "20",
+            "exclusiveAreal": "40",
+            "level": "1",
+            "localNumber": "122",
+            "rentCost": "100000",
+            "shoppingMallName": "Byporten - Kjøpesenter",
+            "totalAreal": 60
+          },
+          "totalAreal": 140
+        },
+        "store": {
+          "chain": "KFC",
+          "concept": "<p>food n stuf</p>",
+          "groupName": "KFC",
+          "industryCode": "storeIndustryCode_o1",
+          "name": "KFC"
+        }
+      },
+      "security": {
+        "deadline": 1661939805734,
+        "form": "securityAlternativeAditionalInfo_o1",
+        "providesSecurity": true,
+        "sum": 9198770
+      },
+      "signedDocument": {
+        "documentUid": "/api/envelopes/HkxQKRmAbF/documents/Syg4YRXCbt",
+        "envelopeUid": "/envelopes/HkxQKRmAbF",
+        "fileId": "",
+        "fileName": "",
+        "fileType": ""
+      },
+      "specialProvision": "<p>nada</p>",
+      "startDate": "",
+      "vat": 1
+    }
+  }
+]

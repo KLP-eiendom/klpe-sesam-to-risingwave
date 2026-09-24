@@ -1,0 +1,5 @@
+{
+  "mart": "mrt_global_invoice",
+  "blacklist": [],
+  "id_field": "Id"
+}

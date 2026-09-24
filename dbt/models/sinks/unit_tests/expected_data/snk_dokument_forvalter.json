@@ -1,0 +1,30 @@
+[
+  {
+    "#id": "24",
+    "Filnavn": "Standard leiekontrakt - sesam",
+    "Id": "24:superoffice-document",
+    "KonvoluttId": "HkxQKRmAbF",
+    "LekoId": "Contract-21-08-22_12-09-327",
+    "Navn": "Standard leiekontrakt - sesam",
+    "OpprettetAvSoPersonId": 7,
+    "Prosjekt": "N20900-N20902 Byporten Kjøpesenter",
+    "SignertDato": "~t2021-09-02T10:59:26.767Z",
+    "SoContactId": 2,
+    "ProsjektId": 4,
+    "SalgId": null
+  },
+  {
+    "#id": "25",
+    "Filnavn": "Standard leiekontrakt - leieavtale2",
+    "Id": "25:superoffice-document",
+    "KonvoluttId": "H1liOq-pbK",
+    "LekoId": null,
+    "Navn": "Standard leiekontrakt - leieavtale2",
+    "OpprettetAvSoPersonId": 7,
+    "Prosjekt": "N21100-N21102 Ett eller annet",
+    "SignertDato": "~t2021-09-03T08:57:13.284Z",
+    "SoContactId": 2,
+    "ProsjektId": null,
+    "SalgId": 2
+  }
+]

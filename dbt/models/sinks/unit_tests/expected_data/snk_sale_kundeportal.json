@@ -1,0 +1,53 @@
+[
+  {
+    "#id": "2:superoffice-sale",
+    "EksternId": "2:superoffice-sale",
+    "Created": "1970-01-01 00:00:00",
+    "OpprettetAv": "TL",
+    "LastUpdated": "1970-01-01 00:00:00",
+    "EndretAv": "TL",
+    "SoContactId": 3,
+    "Kundenummer": "600015",
+    "Beskrivelse": "",
+    "Belop": 0.0,
+    "Type": "50% NO:\"Kontraktsforhandlinger\";",
+    "Status": "[SR_SALE_OPEN]",
+    "SolgtDato": "2020-12-09 00:00:00+00:00",
+    "ProsjektId": 4,
+    "ProsjektNavn": "300-301 Pilestredet 40"
+  },
+  {
+    "#id": "1:superoffice-sale",
+    "EksternId": "1:superoffice-sale",
+    "Created": "1970-01-01 00:00:00",
+    "OpprettetAv": "",
+    "LastUpdated": "1970-01-01 00:00:00",
+    "EndretAv": "",
+    "SoContactId": 1,
+    "Kundenummer": "10000",
+    "Beskrivelse": "This is just an example sale!",
+    "Belop": 150.0,
+    "Type": "30% NO:\"Visning\";",
+    "Status": "[SR_SALE_OPEN]",
+    "SolgtDato": "2016-01-04 00:00:00+00:00",
+    "ProsjektId": 0,
+    "ProsjektNavn": null
+  },
+  {
+    "#id": "3:superoffice-sale",
+    "EksternId": "3:superoffice-sale",
+    "Created": "1970-01-01 00:00:00",
+    "OpprettetAv": "TL",
+    "LastUpdated": "1970-01-01 00:00:00",
+    "EndretAv": "TL",
+    "SoContactId": 9,
+    "Kundenummer": "90002123",
+    "Beskrivelse": "",
+    "Belop": 0.0,
+    "Type": "30% NO:\"Sendt tilbud\";",
+    "Status": "[SR_SALE_OPEN]",
+    "SolgtDato": "2021-02-03 00:00:00+00:00",
+    "ProsjektId": 0,
+    "ProsjektNavn": null
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "blacklist": [
+    "content",
+    "jsondata"
+  ],
+  "id_field": "id"
+}

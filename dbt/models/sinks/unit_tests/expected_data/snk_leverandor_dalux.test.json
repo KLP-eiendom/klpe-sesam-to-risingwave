@@ -1,0 +1,7 @@
+{
+  "mart": "mrt_leverandor_dalux_writeback",
+  "blacklist": [
+    "userDefinedFields"
+  ],
+  "id_field": "companyId"
+}

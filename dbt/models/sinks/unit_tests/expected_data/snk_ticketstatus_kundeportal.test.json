@@ -1,0 +1,5 @@
+{
+  "mart": "mrt_global_ticketstatus",
+  "blacklist": [],
+  "id_field": "SakstatusId"
+}

@@ -1,0 +1,212 @@
+unit_tests:
+  - name: snk_leverandorvurdering_superoffice__sesam_parity
+    model: snk_leverandorvurdering_superoffice
+    given:
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - {
+              contactid: 7867,
+              dunsnr: 562231845,
+              orgnr: "123",
+              kredittrating: "AA",
+              betalingsanmerkning: "Akseptabel",
+              soliditet: 0.1747,
+              aarsregnskap: "2022-12",
+              okonomiskforhold_sistvurdert: "2023-07-11 00:00:00",
+              mvaregistrert: "ja",
+              sperret: false,
+              d365kommentar: "Test",
+              revisor: "DELOITTE AS",
+              revisorkommentar: "Årsoppgjøret er ikke avgitt innen lovens frist",
+              sanksjonert: null,
+              underavvikling: null,
+              konsernintern: false,
+            }
+    expect:
+      rows:
+        - {
+            "ContactId": 7867,
+            "Dunsnr": 562231845,
+            "Orgnummer": "123",
+            "Kredittrating": "AA",
+            "Betanmerkning": "Akseptabel",
+            "Soliditet": 0.1747,
+            "Aarsregnskap": "2022-12",
+            "Okonomiskforhold": "2023-07-11 00:00:00",
+            "MvaRegistrert": "ja",
+            "Sperret": false,
+            "D365Kommentar": "Test",
+            "Revisor": "DELOITTE AS",
+            "RevisorKommentar": "Årsoppgjøret er ikke avgitt innen lovens frist",
+            "Sanksjonert": null,
+            "Underavvikling": null,
+            "Konsernintern": false,
+          }
+
+  # A vendor Bisnode hasn't DUNS-matched yet (dunsnr null) must still post its D365-sourced
+  # fields (Sperret, D365Kommentar, Orgnummer) to SuperOffice — confirmed real case:
+  # d365_leverandor_id 502782, leverandorsperre cleared in D365, but the row was filtered
+  # out entirely by the old `WHERE dunsnr IS NOT NULL`, so SuperOffice stayed "sperret"
+  # forever. Only Bisnode-sourced fields should be null, not the whole row.
+  - name: snk_leverandorvurdering_superoffice__posts_d365_fields_without_dunsnr
+    model: snk_leverandorvurdering_superoffice
+    given:
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - {
+              contactid: 10219,
+              dunsnr: null,
+              orgnr: "913063279",
+              kredittrating: null,
+              betalingsanmerkning: null,
+              soliditet: null,
+              aarsregnskap: null,
+              okonomiskforhold_sistvurdert: null,
+              mvaregistrert: null,
+              sperret: false,
+              d365kommentar: null,
+              revisor: null,
+              revisorkommentar: null,
+              sanksjonert: null,
+              underavvikling: false,
+              konsernintern: false,
+            }
+    expect:
+      rows:
+        - {
+            "ContactId": 10219,
+            "Dunsnr": null,
+            "Orgnummer": "913063279",
+            "Kredittrating": null,
+            "Betanmerkning": null,
+            "Soliditet": null,
+            "Aarsregnskap": null,
+            "Okonomiskforhold": null,
+            "MvaRegistrert": null,
+            "Sperret": false,
+            "D365Kommentar": null,
+            "Revisor": null,
+            "RevisorKommentar": null,
+            "Sanksjonert": null,
+            "Underavvikling": false,
+            "Konsernintern": false,
+          }
+
+  - name: snk_leverandor_omsetning_superoffice__sesam_parity
+    model: snk_leverandor_omsetning_superoffice
+    given:
+      - input: ref('mrt_leverandor_omsetning_superoffice')
+        rows:
+          - {
+              leverandornummer: "502393",
+              omsetning_belop_i_aar: -54863,
+              omsetning_belop_i_fjor: -14863,
+              contactId: 17828,
+              "MvaRegistrert": "ja",
+              "Revisor": "Ernst & Young AB",
+              "Sperret": false,
+              "UnderAvvikling": false,
+              "Konsernintern": true,
+              "Engangsleverandor": null,
+              "D365Kommentar": null,
+            }
+    expect:
+      rows:
+        - {
+            leverandornummer: "502393",
+            omsetning_belop_i_aar: -54863,
+            omsetning_belop_i_fjor: -14863,
+            contactId: 17828,
+            "MvaRegistrert": "ja",
+            "Revisor": "Ernst & Young AB",
+            "Sperret": false,
+            "D365Kommentar": null,
+            "UnderAvvikling": false,
+            "Engangsleverandor": null,
+            "Konsernintern": true,
+          }
+
+  - name: snk_leverandor_dalux__matched_vendor_carries_company_id
+    description: >
+      The update branch: a vendor with a Dalux company emits, carrying Dalux's own
+      companyId so pubsub-writer can PATCH /2.1/companies/{companyId}. The current
+      user-defined-field envelope rides along untouched — the writer replaces only
+      the mapped values inside it.
+    model: snk_leverandor_dalux
+    given:
+      - input: ref('mrt_leverandor_dalux_writeback')
+        rows:
+          - organisationid: "502003"
+            name: "UPS Norway AS"
+            address_road: "Postboks 228 Alnabru"
+            address_zipcode: "0614"
+            address_city: "OSLO"
+            phoneno: ~
+            email: ~
+            klassifisering: "Ikke godkjent"
+            organisasjonsnummer: "921000015"
+            lokasjon: "Oslo"
+            evalueringskommentar: "Vurdert 2026"
+            isactive: false
+      - input: ref('stg_dalux_leverandor')
+        rows:
+          - companyid: "2"
+            organisationid: "502003"
+            userdefinedfields: '{"items":[{"name":"Klassifisering","values":[{"text":"Godkjent"}]}]}'
+    expect:
+      rows:
+        - companyId: "2"
+          name: "UPS Norway AS"
+          phoneNo: ~
+          email: ~
+          isActive: false
+          address_road: "Postboks 228 Alnabru"
+          address_zipcode: "0614"
+          address_city: "OSLO"
+          klassifisering: "Ikke godkjent"
+          organisasjonsnummer: "921000015"
+          lokasjon: "Oslo"
+          evalueringskommentar: "Vurdert 2026"
+          userDefinedFields: '{"items":[{"name":"Klassifisering","values":[{"text":"Godkjent"}]}]}'
+
+  - name: snk_leverandor_dalux__vendor_without_dalux_company_does_not_emit
+    description: >
+      Creation is not wired up, so a vendor Dalux doesn't know must produce no
+      message at all — that is what the INNER JOIN is for.
+    model: snk_leverandor_dalux
+    given:
+      - input: ref('mrt_leverandor_dalux_writeback')
+        rows:
+          - organisationid: "509999"
+            name: "Ikke i Dalux AS"
+            isactive: true
+      - input: ref('stg_dalux_leverandor')
+        rows:
+          - companyid: "2"
+            organisationid: "502003"
+            userdefinedfields: ~
+    expect:
+      rows: []
+
+  - name: snk_leverandor_dalux__duplicate_organisation_id_does_not_emit
+    description: >
+      An organisationId held by two Dalux companies would otherwise fan out into two
+      PATCHes against arbitrary duplicates. The vendor is dropped instead, and stays
+      visible as a vendor Dalux never gets updated.
+    model: snk_leverandor_dalux
+    given:
+      - input: ref('mrt_leverandor_dalux_writeback')
+        rows:
+          - organisationid: "502003"
+            name: "UPS Norway AS"
+            isactive: true
+      - input: ref('stg_dalux_leverandor')
+        rows:
+          - companyid: "2"
+            organisationid: "502003"
+            userdefinedfields: ~
+          - companyid: "99"
+            organisationid: "502003"
+            userdefinedfields: ~
+    expect:
+      rows: []

@@ -1,0 +1,85 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - dbt/**
+      - azure-pipelines-ci.yml
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - dbt/**
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - name: DBT_PROFILES_DIR
+    value: $(Build.SourcesDirectory)/dbt
+  - group: Risingwave - CI
+
+steps:
+  # 1. Install dbt-risingwave adapter
+  - script: pip install dbt-risingwave psycopg2-binary
+    displayName: "Install dbt-risingwave adapter"
+
+  # 2. Drop all existing objects in ci database (handles stale models and dependency order)
+  - script: |
+      set -eo pipefail
+      # Set up PostgreSQL environment variables using shell variables (already mapped in 'env')
+      # This avoids syntax errors with special characters in passwords
+      export PGHOST="$DBT_RW_HOST"
+      export PGPORT="4566"
+      export PGUSER="$DBT_RW_USER"
+      export PGPASSWORD="$DBT_RW_PASSWORD"
+      export PGSSLMODE="require"
+
+      # Ensure ci database exists and user has CONNECT privilege
+      # Connecting to 'dev' first to perform administrative tasks
+      psql -d dev -c "CREATE DATABASE IF NOT EXISTS ci;" || true
+      psql -d dev -c "GRANT CONNECT, CREATE ON DATABASE ci TO $DBT_RW_USER;" || true
+      psql -d ci -c "GRANT USAGE, CREATE ON SCHEMA public TO $DBT_RW_USER;" || true
+      
+      # Now run the drop script against the ci database
+      psql -d ci -f scripts/drop_all.sql
+    displayName: "Drop all existing ci objects"
+    env:
+      DBT_RW_HOST: $(DBT_RW_HOST)
+      DBT_RW_USER: $(DBT_RW_USER)
+      DBT_RW_PASSWORD: $(DBT_RW_PASSWORD)
+
+  # 3. Seed, run, and test against ci database
+  - script: |
+      set -eo pipefail
+      cd dbt
+      dbt seed --target ci
+      
+      # Build staging models first (so they can receive test data)
+      dbt run --target ci --full-refresh --select staging.*
+      
+      # Load test data into staging tables
+      python3 scripts/load_test_data.py
+      
+      # Run marts + sinks with full-refresh (excludes staging to preserve loaded test data)
+      dbt run --target ci --full-refresh --exclude staging.*
+      
+      # Run E2E verification (smoke tests)
+      python3 scripts/verify_e2e.py
+      
+      # Run standard dbt tests (unit tests and generic tests)
+      dbt test --target ci
+    displayName: "Run dbt (seed + run + test)"
+    env:
+      DBT_RW_HOST: $(DBT_RW_HOST)
+      DBT_RW_USER: $(DBT_RW_USER)
+      DBT_RW_PASSWORD: $(DBT_RW_PASSWORD)
+      DBT_RW_DBNAME: ci
+      RW_WEBHOOK_SECRET: $(RW_WEBHOOK_SECRET)
+      FORVALTER_MYSQL_DB: $(FORVALTER_MYSQL_DB)
+      KUNDEPORTAL_MYSQL_DB: $(KUNDEPORTAL_MYSQL_DB)
+      MILJOPROFIL_MYSQL_DB: $(MILJOPROFIL_MYSQL_DB)

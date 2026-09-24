@@ -1,0 +1,122 @@
+[
+  {
+    "#id": "N21001",
+    "ByggId": "N21001",
+    "Navn": "Paléet kontor",
+    "AndelFossilt": 0,
+    "Energiforbruk": 0,
+    "FdvWebId": null,
+    "Byggeaar": null,
+    "Energikategori": null,
+    "OppvarmetAreal": null,
+    "Oppvarmingskategori": null
+  },
+  {
+    "#id": "N15201",
+    "ByggId": "N15201",
+    "Navn": "N15201 - Vaktmester",
+    "AndelFossilt": 0,
+    "Energiforbruk": 0,
+    "FdvWebId": null,
+    "Byggeaar": null,
+    "Energikategori": null,
+    "OppvarmetAreal": null,
+    "Oppvarmingskategori": null
+  },
+  {
+    "#id": "N2010",
+    "ByggId": "N2010",
+    "Navn": "N2010 - Holbergs gate 1 (grunn)",
+    "AndelFossilt": 0,
+    "Energiforbruk": 0,
+    "FdvWebId": null,
+    "Byggeaar": null,
+    "Energikategori": null,
+    "OppvarmetAreal": null,
+    "Oppvarmingskategori": null
+  },
+  {
+    "#id": "N21003",
+    "ByggId": "N21003",
+    "Navn": "N21003 - Andel OHF - Sameiet Paleet",
+    "AndelFossilt": 0,
+    "Energiforbruk": 0,
+    "FdvWebId": null,
+    "Byggeaar": null,
+    "Energikategori": null,
+    "OppvarmetAreal": null,
+    "Oppvarmingskategori": null
+  },
+  {
+    "#id": "D20201",
+    "ByggId": "D20201",
+    "Navn": "Arne Jacobsens Allé 13/Edvard Thomsens Vej 8-14",
+    "AndelFossilt": 40,
+    "Energiforbruk": 100,
+    "FdvWebId": "bygg36",
+    "Byggeaar": "2008",
+    "Energikategori": "B",
+    "OppvarmetAreal": 26084,
+    "Oppvarmingskategori": "2"
+  },
+  {
+    "#id": "N9324",
+    "ByggId": "N9324",
+    "Navn": "N9324 - Alfaset 3, Industrivei 1",
+    "AndelFossilt": 0,
+    "Energiforbruk": 0,
+    "FdvWebId": null,
+    "Byggeaar": null,
+    "Energikategori": null,
+    "OppvarmetAreal": null,
+    "Oppvarmingskategori": null
+  },
+  {
+    "#id": "N21102",
+    "ByggId": "N21102",
+    "Navn": "GlasMagasinet Kjøpesenter",
+    "AndelFossilt": 30,
+    "Energiforbruk": 301,
+    "FdvWebId": "bygg28",
+    "Byggeaar": "",
+    "Energikategori": "D",
+    "OppvarmetAreal": null,
+    "Oppvarmingskategori": "1"
+  },
+  {
+    "#id": "N23001",
+    "ByggId": "N23001",
+    "Navn": "Ibsenkvartalet",
+    "AndelFossilt": 70.8,
+    "Energiforbruk": 204,
+    "FdvWebId": "bygg5",
+    "Byggeaar": "1994-1996",
+    "Energikategori": "G",
+    "OppvarmetAreal": 30453,
+    "Oppvarmingskategori": "4"
+  },
+  {
+    "#id": "S20401",
+    "ByggId": "S20401",
+    "Navn": "Såpsjudaren 15 Stockholm",
+    "AndelFossilt": 0,
+    "Energiforbruk": 128,
+    "FdvWebId": "bygg128",
+    "Byggeaar": "1960",
+    "Energikategori": "C",
+    "OppvarmetAreal": null,
+    "Oppvarmingskategori": null
+  },
+  {
+    "#id": "D20801",
+    "ByggId": "D20801",
+    "Navn": "Weidekampsgade 12-16",
+    "AndelFossilt": 0,
+    "Energiforbruk": 0,
+    "FdvWebId": null,
+    "Byggeaar": null,
+    "Energikategori": null,
+    "OppvarmetAreal": null,
+    "Oppvarmingskategori": null
+  }
+]

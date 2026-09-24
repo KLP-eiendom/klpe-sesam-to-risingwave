@@ -1,0 +1,72 @@
+name: Drift Check
+
+run-name: >-
+  Drift Check → ${{ github.event_name == 'workflow_dispatch'
+  && inputs.environment || 'development + staging' }}
+
+# Scheduled drift check for a repo that has NO nightly take-down/clean-deploy
+# pair. Opt-in addon (starter-workflows/_addons/k8s-drift-check/ in
+# klpe-actions).
+#
+# Restores the half of the KDI Azure lifecycle that migration dropped: a
+# weekday re-apply. Azure had NO take-down counterpart anywhere in the
+# project, so the take-down pair is deliberately NOT replicated here.
+#
+# DEVELOPMENT AND STAGING ONLY. There is no production job, on purpose:
+# Azure's job was dev-only, and pointing a new scheduled mechanism at
+# production is a separate change made after the migration is finished. The
+# reusable workflow supports production (mode: report) so that change adds a
+# caller, not a workflow.
+#
+# The workflow can never change a running version — it holds no registry
+# lookup, and reads every image from the live cluster.
+#
+# NOTE: GitHub cron is UTC — 03:00 UTC ≈ 05:00 CEST / 04:00 CET (drifts ±1h
+# across DST). The minute is staggered per repo (filled at bootstrap from a
+# hash of the repo name) so spokes don't all fire on minute 0 — the
+# most-contended slot, which routinely slips 1–2h — and don't stampede the
+# shared 5-runner ARC pool at once.
+#
+# Tunables (manifest_dir, cluster, namespace, rollout_timeout, runner): see
+# .github/workflows/k8s-drift-check.yml in klpe-actions.
+
+on:
+  schedule:
+    - cron: "59 3 * * 1-5" # weekday mornings
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment"
+        type: choice
+        options: [development, staging]
+        default: development
+
+permissions:
+  contents: read
+  actions: write # lets the reusable workflow keepalive-reset this schedule
+
+jobs:
+  development:
+    # Matches the k8s-lifecycle addons: name the trigger that must run BOTH
+    # jobs, rather than negating the one that must run one. A `push` trigger
+    # added later would then not silently start applying to both environments.
+    if: github.event_name == 'schedule' || inputs.environment == 'development'
+    concurrency:
+      group: drift-check-development
+    uses: "klpkonsern/klpe-actions/.github/workflows/k8s-drift-check.yml@v2"
+    with:
+      environment: development
+      mode: apply
+      # TODO (north-cluster repos only): uncomment
+      # cluster: north
+
+  staging:
+    if: github.event_name == 'schedule' || inputs.environment == 'staging'
+    concurrency:
+      group: drift-check-staging
+    uses: "klpkonsern/klpe-actions/.github/workflows/k8s-drift-check.yml@v2"
+    with:
+      environment: staging
+      mode: apply
+      # TODO (north-cluster repos only): uncomment
+      # cluster: north

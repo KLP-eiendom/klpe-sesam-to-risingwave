@@ -1,0 +1,7 @@
+{
+  "mart": "mrt_superoffice_ticketmessage_update",
+  "blacklist": [
+    "created",
+    "lastupdated"
+  ]
+}

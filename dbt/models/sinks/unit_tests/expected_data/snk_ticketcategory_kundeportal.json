@@ -1,0 +1,178 @@
+[
+  {
+    "#id": "1:superoffice:property",
+    "Navn": "300 Frydenlund Eiendom ANS",
+    "SakskategoriId": 1,
+    "Parent": -1,
+    "System": "superoffice",
+    "Type": "property",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "2:superoffice:support",
+    "Navn": "Bestilling adgangskort",
+    "SakskategoriId": 2,
+    "Parent": -1,
+    "System": "superoffice",
+    "Type": "support",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "2:superoffice:property",
+    "Navn": "001 Leuthen P Hus",
+    "SakskategoriId": 2,
+    "Parent": -1,
+    "System": "superoffice",
+    "Type": "property",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "7:superoffice:support",
+    "Navn": "Kantine",
+    "SakskategoriId": 7,
+    "Parent": -1,
+    "System": "superoffice",
+    "Type": "support",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "3:superoffice:property",
+    "Navn": "002 Bakke P Hus",
+    "SakskategoriId": 3,
+    "Parent": -1,
+    "System": "superoffice",
+    "Type": "property",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "5:superoffice:support",
+    "Navn": "Faktura/økonomi",
+    "SakskategoriId": 5,
+    "Parent": -1,
+    "System": "superoffice",
+    "Type": "support",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "6:superoffice:support",
+    "Navn": "Inneklima",
+    "SakskategoriId": 6,
+    "Parent": -1,
+    "System": "superoffice",
+    "Type": "support",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "13:superoffice:support",
+    "Navn": "Annet",
+    "SakskategoriId": 13,
+    "Parent": -1,
+    "System": "superoffice",
+    "Type": "support",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "5:superoffice:property",
+    "Navn": "300-302 Pilestredet 42",
+    "SakskategoriId": 5,
+    "Parent": 1,
+    "System": "superoffice",
+    "Type": "property",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "8:superoffice:support",
+    "Navn": "Ledige lokaler",
+    "SakskategoriId": 8,
+    "Parent": -1,
+    "System": "superoffice",
+    "Type": "support",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "4:superoffice:support",
+    "Navn": "Brann",
+    "SakskategoriId": 4,
+    "Parent": -1,
+    "System": "superoffice",
+    "Type": "support",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "12:superoffice:support",
+    "Navn": "Sikkerhet",
+    "SakskategoriId": 12,
+    "Parent": -1,
+    "System": "superoffice",
+    "Type": "support",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "10:superoffice:support",
+    "Navn": "Presse og investorer",
+    "SakskategoriId": 10,
+    "Parent": -1,
+    "System": "superoffice",
+    "Type": "support",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "11:superoffice:support",
+    "Navn": "Renhold",
+    "SakskategoriId": 11,
+    "Parent": -1,
+    "System": "superoffice",
+    "Type": "support",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "3:superoffice:support",
+    "Navn": "Bestillingsarbeid",
+    "SakskategoriId": 3,
+    "Parent": -1,
+    "System": "superoffice",
+    "Type": "support",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "9:superoffice:support",
+    "Navn": "Lys",
+    "SakskategoriId": 9,
+    "Parent": -1,
+    "System": "superoffice",
+    "Type": "support",
+    "Kode": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  }
+]

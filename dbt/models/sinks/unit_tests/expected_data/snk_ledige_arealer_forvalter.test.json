@@ -1,0 +1,6 @@
+{
+  "id_field": "Id",
+  "blacklist": [
+    "Created"
+  ]
+}

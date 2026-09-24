@@ -1,0 +1,42 @@
+version: 2
+
+unit_tests:
+  - name: mrt_sale_forvalter__excludes_department_contact
+    description: >
+      SuperOffice data quality occasionally duplicates a customer's Kundenummer onto a
+      department/branch contact (e.g. "Skatteetaten avd Bergen", contactId 18327) that
+      shouldn't be treated as authoritative — confirmed real case: kundenummer 600335,
+      contactId 8636 is the real company, 18327 is its Bergen department. A sale linked
+      to the department contactId must NOT resolve Kundenummer (matches Sesam).
+    model: mrt_sale_forvalter
+    given:
+      - input: ref('mrt_global_sale')
+        rows:
+          - { saleId: "1", contactid: 8636 }
+          - { saleId: "2", contactid: 18327 }
+      - input: ref('mrt_global_customer')
+        rows:
+          - { contactid: 8636, kundenummer: "600335", department: "" }
+          - { contactid: 18327, kundenummer: "600335", department: "Bergen" }
+    expect:
+      rows:
+        - { saleId: "1", contactid: 8636, kundenummer: "600335" }
+        - { saleId: "2", contactid: 18327, kundenummer: null }
+
+  - name: mrt_sale_forvalter__keeps_kundenummer_for_lone_department_contact
+    description: >
+      A contact that has a department filled in but is the ONLY contact for its
+      kundenummer (no non-department sibling) is a normal single contact, not a
+      duplicate — its Kundenummer must NOT be nulled out just because department
+      happens to be set.
+    model: mrt_sale_forvalter
+    given:
+      - input: ref('mrt_global_sale')
+        rows:
+          - { saleId: "3", contactid: 40001 }
+      - input: ref('mrt_global_customer')
+        rows:
+          - { contactid: 40001, kundenummer: "700001", department: "Innkjøp" }
+    expect:
+      rows:
+        - { saleId: "3", contactid: 40001, kundenummer: "700001" }

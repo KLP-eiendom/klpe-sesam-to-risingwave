@@ -1,0 +1,22 @@
+[
+  {
+    "#id": "15858",
+    "id": 15858,
+    "created": "2021-02-09T09:49:10.325008Z",
+    "name": "Vedlegg 3 Glasmagasinet vedtekter",
+    "path": "FDVbygg28/Diverse_Branntegning_Vedlegg_3_Glasmagasinet_vedtekter_7.pdf",
+    "type": "Vedtekter",
+    "buildingIds": ["N21102"],
+    "buildingType": "Handel"
+  },
+  {
+    "#id": "19876",
+    "id": 19876,
+    "created": "2022-10-21T14:30:58.471818Z",
+    "name": "Vedlegg 2 - Generelle vilkår KLP Parkering",
+    "path": "superoffice_maler/kontor/Vedlegg 2 - Generelle vilkår KLP Parkering.pdf",
+    "type": "Vilkår",
+    "buildingIds": ["N23001"],
+    "buildingType": "Kontor"
+  }
+]

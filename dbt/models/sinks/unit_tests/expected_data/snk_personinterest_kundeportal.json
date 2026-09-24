@@ -1,0 +1,65 @@
+[
+  {
+    "#id": "eva.lunde@example.com:12",
+    "BrukerId": "eva.lunde@example.com",
+    "Name": "Kontraktsansvarlig",
+    "PersIntId": 12,
+    "SuperOfficeId": 14544,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "eva.lunde@example.com:15",
+    "BrukerId": "eva.lunde@example.com",
+    "Name": "Kundearrangement",
+    "PersIntId": 15,
+    "SuperOfficeId": 14544,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "kontakt@example.com:12",
+    "BrukerId": "kontakt@example.com",
+    "Name": "Kontraktsansvarlig",
+    "PersIntId": 12,
+    "SuperOfficeId": 17589,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "kontakt@example.com:13",
+    "BrukerId": "kontakt@example.com",
+    "Name": "Test",
+    "PersIntId": 13,
+    "SuperOfficeId": 17589,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "service@example.com:1",
+    "BrukerId": "service@example.com",
+    "Name": "Julekort",
+    "PersIntId": 1,
+    "SuperOfficeId": 17675,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "anders.lien@example.com:12",
+    "BrukerId": "anders.lien@example.com",
+    "Name": "Kontraktsansvarlig",
+    "PersIntId": 12,
+    "SuperOfficeId": 17398,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "anders.lien@example.com:14",
+    "BrukerId": "anders.lien@example.com",
+    "Name": "Kundeportal",
+    "PersIntId": 14,
+    "SuperOfficeId": 17398,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  }
+]

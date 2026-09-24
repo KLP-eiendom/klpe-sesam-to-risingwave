@@ -1,0 +1,83 @@
+{
+  "entities": [
+    {
+      "_id": "600047",
+      "adresse": "Postboks 232 Sentrum\n0103 OSLO\nNOR",
+      "by": "OSLO",
+      "gate_adresse": "Postboks 232 Sentrum",
+      "kontakt_tlf": "+47 22 00 00 00",
+      "kundegruppe": "210",
+      "kundegruppe_navn": "Kunde 30dSTDx1,5",
+      "kundenummer": "600047",
+      "mva_nummer": "971278374",
+      "navn": "Statsbygg",
+      "navn_alias": "Statsbygg",
+      "postnummer": "0103",
+      "region_id": "NOR"
+    },
+    {
+      "_id": "600000",
+      "adresse": "Pilestredet 75C\n0354 OSLO\nNOR",
+      "by": "OSLO",
+      "gate_adresse": "Pilestredet 75C",
+      "kontakt_tlf": "+47 22 00 00 00",
+      "kundegruppe": "200",
+      "kundegruppe_navn": "Kunde 30dSTD",
+      "kundenummer": "600000",
+      "mva_nummer": "NO840799522MVA",
+      "navn": "Ingeniørene Seim & Hultgreen A/S",
+      "navn_alias": "Ingeniørene Seim & H",
+      "postnummer": "0354",
+      "region_id": "NOR"
+    },
+    {
+      "_id": "600001",
+      "adresse": "Postboks 6817 St.Olavs plass\n0130 OSLO\nNOR",
+      "by": "OSLO",
+      "gate_adresse": "Postboks 6817 St.Olavs plass",
+      "kontakt_epost": "grethe.nilsen@example.com",
+      "kontakt_tlf": "+47 22 00 00 00",
+      "kundegruppe": "200",
+      "kundegruppe_navn": "Kunde 30dSTD",
+      "kundenummer": "600001",
+      "mva_nummer": "NO914797497MVA",
+      "navn": "Nordic News Agency AS",
+      "navn_alias": "NTB - Norsk Telegram",
+      "postnummer": "0130",
+      "region_id": "NOR"
+    },
+    {
+      "_id": "600015",
+      "adresse": "Fakturamottak, Postboks 364-Alnabru\n0614 OSLO\nNOR",
+      "by": "OSLO",
+      "gate_adresse": "Fakturamottak, Postboks 364-Alnabru",
+      "kontakt_tlf": "+47 22 00 00 00",
+      "kundegruppe": "210",
+      "kundegruppe_navn": "Kunde 30dSTDx1,5",
+      "kundenummer": "600015",
+      "mva_nummer": "997058925",
+      "navn": "Oslomet - Storbyuniversitetet",
+      "navn_alias": "Oslomet - Storbyuniv",
+      "opprettet_dato": "2020-11-09T10:24:25",
+      "postnummer": "0614",
+      "region_id": "NOR"
+    },
+    {
+      "_id": "600314",
+      "adresse": "c/o Financial Services- Account Payable, Stjärntorget 1\n196 94 SOLNA\nNOR",
+      "by": "SOLNA",
+      "gate_adresse": "c/o Financial Services- Account Payable, Stjärntorget 1",
+      "kontakt_epost": null,
+      "kontakt_tlf": null,
+      "kundegruppe": "110",
+      "kundegruppe_navn": "Kunde 14dSTDx1,5",
+      "kundenummer": "600314",
+      "mva_nummer": "981929055",
+      "navn": "Telecom Norway AS",
+      "navn_alias": "Telia Sonera Norge A",
+      "opprettet_dato": "2020-11-09T10:24:25",
+      "postnummer": "196 94",
+      "region_id": "NOR"
+    }
+  ]
+}

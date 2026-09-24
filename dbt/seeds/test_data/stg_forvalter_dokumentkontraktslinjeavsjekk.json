@@ -1,0 +1,12 @@
+{
+  "entities": [
+    {
+      "_id": "530791_superoffice-document_5637350079",
+      "DokumentId": "530791:superoffice-document",
+      "KontraktLinjeId": "5637350079",
+      "DokumentAvsjekkDokumentId": "530791:superoffice-document",
+      "Created": "0001-01-01 00:00:00",
+      "LastUpdated": "2022-05-09 12:28:32"
+    }
+  ]
+}

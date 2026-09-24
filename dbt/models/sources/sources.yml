@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: forvalter_cdc_source
+    description: "MySQL CDC source connector for the Forvalter database"
+    tables:
+      - name: BrukerRolle
+      - name: ProsjektProsess
+      - name: DokumentKontraktlinjeAvsjekk
+
+  - name: kundeportal_cdc_source
+    description: "MySQL CDC source connector for the Kundeportal database"
+    tables:
+      - name: Kunder
+      - name: ByggTegning
+
+  - name: camunda_cdc_source
+    description: "The underlying PostgreSQL CDC source connector for the Camunda process engine"
+    schema: public
+    tables:
+      # These tables will be materialized as RisingWave tables using the source connector
+      # in the staging models
+      - name: act_ru_execution
+      - name: act_ru_task
+      - name: act_ru_incident
+      - name: act_ru_variable
+      - name: act_re_procdef
+      - name: act_re_deployment
+      - name: act_hi_procinst
+      - name: act_hi_taskinst

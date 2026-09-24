@@ -1,0 +1,24 @@
+{
+  "entities": [
+    {
+      "_id": "ff1d92d8-24a0-11ef-ba99-ee81634ae833",
+      "id_": "ff1d92d8-24a0-11ef-ba99-ee81634ae833",
+      "proc_inst_id_": "ff1d92d8-24a0-11ef-ba99-ee81634ae833",
+      "business_key_": "128:superoffice-document",
+      "proc_def_key_": "SuperOffice_KontraktsregistreringProsess",
+      "start_time_": "2024-06-07 07:38:56.528",
+      "state_": "ACTIVE"
+    },
+    {
+      "_id": "89bae85d-4142-11f0-962a-0290f7e50b48",
+      "id_": "89bae85d-4142-11f0-962a-0290f7e50b48",
+      "proc_inst_id_": "89bae85d-4142-11f0-962a-0290f7e50b48",
+      "business_key_": "48-tiltak_gjennomforing",
+      "proc_def_key_": "tiltak_gjennomforing",
+      "start_time_": "2025-06-04 12:50:48.288",
+      "end_time_": "2025-06-05 12:45:22.906",
+      "duration_": 86074618,
+      "state_": "COMPLETED"
+    }
+  ]
+}

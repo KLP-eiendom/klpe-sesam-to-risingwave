@@ -1,0 +1,28 @@
+version: 2
+
+unit_tests:
+  - name: mrt_superoffice_ticketmessage__expansion
+    description: Verifies that mrt_superoffice_ticketmessage correctly expands TicketMessages from the ticketMessages column.
+    model: mrt_superoffice_ticketmessage
+    given:
+      - input: ref('mrt_superoffice_ticket')
+        rows:
+          - ticketId: 300
+            ticketMessages: >-
+              [{"EjMessageId": 417, "CreatedAt": "2020-07-23T11:12:06Z", "Body": "Test message", "Slevel": "Unknown"}]
+          # SuperOffice sometimes sends "TicketMessages": null explicitly (JSONB null,
+          # not SQL NULL) instead of omitting the field or sending []. jsonb_array_elements
+          # errors with "cannot extract elements from a jsonb null" if this isn't guarded
+          # via jsonb_typeof — must yield zero rows for this ticket, not an error.
+          - ticketId: 301
+            ticketMessages: "null"
+    expect:
+      rows:
+        - ticketMessageId: 417
+          externalId: "417:superoffice-ticketmessage"
+          ticketId: 300
+          parentTicketId: "300:superoffice-ticket"
+          createdAt: "2020-07-23T11:12:06+00:00"
+          body: "Test message"
+          slevel: "Unknown"
+          _deleted: false

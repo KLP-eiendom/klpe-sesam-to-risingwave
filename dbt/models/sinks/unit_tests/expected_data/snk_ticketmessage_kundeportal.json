@@ -1,0 +1,29 @@
+[
+  {
+    "#id": 417,
+    "EksternId": "417:superoffice-ticketmessage",
+    "EksternSakId": "300:superoffice-ticket",
+    "Melding": "This is a test.",
+    "Created": "2020-07-23 11:12:06",
+    "LastUpdated": "2020-07-23 11:12:06",
+    "OpprettetAv": "siri.kristoffersen@example.com"
+  },
+  {
+    "#id": 460,
+    "EksternId": "460:superoffice-ticketmessage",
+    "EksternSakId": "300:superoffice-ticket",
+    "Melding": "This is a test of a deleted message",
+    "Created": "2020-07-23 11:12:06",
+    "LastUpdated": "2020-07-23 11:12:06",
+    "OpprettetAv": "siri.kristoffersen@example.com"
+  },
+  {
+    "#id": 418,
+    "EksternId": "418:superoffice-ticketmessage",
+    "EksternSakId": "342:superoffice-ticket",
+    "Melding": "This is a test.",
+    "Created": "2020-07-23 11:12:06",
+    "LastUpdated": "2020-07-23 11:12:06",
+    "OpprettetAv": "siri.kristoffersen@example.com"
+  }
+]

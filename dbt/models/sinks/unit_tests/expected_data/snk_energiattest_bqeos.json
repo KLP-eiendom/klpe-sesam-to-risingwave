@@ -1,0 +1,92 @@
+[
+  {
+    "#id": "D20201",
+    "_id": "D20201",
+    "ByggNummer": "D20201",
+    "AndelFossilEl": 40.0,
+    "EnergiForbruk": 100.0,
+    "Navn": "Arne Jacobsens Allé 13/Edvard Thomsens Vej 8-14",
+    "EnergiKarakter": "B"
+  },
+  {
+    "#id": "N21102",
+    "_id": "N21102",
+    "ByggNummer": "N21102",
+    "AndelFossilEl": 30.0,
+    "EnergiForbruk": 301.0,
+    "Navn": "GlasMagasinet Kjøpesenter",
+    "EnergiKarakter": "D"
+  },
+  {
+    "#id": "N23001",
+    "_id": "N23001",
+    "ByggNummer": "N23001",
+    "AndelFossilEl": 70.8,
+    "EnergiForbruk": 204.0,
+    "Navn": "Ibsenkvartalet",
+    "EnergiKarakter": "G"
+  },
+  {
+    "#id": "S20401",
+    "_id": "S20401",
+    "AndelFossilEl": 0,
+    "ByggNummer": "S20401",
+    "EnergiForbruk": 128,
+    "EnergiKarakter": "C",
+    "Navn": "Såpsjudaren 15 Stockholm"
+  },
+  {
+    "#id": "N21001",
+    "_id": "N21001",
+    "ByggNummer": "N21001",
+    "AndelFossilEl": 0,
+    "EnergiForbruk": 0,
+    "Navn": "Paléet kontor",
+    "EnergiKarakter": null
+  },
+  {
+    "#id": "D20801",
+    "_id": "D20801",
+    "ByggNummer": "D20801",
+    "AndelFossilEl": 0,
+    "EnergiForbruk": 0,
+    "Navn": "Weidekampsgade 12-16",
+    "EnergiKarakter": null
+  },
+  {
+    "#id": "N15201",
+    "_id": "N15201",
+    "ByggNummer": "N15201",
+    "AndelFossilEl": 0,
+    "EnergiForbruk": 0,
+    "Navn": null,
+    "EnergiKarakter": null
+  },
+  {
+    "#id": "N2010",
+    "_id": "N2010",
+    "ByggNummer": "N2010",
+    "AndelFossilEl": 0,
+    "EnergiForbruk": 0,
+    "Navn": null,
+    "EnergiKarakter": null
+  },
+  {
+    "#id": "N21003",
+    "_id": "N21003",
+    "ByggNummer": "N21003",
+    "AndelFossilEl": 0,
+    "EnergiForbruk": 0,
+    "Navn": null,
+    "EnergiKarakter": null
+  },
+  {
+    "#id": "N9324",
+    "_id": "N9324",
+    "ByggNummer": "N9324",
+    "AndelFossilEl": 0,
+    "EnergiForbruk": 0,
+    "Navn": null,
+    "EnergiKarakter": null
+  }
+]

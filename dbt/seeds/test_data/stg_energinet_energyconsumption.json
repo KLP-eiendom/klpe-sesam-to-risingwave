@@ -1,0 +1,74 @@
+{
+  "entities": [
+    {
+      "_id": "N24901--Utetemperatur-C-202106",
+      "BuildingId": "N24901",
+      "MeteringpointId": "2128831196",
+      "Mnd": 202106,
+      "MndString": "202106",
+      "Sum": "~f66.4",
+      "Type": "Utetemperatur",
+      "unit": "C"
+    },
+    {
+      "_id": "N24901--Utetemperatur-C-202105",
+      "BuildingId": "N24901",
+      "MeteringpointId": "2128831196",
+      "Mnd": 202105,
+      "MndString": "202105",
+      "Sum": "~f567.6",
+      "Type": "Utetemperatur",
+      "unit": "C"
+    },
+    {
+      "_id": "N22701--Fjernvarme-kWh-202106",
+      "BuildingId": "N22701",
+      "MeteringpointId": null,
+      "Mnd": 202106,
+      "MndString": "202106",
+      "Sum": 100,
+      "Type": "Fjernvarme",
+      "unit": "kWh"
+    },
+    {
+      "_id": "N22701--Fjernvarme-kWh-202105",
+      "BuildingId": "N22701",
+      "MeteringpointId": null,
+      "Mnd": 202105,
+      "MndString": "202105",
+      "Sum": 37020,
+      "Type": "Fjernvarme",
+      "unit": "kWh"
+    },
+    {
+      "_id": "N22701--El-kWh-202105",
+      "BuildingId": "N22701",
+      "MeteringpointId": null,
+      "Mnd": 202105,
+      "MndString": "202105",
+      "Sum": "~f105256.8",
+      "Type": "El",
+      "unit": "kWh"
+    },
+    {
+      "_id": "N24901--El-kWh-202106",
+      "BuildingId": "N24901",
+      "MeteringpointId": "2128831196",
+      "Mnd": 202106,
+      "MndString": "202106",
+      "Sum": 286,
+      "Type": "El",
+      "unit": "kWh"
+    },
+    {
+      "_id": "N24901--El-kWh-202105",
+      "BuildingId": "N24901",
+      "MeteringpointId": "2128831196",
+      "Mnd": 202105,
+      "MndString": "202105",
+      "Sum": "~f6989.200012208",
+      "Type": "El",
+      "unit": "kWh"
+    }
+  ]
+}

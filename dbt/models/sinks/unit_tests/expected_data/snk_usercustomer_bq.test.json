@@ -1,0 +1,8 @@
+{
+  "mart": "mrt_global_user",
+  "blacklist": [],
+  "id_field": [
+    "so_id",
+    "kunde_id"
+  ]
+}

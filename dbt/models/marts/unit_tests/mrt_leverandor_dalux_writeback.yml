@@ -1,0 +1,438 @@
+version: 2
+
+# The classification seed is given inline in every test rather than relying on the
+# real CSV, so a change to the business rule can't silently change what these
+# assert. Keep the fixture rows in dict form: dalux_aktiv must arrive as a real
+# boolean, since the model compares it to FALSE.
+#
+# The base is mrt_global_leverandorvurdering, which is already one row per vendor
+# number — so unlike the previous version of this model there is no aggregation to
+# test here. What replaced it is the D365 lookup for the four fields the assessment
+# mart doesn't carry (street, postcode, phone, one-off flag) plus the raw org number.
+
+unit_tests:
+  - name: mrt_leverandor_dalux_writeback__godkjent_is_active_and_carries_udf_fields
+    description: >
+      An approved vendor with nothing blocking is active, and all four user-defined
+      field values are carried through for Dalux — including lokasjon and
+      evalueringskommentar, which is why this model reads the assessment mart.
+    model: mrt_leverandor_dalux_writeback
+    given:
+      - input: ref('dalux_klassifisering_status')
+        rows:
+          - {klassifiseringbeskrivelse: "Godkjent", dalux_aktiv: true}
+          - {klassifiseringbeskrivelse: "Ikke godkjent", dalux_aktiv: false}
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - d365_leverandor_id: "500351"
+            navn: "Ahlsell Norge AS"
+            city: "OSLO"
+            emailaddress: "post@example.com"
+            orgnr: "910 777 677"
+            klassifiseringbeskrivelse: "Godkjent"
+            lokasjon: "Oslo"
+            evalueringskommentar: "Fungerer godt"
+            sperret: false
+            underavvikling: false
+            d365_aktiv: "ja"
+            stop: false
+            sanksjonert: false
+      - input: ref('stg_d365_leverandor')
+        rows:
+          - leverandor_id: "500351"
+            gate_adresse: "Brobekkveien 80A"
+            postnummer: "0582"
+            kontakt_tlf: "22 00 00 00"
+            engangsleverandor: "nei"
+            organisasjonsnummer: "910777677"
+    expect:
+      rows:
+        - organisationid: "500351"
+          name: "Ahlsell Norge AS"
+          address_road: "Brobekkveien 80A"
+          address_zipcode: "0582"
+          address_city: "OSLO"
+          phoneno: "22 00 00 00"
+          email: "post@example.com"
+          klassifisering: "Godkjent"
+          lokasjon: "Oslo"
+          evalueringskommentar: "Fungerer godt"
+          organisasjonsnummer: "910777677"
+          isactive: true
+          klassifisering_ukjent: false
+
+  - name: mrt_leverandor_dalux_writeback__sanksjonert_makes_inactive
+    description: >
+      A hit in Bisnode's sanctions screening deactivates the vendor in Dalux, even
+      when D365, SuperOffice and the classification all say it is fine. This is the
+      only Bisnode signal we act on — the rest has no field in Dalux to live in.
+    model: mrt_leverandor_dalux_writeback
+    given:
+      - input: ref('dalux_klassifisering_status')
+        rows:
+          - {klassifiseringbeskrivelse: "Godkjent", dalux_aktiv: true}
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - d365_leverandor_id: "500351"
+            klassifiseringbeskrivelse: "Godkjent"
+            sperret: false
+            underavvikling: false
+            d365_aktiv: "ja"
+            stop: false
+            sanksjonert: true
+      - input: ref('stg_d365_leverandor')
+        rows:
+          - leverandor_id: "500351"
+            engangsleverandor: "nei"
+    expect:
+      rows:
+        - organisationid: "500351"
+          isactive: false
+
+  - name: mrt_leverandor_dalux_writeback__unscreened_vendor_stays_active
+    description: >
+      sanksjonert is NULL when Bisnode has never screened the vendor. That is "not
+      screened", not "clean but flagged" — and it must not deactivate anyone.
+    model: mrt_leverandor_dalux_writeback
+    given:
+      - input: ref('dalux_klassifisering_status')
+        rows:
+          - {klassifiseringbeskrivelse: "Godkjent", dalux_aktiv: true}
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - d365_leverandor_id: "500351"
+            klassifiseringbeskrivelse: "Godkjent"
+            sperret: false
+            underavvikling: false
+            d365_aktiv: "ja"
+            stop: false
+            sanksjonert: ~
+      - input: ref('stg_d365_leverandor')
+        rows:
+          - leverandor_id: "500351"
+            engangsleverandor: "nei"
+    expect:
+      rows:
+        - organisationid: "500351"
+          isactive: true
+
+  - name: mrt_leverandor_dalux_writeback__ikke_godkjent_is_inactive
+    description: >
+      A classification the seed marks dalux_aktiv=false deactivates the vendor.
+    model: mrt_leverandor_dalux_writeback
+    given:
+      - input: ref('dalux_klassifisering_status')
+        rows:
+          - {klassifiseringbeskrivelse: "Godkjent", dalux_aktiv: true}
+          - {klassifiseringbeskrivelse: "Ikke godkjent", dalux_aktiv: false}
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - d365_leverandor_id: "500351"
+            klassifiseringbeskrivelse: "Ikke godkjent"
+            sperret: false
+            d365_aktiv: "ja"
+            stop: false
+            sanksjonert: false
+      - input: ref('stg_d365_leverandor')
+        rows:
+          - leverandor_id: "500351"
+            engangsleverandor: "nei"
+    expect:
+      rows:
+        - organisationid: "500351"
+          klassifisering: "Ikke godkjent"
+          isactive: false
+          klassifisering_ukjent: false
+
+  - name: mrt_leverandor_dalux_writeback__unknown_classification_stays_active
+    description: >
+      A classification SuperOffice uses but the seed doesn't know must NOT
+      deactivate — the opposite default would let a renamed display text silently
+      deactivate vendors in Dalux. It is flagged instead.
+    model: mrt_leverandor_dalux_writeback
+    given:
+      - input: ref('dalux_klassifisering_status')
+        rows:
+          - {klassifiseringbeskrivelse: "Godkjent", dalux_aktiv: true}
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - d365_leverandor_id: "500351"
+            klassifiseringbeskrivelse: "Helt ny kategori"
+            sperret: false
+            d365_aktiv: "ja"
+            stop: false
+            sanksjonert: false
+      - input: ref('stg_d365_leverandor')
+        rows:
+          - leverandor_id: "500351"
+            engangsleverandor: "nei"
+    expect:
+      rows:
+        - organisationid: "500351"
+          klassifisering: "Helt ny kategori"
+          isactive: true
+          klassifisering_ukjent: true
+
+  - name: mrt_leverandor_dalux_writeback__classification_match_ignores_case_and_spacing
+    description: >
+      The seed join is on LOWER(TRIM(...)) on both sides, so casing or padding in
+      SuperOffice must not turn a known classification into an unknown one.
+    model: mrt_leverandor_dalux_writeback
+    given:
+      - input: ref('dalux_klassifisering_status')
+        rows:
+          - {klassifiseringbeskrivelse: "Ikke godkjent", dalux_aktiv: false}
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - d365_leverandor_id: "500351"
+            klassifiseringbeskrivelse: "  IKKE GODKJENT "
+            sperret: false
+            d365_aktiv: "ja"
+            stop: false
+      - input: ref('stg_d365_leverandor')
+        rows:
+          - leverandor_id: "500351"
+    expect:
+      rows:
+        - organisationid: "500351"
+          isactive: false
+          klassifisering_ukjent: false
+
+  - name: mrt_leverandor_dalux_writeback__d365_and_so_blocks_beat_approved_classification
+    description: >
+      Any inactivating source wins. Three separate vendors, each blocked by a
+      different source, all approved in SuperOffice: a D365 vendor block, a D365
+      liquidation flag, and a stop on the SuperOffice contact.
+    model: mrt_leverandor_dalux_writeback
+    given:
+      - input: ref('dalux_klassifisering_status')
+        rows:
+          - {klassifiseringbeskrivelse: "Godkjent", dalux_aktiv: true}
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - d365_leverandor_id: "500001"
+            klassifiseringbeskrivelse: "Godkjent"
+            sperret: true
+            underavvikling: false
+            d365_aktiv: "ja"
+            stop: false
+          - d365_leverandor_id: "500002"
+            klassifiseringbeskrivelse: "Godkjent"
+            sperret: false
+            underavvikling: true
+            d365_aktiv: "ja"
+            stop: false
+          - d365_leverandor_id: "500003"
+            klassifiseringbeskrivelse: "Godkjent"
+            sperret: false
+            underavvikling: false
+            d365_aktiv: "ja"
+            stop: true
+      - input: ref('stg_d365_leverandor')
+        rows:
+          - {leverandor_id: "500001", engangsleverandor: "nei"}
+          - {leverandor_id: "500002", engangsleverandor: "nei"}
+          - {leverandor_id: "500003", engangsleverandor: "nei"}
+    expect:
+      rows:
+        - {organisationid: "500001", isactive: false}
+        - {organisationid: "500002", isactive: false}
+        - {organisationid: "500003", isactive: false}
+
+  - name: mrt_leverandor_dalux_writeback__engangsleverandor_is_inactive
+    description: >
+      One-off vendors are not wanted in Dalux at all, and the FM API has no delete,
+      so inactive is the only way to express it. The flag comes from D365 staging —
+      the assessment mart does not carry it — and counts even when the SuperOffice
+      classification is approved.
+    model: mrt_leverandor_dalux_writeback
+    given:
+      - input: ref('dalux_klassifisering_status')
+        rows:
+          - {klassifiseringbeskrivelse: "Godkjent", dalux_aktiv: true}
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - d365_leverandor_id: "501001"
+            klassifiseringbeskrivelse: "Godkjent"
+            sperret: false
+            d365_aktiv: "ja"
+            stop: false
+      - input: ref('stg_d365_leverandor')
+        rows:
+          - leverandor_id: "501001"
+            engangsleverandor: "ja"
+    expect:
+      rows:
+        - organisationid: "501001"
+          isactive: false
+
+  - name: mrt_leverandor_dalux_writeback__orgnr_prefers_d365_then_superoffice
+    description: >
+      D365 is the master for the org number; SuperOffice is the fallback, normalised
+      the same way. unique_orgnr must never be used — it falls back to
+      'uuid-<contactId>', and that string must not reach Dalux.
+    model: mrt_leverandor_dalux_writeback
+    given:
+      - input: ref('dalux_klassifisering_status')
+        rows: []
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - d365_leverandor_id: "500010"
+            orgnr: "999 888 777"
+            unique_orgnr: "uuid-7867"
+            sperret: false
+            d365_aktiv: "ja"
+            stop: false
+          - d365_leverandor_id: "500011"
+            orgnr: "111 222 333 MVA"
+            unique_orgnr: "uuid-7868"
+            sperret: false
+            d365_aktiv: "ja"
+            stop: false
+      - input: ref('stg_d365_leverandor')
+        rows:
+          - {leverandor_id: "500010", organisasjonsnummer: "910777677"}
+          - {leverandor_id: "500011", organisasjonsnummer: ~}
+    expect:
+      rows:
+        - {organisationid: "500010", organisasjonsnummer: "910777677"}
+        - {organisationid: "500011", organisasjonsnummer: "111222333"}
+
+  - name: mrt_leverandor_dalux_writeback__empty_strings_become_null
+    description: >
+      An empty value is "no opinion", not a value: it must come out NULL so
+      pubsub-writer strips it from the PATCH instead of clearing what Dalux holds.
+      This matters most for lokasjon and evalueringskommentar — the assessment mart
+      does not NULLIF its SuperOffice text, so an empty DisplayText arrives as ''.
+    model: mrt_leverandor_dalux_writeback
+    given:
+      - input: ref('dalux_klassifisering_status')
+        rows: []
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - d365_leverandor_id: "500351"
+            navn: ""
+            city: "   "
+            emailaddress: ""
+            orgnr: ""
+            klassifiseringbeskrivelse: ""
+            lokasjon: ""
+            evalueringskommentar: "   "
+            sperret: false
+            d365_aktiv: "ja"
+            stop: false
+      - input: ref('stg_d365_leverandor')
+        rows:
+          - leverandor_id: "500351"
+            gate_adresse: "   "
+            postnummer: ""
+            kontakt_tlf: ""
+            organisasjonsnummer: ""
+    expect:
+      rows:
+        - organisationid: "500351"
+          name: ~
+          address_road: ~
+          address_zipcode: ~
+          address_city: ~
+          phoneno: ~
+          email: ~
+          klassifisering: ~
+          lokasjon: ~
+          evalueringskommentar: ~
+          organisasjonsnummer: ~
+          klassifisering_ukjent: false
+
+  - name: mrt_leverandor_dalux_writeback__placeholder_vendor_number_is_dropped
+    description: >
+      The assessment mart keeps SuperOffice contacts whose field 15 has no D365
+      match, keyed as 'uuid-<contactId>'; those get a NULL d365_leverandor_id and
+      cannot address anything in Dalux, so they must not reach the sink.
+    model: mrt_leverandor_dalux_writeback
+    given:
+      - input: ref('dalux_klassifisering_status')
+        rows: []
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - d365_leverandor_id: ~
+            navn: "Kontakt uten D365-treff"
+            unique_orgnr: "uuid-16445"
+            sperret: false
+            d365_aktiv: "ja"
+            stop: false
+          - d365_leverandor_id: "  "
+            navn: "Tom streng"
+            sperret: false
+            d365_aktiv: "ja"
+            stop: false
+      - input: ref('stg_d365_leverandor')
+        rows: []
+    expect:
+      rows: []
+
+  - name: mrt_leverandor_dalux_writeback__vendor_without_d365_row_still_emits
+    description: >
+      The D365 lookup is a LEFT JOIN: a vendor number the assessment mart has but
+      staging doesn't must still reach Dalux with what we do know, rather than
+      disappearing. The D365-only fields simply come out NULL and are stripped.
+    model: mrt_leverandor_dalux_writeback
+    given:
+      - input: ref('dalux_klassifisering_status')
+        rows:
+          - {klassifiseringbeskrivelse: "Godkjent", dalux_aktiv: true}
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - d365_leverandor_id: "500999"
+            navn: "Kun i vurderingsmarten AS"
+            klassifiseringbeskrivelse: "Godkjent"
+            sperret: false
+            d365_aktiv: "ja"
+            stop: false
+      - input: ref('stg_d365_leverandor')
+        rows: []
+    expect:
+      rows:
+        - organisationid: "500999"
+          name: "Kun i vurderingsmarten AS"
+          address_road: ~
+          phoneno: ~
+          isactive: true
+
+  - name: mrt_leverandor_dalux_writeback__multi_language_displaytext_is_unwrapped
+    description: >
+      Real dev data: SuperOffice holds 'NO:"Oslo";US:"Oslo";' and the assessment mart's
+      unwrap only strips the leading NO:" and the very last ";, so the value arrives here
+      as 'Oslo";US:"Oslo'. Writing that into Dalux's Lokasjon field would be garbage, and
+      a classification in the same shape would miss the seed lookup and count as unknown
+      — so both are cut at the first quote before anything reads them.
+    model: mrt_leverandor_dalux_writeback
+    given:
+      - input: ref('dalux_klassifisering_status')
+        rows:
+          - {klassifiseringbeskrivelse: "Godkjent", dalux_aktiv: true}
+      - input: ref('mrt_global_leverandorvurdering')
+        rows:
+          - d365_leverandor_id: "500561"
+            navn: "Ice Communication Norge AS"
+            klassifiseringbeskrivelse: 'Godkjent";US:"Approved'
+            lokasjon: 'Oslo";US:"Oslo'
+            evalueringskommentar: 'Kommentar med " i seg'
+            sperret: false
+            underavvikling: false
+            d365_aktiv: "ja"
+            stop: false
+            sanksjonert: false
+      - input: ref('stg_d365_leverandor')
+        rows:
+          - leverandor_id: "500561"
+            engangsleverandor: "nei"
+    expect:
+      rows:
+        - organisationid: "500561"
+          klassifisering: "Godkjent"
+          lokasjon: "Oslo"
+          # Not a DisplayText field — a comment may legitimately contain a quote,
+          # so it must survive untouched.
+          evalueringskommentar: 'Kommentar med " i seg'
+          isactive: true
+          klassifisering_ukjent: false

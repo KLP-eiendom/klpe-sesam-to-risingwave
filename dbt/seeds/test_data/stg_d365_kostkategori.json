@@ -1,0 +1,58 @@
+{
+  "entities": [
+    {
+      "_id": "949",
+      "kategori": "949 - Endring kostnadsføring",
+      "kategori_id": "949",
+      "kategori_navn": "Endring kostnadsføring",
+      "kategorigruppe": "9 - Spesielle kostnader",
+      "kategorigruppe_id": "9",
+      "kategorigruppe_navn": "Spesielle kostnader"
+    },
+    {
+      "_id": "K61030",
+      "kategori": "K61030 - Eiendomsutvikling",
+      "kategori_id": "K61030",
+      "kategori_navn": "Eiendomsutvikling",
+      "kategorigruppe": "K - Direkteføring kostnader",
+      "kategorigruppe_id": "K",
+      "kategorigruppe_navn": "Direkteføring kostnader"
+    },
+    {
+      "_id": "T",
+      "kategori": "T - Timer",
+      "kategori_id": "T",
+      "kategori_navn": "Timer",
+      "kategorigruppe": "T - Timer",
+      "kategorigruppe_id": "T",
+      "kategorigruppe_navn": "Timer"
+    },
+    {
+      "_id": "822",
+      "kategori": "822 - RIB",
+      "kategori_id": "822",
+      "kategori_navn": "RIB",
+      "kategorigruppe": "8 - Generelle kostnader",
+      "kategorigruppe_id": "8",
+      "kategorigruppe_navn": "Generelle kostnader"
+    },
+    {
+      "_id": "PLED",
+      "kategori": "PLED - Prosjektledelse",
+      "kategori_id": "PLED",
+      "kategori_navn": "Prosjektledelse",
+      "kategorigruppe": "T - Timer",
+      "kategorigruppe_id": "T",
+      "kategorigruppe_navn": "Timer"
+    },
+    {
+      "_id": "PLED_n101_K",
+      "kategori": "PLED_n101_K - Prosjektledelse",
+      "kategori_id": "PLED_n101_K",
+      "kategori_navn": "Prosjektledelse",
+      "kategorigruppe": "K - Direkteføring kostnader",
+      "kategorigruppe_id": "K",
+      "kategorigruppe_navn": "Direkteføring kostnader"
+    }
+  ]
+}

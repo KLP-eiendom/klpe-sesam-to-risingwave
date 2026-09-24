@@ -1,0 +1,30 @@
+[
+  {
+    "#id": "255:superoffice-ticket",
+    "Created": "2020-07-23 10:12:21",
+    "EksternSakId": "255:superoffice-ticket",
+    "LastUpdated": "2020-07-23 12:06:46",
+    "SakskategoriId": 97
+  },
+  {
+    "#id": "2551:superoffice-ticket",
+    "Created": "2020-07-23 10:12:21",
+    "EksternSakId": "2551:superoffice-ticket",
+    "LastUpdated": "2020-07-23 12:06:46",
+    "SakskategoriId": 97
+  },
+  {
+    "#id": "300:superoffice-ticket",
+    "Created": "2020-07-23 11:12:05",
+    "EksternSakId": "300:superoffice-ticket",
+    "LastUpdated": "2020-07-23 11:12:06",
+    "SakskategoriId": 97
+  },
+  {
+    "#id": "342:superoffice-ticket",
+    "Created": "2020-07-23 11:12:05",
+    "EksternSakId": "342:superoffice-ticket",
+    "LastUpdated": "2020-07-23 11:12:06",
+    "SakskategoriId": 97
+  }
+]

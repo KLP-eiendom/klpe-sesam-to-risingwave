@@ -1,0 +1,62 @@
+version: 2
+
+unit_tests:
+  - name: mrt_verified_document__sesam_cases
+    description: >
+      Verifies that mrt_verified_document correctly expands the documents[] array from
+      stg_verified_envelope JSONB payloads.
+      Uses both Sesam verified-envelope test entities:
+        Envelope HkxQKRmAbF — document Syg4YRXCbt (sesam.pdf), one signature from
+          rune.nygard@example.com at 2021-09-02T10:59:26.767Z.
+          unique_verified_id strips /envelopes/ and /documents/ path segments.
+          externalId = "<docId>:verified-document".
+          owner = LOWER(first field in envelope-level payload.owner field).
+        Envelope H1liOq-pbK — document SkZsOcZ6WK (leieavtale2.pdf), one signature.
+      Envelopes with no documents[] or documents with no uid are excluded (WHERE clause).
+    model: mrt_verified_document
+    given:
+      - input: ref('stg_verified_envelope')
+        rows:
+          - payload: >-
+              {"id": "HkxQKRmAbF",
+               "owner": "api-verified-klpeiendom@example.com",
+               "created": "2021-09-02T10:59:07.431Z",
+               "modified": "2021-09-02T10:59:24.144Z",
+               "recipients": [{"uid": "/envelopes/HkxQKRmAbF/recipients/S1ZVFR70-K",
+                 "email": "rune.nygard@example.com", "givenName": "Rune Mydske", "familyName": "Nielsen"}],
+               "documents": [{"uid": "/envelopes/HkxQKRmAbF/documents/Syg4YRXCbt",
+                 "name": "sesam.pdf",
+                 "signatures": [{"date": "2021-09-02T10:59:26.767Z",
+                   "email": "rune.nygard@example.com", "status": "signed"}]}]}
+          - payload: >-
+              {"id": "H1liOq-pbK",
+               "owner": "api-verified-klpeiendom@example.com",
+               "created": "2021-09-01T14:13:06.812Z",
+               "modified": "2021-09-03T08:57:15.346Z",
+               "recipients": [{"uid": "/envelopes/H1liOq-pbK/recipients/rJh_5bTWY",
+                 "email": "rune.nygard@example.com", "givenName": "Rune Test", "familyName": "Nielsen"}],
+               "documents": [{"uid": "/envelopes/H1liOq-pbK/documents/SkZsOcZ6WK",
+                 "name": "leieavtale2.pdf",
+                 "signatures": [{"date": "2021-09-03T08:57:13.284Z",
+                   "email": "rune.nygard@example.com", "status": "signed"}]}]}
+
+    expect:
+      rows:
+        - uid: "/envelopes/HkxQKRmAbF/documents/Syg4YRXCbt"
+          unique_verified_id: "HkxQKRmAbFSyg4YRXCbt"
+          externalId: "Syg4YRXCbt:verified-document"
+          name: "sesam.pdf"
+          envelope_id: "HkxQKRmAbF"
+          owner: "api-verified-klpeiendom@example.com"
+          signedAt: "2021-09-02T10:59:26.767+00:00"
+          createdDate: "2021-09-02T10:59:07.431+00:00"
+          modifiedDate: "2021-09-02T10:59:24.144+00:00"
+        - uid: "/envelopes/H1liOq-pbK/documents/SkZsOcZ6WK"
+          unique_verified_id: "H1liOq-pbKSkZsOcZ6WK"
+          externalId: "SkZsOcZ6WK:verified-document"
+          name: "leieavtale2.pdf"
+          envelope_id: "H1liOq-pbK"
+          owner: "api-verified-klpeiendom@example.com"
+          signedAt: "2021-09-03T08:57:13.284+00:00"
+          createdDate: "2021-09-01T14:13:06.812+00:00"
+          modifiedDate: "2021-09-03T08:57:15.346+00:00"

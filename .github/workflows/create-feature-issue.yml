@@ -1,0 +1,54 @@
+# .github/workflows/create-feature-issue.yml
+#
+# Caller workflow committed to every klpe-* spoke. Delegates to the reusable
+# create-feature-issue hub in klpe-actions.
+#
+# Triggers:
+#   · repository_dispatch (event_type: create-feature-issue)
+#       Agents kick this off via `gh api .../dispatches`. The client_payload
+#       supplies title / body / labels.
+#   · workflow_dispatch
+#       Humans use the Actions tab when an agent isn't in the loop.
+#
+# Secret required (already on every spoke):
+#   GH_PROJECT_TOKEN classic PAT with `repo` + `project` scopes —
+#                    the same secret used by sprint-carryover.yml and
+#                    add-to-project.yml. No new setup per repo.
+
+name: Create Feature Issue
+
+on:
+  repository_dispatch:
+    types: [create-feature-issue]
+  workflow_dispatch:
+    inputs:
+      title:
+        description: "Issue title — short imperative phrase"
+        required: true
+        type: string
+      body:
+        description: "Issue body — Markdown"
+        required: true
+        type: string
+      labels:
+        description: "Comma-separated labels — `task` or `bug`"
+        required: false
+        type: string
+        default: "task"
+      parent:
+        description: "Story to attach to — `123` or `owner/repo#123`. Empty = domain fallback."
+        required: false
+        type: string
+        default: ""
+
+jobs:
+  create:
+    name: Create tracking Issue
+    uses: "klpkonsern/klpe-actions/.github/workflows/create-feature-issue.yml@v2"
+    with:
+      title:  ${{ github.event.client_payload.title  || inputs.title }}
+      body:   ${{ github.event.client_payload.body   || inputs.body }}
+      labels: ${{ github.event.client_payload.labels || inputs.labels || 'task' }}
+      parent: ${{ github.event.client_payload.parent || inputs.parent || '' }}
+    secrets:
+      GH_PROJECT_TOKEN: ${{ secrets.GH_PROJECT_TOKEN }}

@@ -1,0 +1,66 @@
+# Name your project! Project names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization's
+# name or the intended use of these models
+name: "kdi_risingwave"
+version: "1.0.0"
+config-version: 2
+
+# This setting configures which "profile" dbt uses for this project.
+profile: "kdi_risingwave"
+
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets: # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+
+# In this example config, we tell dbt to build all models in the example/
+# directory as views. These settings can be overridden in the individual model
+# files using the `{{ config(...) }}` macro.
+models:
+  kdi_risingwave:
+    # Streaming jobs default to RisingWave's adaptive parallelism (= full cluster
+    # capacity) unless told otherwise, which silently rescales every existing job
+    # upward whenever the cluster is scaled — the actor count per job grows with
+    # it, so the actor-count/parallelism ratio never actually improves. KDI Eiendom
+    # entity volumes are modest (not Kafka-firehose scale), so pin a low explicit
+    # default here; override per-model with a model-level pre-hook if a specific
+    # job genuinely needs more.
+    +pre-hook: "SET streaming_parallelism = 2"
+    # Note: sink models (snk_ prefix) carry tags=['sink'] in their own config blocks
+    # so they can be excluded from localdev/ci runs with: --exclude tag:sink
+    sinks:
+      +tags:
+        - sink
+
+seeds:
+  kdi_risingwave:
+    # Which SuperOffice vendor classifications may be active in Dalux.
+    # Keyed on the DESCRIPTION, not the code: SuperOffice's custom-field-16 codes
+    # differ per environment (dev 17-22/31-32, test+prod 33-40) while the display
+    # text is identical across all of them, so one seed serves every environment.
+    # A description missing from this file counts as active — see
+    # mrt_leverandor_dalux_writeback for why that default is deliberate.
+    dalux_klassifisering_status:
+      +column_types:
+        klassifiseringbeskrivelse: varchar
+        dalux_aktiv: boolean
+    fdvweb_helper_energy:
+      +column_types:
+        id: integer
+        energiskalaid: integer
+        buildingcategoryname: varchar
+        value: integer
+        grade: varchar
+        arealkorrektsjon: integer

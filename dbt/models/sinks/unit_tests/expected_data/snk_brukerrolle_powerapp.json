@@ -1,0 +1,38 @@
+[
+  {
+    "#id": "1",
+    "Id": 1,
+    "BrukerId": "knut.berg@example.com",
+    "Rolle": "Okonomisjef",
+    "Region": null,
+    "Created": "2024-10-17 11:28:05",
+    "LastUpdated": "2024-10-17 11:28:05"
+  },
+  {
+    "#id": "2",
+    "Id": 2,
+    "BrukerId": "ola.nordmann@example.com",
+    "Rolle": "Forvalter",
+    "Region": "Oslo",
+    "Created": "2024-10-17 11:28:05",
+    "LastUpdated": "2024-10-17 11:28:05"
+  },
+  {
+    "#id": "3",
+    "Id": 3,
+    "BrukerId": "marius.dahl@example.com",
+    "Rolle": "Driftsjef",
+    "Region": "Oslo",
+    "Created": "2024-10-17 11:28:05",
+    "LastUpdated": "2024-10-17 11:28:05"
+  },
+  {
+    "#id": "4",
+    "Id": 4,
+    "BrukerId": "erik.sand@example.com",
+    "Rolle": "Prosjektleder",
+    "Region": "Oslo",
+    "Created": "2024-10-17 11:28:05",
+    "LastUpdated": "2024-10-17 11:28:05"
+  }
+]

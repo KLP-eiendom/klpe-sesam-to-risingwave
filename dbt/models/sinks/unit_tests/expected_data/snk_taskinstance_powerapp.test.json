@@ -1,0 +1,9 @@
+{
+  "blacklist": [
+    "_ts",
+    "_updated",
+    "removal_time_",
+    "type"
+  ],
+  "id_field": "id_"
+}

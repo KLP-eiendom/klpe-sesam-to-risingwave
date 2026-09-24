@@ -1,0 +1,234 @@
+{
+  "entities": [
+    {
+      "_id": "N22101-_null_-202201-12. Vannforbruk-m³",
+      "BuildingId": "N22101",
+      "MeteringpointId": null,
+      "Mnd": "202201",
+      "MndString": "202201",
+      "Sum": "523.681365139",
+      "Type": "12. Vannforbruk",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22101-_null_-202110-12. Vannforbruk-m³",
+      "BuildingId": "N22101",
+      "MeteringpointId": null,
+      "Mnd": "202110",
+      "MndString": "202110",
+      "Sum": "770.7888282",
+      "Type": "12. Vannforbruk",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22101-_null_-202203-12. Vannforbruk-m³",
+      "BuildingId": "N22101",
+      "MeteringpointId": null,
+      "Mnd": "202203",
+      "MndString": "202203",
+      "Sum": "3608.290005",
+      "Type": "12. Vannforbruk",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22101-_null_-202106-12. Vannforbruk-m³",
+      "BuildingId": "N22101",
+      "MeteringpointId": null,
+      "Mnd": "202106",
+      "MndString": "202106",
+      "Sum": "1208.553954827",
+      "Type": "12. Vannforbruk",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22101-_null_-202111-12. Vannforbruk-m³",
+      "BuildingId": "N22101",
+      "MeteringpointId": null,
+      "Mnd": "202111",
+      "MndString": "202111",
+      "Sum": "835.77999997",
+      "Type": "12. Vannforbruk",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22101-_null_-202105-12. Vannforbruk-m³",
+      "BuildingId": "N22101",
+      "MeteringpointId": null,
+      "Mnd": "202105",
+      "MndString": "202105",
+      "Sum": "399.565816515",
+      "Type": "12. Vannforbruk",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22101-_null_-202108-12. Vannforbruk-m³",
+      "BuildingId": "N22101",
+      "MeteringpointId": null,
+      "Mnd": "202108",
+      "MndString": "202108",
+      "Sum": "527.029191625",
+      "Type": "12. Vannforbruk",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22101-_null_-202109-12. Vannforbruk-m³",
+      "BuildingId": "N22101",
+      "MeteringpointId": null,
+      "Mnd": "202109",
+      "MndString": "202109",
+      "Sum": "614.81957805",
+      "Type": "12. Vannforbruk",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22101-_null_-202107-12. Vannforbruk-m³",
+      "BuildingId": "N22101",
+      "MeteringpointId": null,
+      "Mnd": "202107",
+      "MndString": "202107",
+      "Sum": "330.056486559",
+      "Type": "12. Vannforbruk",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22101-_null_-202112-12. Vannforbruk-m³",
+      "BuildingId": "N22101",
+      "MeteringpointId": null,
+      "Mnd": "202112",
+      "MndString": "202112",
+      "Sum": "568.22893495",
+      "Type": "12. Vannforbruk",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22101-_null_-202104-12. Vannforbruk-m³",
+      "BuildingId": "N22101",
+      "MeteringpointId": null,
+      "Mnd": "202104",
+      "MndString": "202104",
+      "Sum": "359.333408419",
+      "Type": "12. Vannforbruk",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22101-_null_-202202-12. Vannforbruk-m³",
+      "BuildingId": "N22101",
+      "MeteringpointId": null,
+      "Mnd": "202202",
+      "MndString": "202202",
+      "Sum": "504.30000002",
+      "Type": "12. Vannforbruk",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22201-_null_-202108-01. Akersgaten 55-m³",
+      "BuildingId": "N22201",
+      "MeteringpointId": null,
+      "Mnd": "202108",
+      "MndString": "202108",
+      "Sum": "443.993034",
+      "Type": "01. Akersgaten 55",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22201-_null_-202105-01. Akersgaten 55-m³",
+      "BuildingId": "N22201",
+      "MeteringpointId": null,
+      "Mnd": "202105",
+      "MndString": "202105",
+      "Sum": "287.737026",
+      "Type": "01. Akersgaten 55",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22201-_null_-202202-01. Akersgaten 55-m³",
+      "BuildingId": "N22201",
+      "MeteringpointId": null,
+      "Mnd": "202202",
+      "MndString": "202202",
+      "Sum": "118.5826303",
+      "Type": "01. Akersgaten 55",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22201-_null_-202201-01. Akersgaten 55-m³",
+      "BuildingId": "N22201",
+      "MeteringpointId": null,
+      "Mnd": "202201",
+      "MndString": "202201",
+      "Sum": "580.4307692",
+      "Type": "01. Akersgaten 55",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22201-_null_-202107-01. Akersgaten 55-m³",
+      "BuildingId": "N22201",
+      "MeteringpointId": null,
+      "Mnd": "202107",
+      "MndString": "202107",
+      "Sum": "380.41464",
+      "Type": "01. Akersgaten 55",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22201-_null_-202104-01. Akersgaten 55-m³",
+      "BuildingId": "N22201",
+      "MeteringpointId": null,
+      "Mnd": "202104",
+      "MndString": "202104",
+      "Sum": "271.293894",
+      "Type": "01. Akersgaten 55",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22201-_null_-202109-01. Akersgaten 55-m³",
+      "BuildingId": "N22201",
+      "MeteringpointId": null,
+      "Mnd": "202109",
+      "MndString": "202109",
+      "Sum": "644.13456",
+      "Type": "01. Akersgaten 55",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22201-_null_-202112-01. Akersgaten 55-m³",
+      "BuildingId": "N22201",
+      "MeteringpointId": null,
+      "Mnd": "202112",
+      "MndString": "202112",
+      "Sum": "580.4307692",
+      "Type": "01. Akersgaten 55",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22201-_null_-202110-01. Akersgaten 55-m³",
+      "BuildingId": "N22201",
+      "MeteringpointId": null,
+      "Mnd": "202110",
+      "MndString": "202110",
+      "Sum": "807.51882",
+      "Type": "01. Akersgaten 55",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22201-_null_-202111-01. Akersgaten 55-m³",
+      "BuildingId": "N22201",
+      "MeteringpointId": null,
+      "Mnd": "202111",
+      "MndString": "202111",
+      "Sum": "695.4813362",
+      "Type": "01. Akersgaten 55",
+      "unit": "m³"
+    },
+    {
+      "_id": "N22201-_null_-202106-01. Akersgaten 55-m³",
+      "BuildingId": "N22201",
+      "MeteringpointId": null,
+      "Mnd": "202106",
+      "MndString": "202106",
+      "Sum": "349.3173227",
+      "Type": "01. Akersgaten 55",
+      "unit": "m³"
+    }
+  ]
+}

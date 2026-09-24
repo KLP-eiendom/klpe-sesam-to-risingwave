@@ -1,0 +1,232 @@
+unit_tests:
+  # Sesam user-kundeportal parity: valid-email filter (*@*.*, no '/') + dedup-by-email
+  # keeping the LOWEST personId (the _duplicateUsers hop).
+  - name: snk_user_kundeportal__sesam_parity
+    model: snk_user_kundeportal
+    given:
+      - input: ref('mrt_global_user')
+        rows:
+          - {
+              personId: 14542,
+              registered: "2011-11-11 15:37:52",
+              bruker_id: "siri.kristoffersen@example.com",
+              mobilePhone: null,
+              firstName: "Siri",
+              lastName: "Kristiansen",
+              retired: false,
+              _deleted: false,
+              personInterestIds: '"NO:Other;"',
+              updated: "2013-11-05 12:37:56",
+            }
+          # same email, HIGHER personId -> dropped by keep-lowest-personId dedup
+          - {
+              personId: 14549,
+              registered: "2012-01-01 00:00:00",
+              bruker_id: "siri.kristoffersen@example.com",
+              mobilePhone: null,
+              firstName: "Siri",
+              lastName: "Duplicate",
+              retired: false,
+              _deleted: false,
+              personInterestIds: '""',
+              updated: "2012-01-01 00:00:00",
+            }
+          # invalid email (no dot after @) -> dropped by *@*.* filter
+          - {
+              personId: 14557,
+              registered: "2011-11-11 15:42:16",
+              bruker_id: "ugyldigepost@no",
+              mobilePhone: null,
+              firstName: "Øyvind",
+              lastName: "Ottersen",
+              retired: false,
+              _deleted: false,
+              personInterestIds: '""',
+              updated: "2011-11-11 15:42:16",
+            }
+          # deleted user -> kept, but IsDeleted=1
+          - {
+              personId: 88888,
+              registered: "2020-01-01 00:00:00",
+              bruker_id: "deleted.user@example.com",
+              mobilePhone: null,
+              firstName: "Deleted",
+              lastName: "User",
+              retired: false,
+              _deleted: true,
+              personInterestIds: '""',
+              updated: "2020-06-01 00:00:00",
+            }
+          # personInterestIds summary lacks "kundeportal", but the person's individual
+          # superoffice-personinterest rows do -> HasKundeportalInteresse=1 (Sesam's hop check).
+          - {
+              personId: 77777,
+              registered: "2018-01-01 00:00:00",
+              bruker_id: "personinterest.only@example.com",
+              mobilePhone: null,
+              firstName: "PersonInterest",
+              lastName: "Only",
+              retired: false,
+              _deleted: false,
+              personInterestIds: '"NO:Other;"',
+              personinterestNames: "kontraktsansvarlig;kundeportal",
+              updated: "2018-01-01 00:00:00",
+            }
+          # multi-instance user: one is retired (lower personId), one is active (higher personId) -> IsDeleted=0, active chosen
+          - {
+              personId: 10001,
+              registered: "2015-01-01 00:00:00",
+              bruker_id: "multi.instance@example.com",
+              mobilePhone: null,
+              firstName: "Retired",
+              lastName: "Instance",
+              retired: true,
+              _deleted: false,
+              personInterestIds: '""',
+              updated: "2015-01-01 00:00:00",
+            }
+          - {
+              personId: 20002,
+              registered: "2016-01-01 00:00:00",
+              bruker_id: "multi.instance@example.com",
+              mobilePhone: null,
+              firstName: "Active",
+              lastName: "Instance",
+              retired: false,
+              _deleted: false,
+              personInterestIds: '""',
+              updated: "2016-01-01 00:00:00",
+            }
+          # multi-instance user: all instances retired/deleted -> IsDeleted=1
+          - {
+              personId: 30001,
+              registered: "2017-01-01 00:00:00",
+              bruker_id: "all.deleted@example.com",
+              mobilePhone: null,
+              firstName: "All",
+              lastName: "Retired1",
+              retired: true,
+              _deleted: false,
+              personInterestIds: '""',
+              updated: "2017-01-01 00:00:00",
+            }
+          - {
+              personId: 30002,
+              registered: "2018-01-01 00:00:00",
+              bruker_id: "all.deleted@example.com",
+              mobilePhone: null,
+              firstName: "All",
+              lastName: "Deleted2",
+              retired: false,
+              _deleted: true,
+              personInterestIds: '""',
+              updated: "2018-01-01 00:00:00",
+            }
+    expect:
+      rows:
+        - {
+            SuperOfficeId: 14542,
+            Registered: "2011-11-11 15:37:52",
+            BrukerId: "siri.kristoffersen@example.com",
+            Epost: "siri.kristoffersen@example.com",
+            Mobilnr: null,
+            Fornavn: "Siri",
+            Etternavn: "Kristiansen",
+            IsDeleted: 0,
+            HasKundeportalInteresse: 0,
+            Updated: "2013-11-05 12:37:56",
+            Created: "2011-11-11 15:37:52",
+            LastUpdated: "2013-11-05 12:37:56",
+          }
+        - {
+            SuperOfficeId: 88888,
+            Registered: "2020-01-01 00:00:00",
+            BrukerId: "deleted.user@example.com",
+            Epost: "deleted.user@example.com",
+            Mobilnr: null,
+            Fornavn: "Deleted",
+            Etternavn: "User",
+            IsDeleted: 1,
+            HasKundeportalInteresse: 0,
+            Updated: "2020-06-01 00:00:00",
+            Created: "2020-01-01 00:00:00",
+            LastUpdated: "2020-06-01 00:00:00",
+          }
+        - {
+            SuperOfficeId: 77777,
+            Registered: "2018-01-01 00:00:00",
+            BrukerId: "personinterest.only@example.com",
+            Epost: "personinterest.only@example.com",
+            Mobilnr: null,
+            Fornavn: "PersonInterest",
+            Etternavn: "Only",
+            IsDeleted: 0,
+            HasKundeportalInteresse: 1,
+            Updated: "2018-01-01 00:00:00",
+            Created: "2018-01-01 00:00:00",
+            LastUpdated: "2018-01-01 00:00:00",
+          }
+        - {
+            SuperOfficeId: 20002,
+            Registered: "2016-01-01 00:00:00",
+            BrukerId: "multi.instance@example.com",
+            Epost: "multi.instance@example.com",
+            Mobilnr: null,
+            Fornavn: "Active",
+            Etternavn: "Instance",
+            IsDeleted: 0,
+            HasKundeportalInteresse: 0,
+            Updated: "2016-01-01 00:00:00",
+            Created: "2016-01-01 00:00:00",
+            LastUpdated: "2016-01-01 00:00:00",
+          }
+        - {
+            SuperOfficeId: 30001,
+            Registered: "2017-01-01 00:00:00",
+            BrukerId: "all.deleted@example.com",
+            Epost: "all.deleted@example.com",
+            Mobilnr: null,
+            Fornavn: "All",
+            Etternavn: "Retired1",
+            IsDeleted: 1,
+            HasKundeportalInteresse: 0,
+            Updated: "2017-01-01 00:00:00",
+            Created: "2017-01-01 00:00:00",
+            LastUpdated: "2017-01-01 00:00:00",
+          }
+
+  - name: snk_user_forvalter__basic
+    model: snk_user_forvalter
+    given:
+      - input: ref('mrt_global_internaluser')
+        rows:
+          - {
+              personId: 123,
+              so_registeredDate: "2020-01-01 10:00:00",
+              email: "test@example.com",
+              roleName: "Admin",
+              copyEmail: "copy@test.com",
+              so_firstName: "Test",
+              so_lastName: "User",
+              region: "Oslo",
+              so_updatedDate: "2020-01-01 12:00:00",
+              fult_navn: "Test User",
+              bruker_id: "TU",
+            }
+    expect:
+      rows:
+        - {
+            SuperOfficeId: 123,
+            Created: "2020-01-01 10:00:00",
+            BrukerId: "test@example.com",
+            SoRole: "Admin",
+            Epost: "test@example.com",
+            KopiEpost: "copy@test.com",
+            Fornavn: "Test",
+            Etternavn: "User",
+            IsDeleted: 0,
+            PortfolioRegion: "Oslo",
+            LastUpdated: "2020-01-01 12:00:00",
+            FulltNavn: "Test User",
+            D365Initialer: "TU",
+          }

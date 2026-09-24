@@ -1,0 +1,1 @@
+for pid in $(netstat -ano | findstr :4566 | awk '{print $5}' | sort -u); do taskkill //PID $pid //F 2>/dev/null; done; sleep 2

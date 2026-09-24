@@ -1,0 +1,10 @@
+{
+  "mart": "mrt_global_document",
+  "blacklist": [
+    "created",
+    "lastupdated",
+    "externalid",
+    "eier"
+  ],
+  "id_field": "Id"
+}

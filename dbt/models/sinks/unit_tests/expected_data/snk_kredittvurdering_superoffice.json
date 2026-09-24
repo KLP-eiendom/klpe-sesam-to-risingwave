@@ -1,0 +1,72 @@
+[
+  {
+    "#id": "10589",
+    "ContactId": 10589,
+    "Dunsnr": "347194036",
+    "Orgnummer": "921000014",
+    "Kredittrating": "A",
+    "betanmerkning": "Upåklagelig",
+    "Soliditet": null,
+    "MvaRegistrert": null,
+    "Revisor": "REVISORKOLLEGIET AS",
+    "RevisorKommentar": null,
+    "Underavvikling": false,
+    "Sanksjonert": true
+  },
+  {
+    "#id": "17828",
+    "ContactId": 17828,
+    "Dunsnr": "352798393",
+    "Orgnummer": "559016-1245",
+    "Kredittrating": "AA",
+    "betanmerkning": "Very good",
+    "Soliditet": 68.0,
+    "MvaRegistrert": "ja",
+    "Revisor": "Söderberg, Katrine",
+    "RevisorKommentar": null,
+    "Underavvikling": false,
+    "Sanksjonert": true
+  },
+  {
+    "#id": "7867",
+    "ContactId": 7867,
+    "Dunsnr": "562231845",
+    "Orgnummer": "921000015",
+    "Kredittrating": "AA",
+    "betanmerkning": "Akseptabel",
+    "Soliditet": null,
+    "MvaRegistrert": null,
+    "Revisor": "DELOITTE AS",
+    "RevisorKommentar": "Årsoppgjøret er ikke avgitt innen lovens frist",
+    "Underavvikling": false,
+    "Sanksjonert": null
+  },
+  {
+    "#id": "15368",
+    "ContactId": 15368,
+    "Dunsnr": "306216508",
+    "Orgnummer": "21000016",
+    "Kredittrating": "A",
+    "betanmerkning": "Veletablert",
+    "Soliditet": 24.94,
+    "MvaRegistrert": null,
+    "Revisor": "Deloitte Statsautoriseret Revisionspartnerselskab",
+    "RevisorKommentar": null,
+    "Underavvikling": false,
+    "Sanksjonert": true
+  },
+  {
+    "#id": "20326",
+    "ContactId": 20326,
+    "Dunsnr": "354173262",
+    "Orgnummer": "556076-0737",
+    "Kredittrating": "A",
+    "betanmerkning": "Satisfactory - notes on record",
+    "Soliditet": null,
+    "MvaRegistrert": "ja",
+    "Revisor": "Nilsson, Michaela",
+    "RevisorKommentar": null,
+    "Underavvikling": false,
+    "Sanksjonert": null
+  }
+]

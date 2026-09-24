@@ -1,0 +1,64 @@
+{
+  "entities": [
+    {
+      "_id": "2-superoffice-support",
+      "name": "option=Bestilling adgangskort",
+      "id": 2
+    },
+    {
+      "_id": "3-superoffice-support",
+      "name": "option=Bestillingsarbeid",
+      "id": 3
+    },
+    {
+      "_id": "4-superoffice-support",
+      "name": "option=Brann",
+      "id": 4
+    },
+    {
+      "_id": "5-superoffice-support",
+      "name": "option=Faktura/økonomi",
+      "id": 5
+    },
+    {
+      "_id": "6-superoffice-support",
+      "name": "option=Inneklima",
+      "id": 6
+    },
+    {
+      "_id": "7-superoffice-support",
+      "name": "option=Kantine",
+      "id": 7
+    },
+    {
+      "_id": "8-superoffice-support",
+      "name": "option=Ledige lokaler",
+      "id": 8
+    },
+    {
+      "_id": "9-superoffice-support",
+      "name": "option=Lys",
+      "id": 9
+    },
+    {
+      "_id": "10-superoffice-support",
+      "name": "option=Presse og investorer",
+      "id": 10
+    },
+    {
+      "_id": "11-superoffice-support",
+      "name": "option=Renhold",
+      "id": 11
+    },
+    {
+      "_id": "12-superoffice-support",
+      "name": "option=Sikkerhet",
+      "id": 12
+    },
+    {
+      "_id": "13-superoffice-support",
+      "name": "option=Annet",
+      "id": 13
+    }
+  ]
+}

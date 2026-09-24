@@ -1,0 +1,57 @@
+{
+  "entities": [
+    {
+      "_id": "073715e9-25c9-11f0-9135-8a464d041997",
+      "id_": "073715e9-25c9-11f0-9135-8a464d041997",
+      "task_def_key_": "Activity_06ftnwe",
+      "proc_def_key_": "prosjekt_ltt_godkjenning",
+      "proc_def_id_": "8fc82324-24f9-11f0-b6c6-ba81fdbaf9b5",
+      "proc_inst_id_": "07365288-25c9-11f0-9135-8a464d041997",
+      "execution_id_": "07365288-25c9-11f0-9135-8a464d041997",
+      "root_proc_inst_id_": "07365288-25c9-11f0-9135-8a464d041997",
+      "act_inst_id_": "Activity_06ftnwe:0736eed8-25c9-11f0-9135-8a464d041997",
+      "name_": "Definer prosjekt",
+      "assignee_": "d4f461d4-7347-4150-b621-d1db3e67d99e",
+      "start_time_": "2025-04-30 13:42:58.826",
+      "end_time_": "2025-04-30 13:43:00.098",
+      "duration_": 1272,
+      "delete_reason_": "completed",
+      "priority_": 50
+    },
+    {
+      "_id": "07ff4804-25c9-11f0-9135-8a464d041997",
+      "id_": "07ff4804-25c9-11f0-9135-8a464d041997",
+      "task_def_key_": "Activity_0n11puh",
+      "proc_def_key_": "prosjekt_ltt_godkjenning",
+      "proc_def_id_": "8fc82324-24f9-11f0-b6c6-ba81fdbaf9b5",
+      "proc_inst_id_": "07365288-25c9-11f0-9135-8a464d041997",
+      "execution_id_": "07fc3abd-25c9-11f0-9135-8a464d041997",
+      "root_proc_inst_id_": "07365288-25c9-11f0-9135-8a464d041997",
+      "act_inst_id_": "Activity_0n11puh:07ff4803-25c9-11f0-9135-8a464d041997",
+      "name_": "Kontroller og korriger",
+      "start_time_": "2025-04-30 13:43:00.138",
+      "end_time_": "2025-04-30 13:43:00.541",
+      "duration_": 403,
+      "delete_reason_": "deleted",
+      "priority_": 50
+    },
+    {
+      "_id": "eb47a167-08b8-11f0-bdc8-e6706b5d0dd1",
+      "id_": "eb47a167-08b8-11f0-bdc8-e6706b5d0dd1",
+      "task_def_key_": "Activity_0vbv03d7",
+      "proc_def_key_": "prosjekt_tek_bestilling",
+      "proc_def_id_": "prosjekt_tek_bestilling:339:1477d0d7-08b3-11f0-b437-020e9034cf85",
+      "proc_inst_id_": "e803731b-08b8-11f0-bdc8-e6706b5d0dd1",
+      "execution_id_": "e8dfefa2-08b8-11f0-bdc8-e6706b5d0dd1",
+      "root_proc_inst_id_": "e803731b-08b8-11f0-bdc8-e6706b5d0dd1",
+      "act_inst_id_": "Activity_0vbv03d7:eb47a166-08b8-11f0-bdc8-e6706b5d0dd1",
+      "name_": "Administrerendedirektør godkjenning",
+      "assignee_": "ola.nordmann@example.com",
+      "start_time_": "2025-03-24 14:04:36.284",
+      "end_time_": "2025-03-24 14:04:37.114",
+      "duration_": 830,
+      "delete_reason_": "completed",
+      "priority_": 50
+    }
+  ]
+}

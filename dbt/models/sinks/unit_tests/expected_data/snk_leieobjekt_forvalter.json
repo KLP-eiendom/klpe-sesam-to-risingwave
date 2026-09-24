@@ -1,0 +1,58 @@
+[
+  {
+    "#id": "N201L01",
+    "Bygg": "N20101",
+    "DrifterId": "jens.carlsen@example.com",
+    "ForvalterId": "camilla.lie@example.com",
+    "GyldigFra": "1990-01-01 00:00:00",
+    "GyldigTil": "2154-12-31 00:00:00",
+    "Id": "N201L01",
+    "Navn": "07 Kontor 326kvm",
+    "OekonomId": "mette.knudsen@example.com",
+    "Type": "Bygg",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N221L241",
+    "Bygg": "N22101",
+    "DrifterId": null,
+    "ForvalterId": null,
+    "GyldigFra": "1990-01-01 00:00:00",
+    "GyldigTil": "2154-12-31 00:00:00",
+    "Id": "N221L241",
+    "Navn": "01 KTR 443,2kvm",
+    "OekonomId": null,
+    "Type": "Bygg",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N221L243",
+    "Bygg": "N22101",
+    "DrifterId": null,
+    "ForvalterId": null,
+    "GyldigFra": "1990-01-01 00:00:00",
+    "GyldigTil": "2154-12-31 00:00:00",
+    "Id": "N221L243",
+    "Navn": "03 KTR 402,9kvm",
+    "OekonomId": null,
+    "Type": "Bygg",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N90201L2",
+    "Bygg": "N90201",
+    "DrifterId": null,
+    "ForvalterId": null,
+    "GyldigFra": "1990-01-01 00:00:00",
+    "GyldigTil": "2154-12-31 00:00:00",
+    "Id": "N90201L2",
+    "Navn": "TA Antenneplass",
+    "OekonomId": null,
+    "Type": "Bygg",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  }
+]

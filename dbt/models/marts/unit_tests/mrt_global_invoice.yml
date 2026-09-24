@@ -1,0 +1,115 @@
+version: 2
+
+unit_tests:
+  - name: mrt_global_invoice__commonid_computation
+    description: >
+      Verifies that CommonId is computed as UPPER(firma_id + '-' + kunde_nummer + '-' + faktura_nummer).
+      Covers: normal case, lowercase inputs that get uppercased, and a case where firma_id is NULL
+      (CommonId becomes NULL — the sink filters these with WHERE id IS NOT NULL).
+    model: mrt_global_invoice
+    given:
+      - input: ref('stg_d365_faktura_detaljer')
+        rows:
+          # Normal case — mixed case inputs get uppercased
+          - id: 'F001'
+            firma_id: 'k001'
+            kunde_nummer: 'c001'
+            faktura_nummer: 'inv001'
+            fakturadato: '2024-01-15 00:00:00+00'
+            forfallsdato: '2024-02-15 00:00:00+00'
+            betalt_dato: null
+            sum: 12500.00
+            sum_innbetalt: 0.00
+            sum_utestaaende: 12500.00
+            sum_utestaaende_forsinket: 0.00
+            sum_utestaaende_forsinket_dager: 0
+            kontraktsnummer: 'K-2024-001'
+            bygg_nummer: null
+            kid: null
+            faktura_sendt_elektronisk: 1
+            opprettet: '2024-01-15 08:00:00+00'
+            sist_oppdatert: '2024-01-15 08:00:00+00'
+            siste_innbetaling: null
+            pdf_filnavn: null
+
+          # Already uppercase inputs — no change
+          - id: 'F002'
+            firma_id: 'K002'
+            kunde_nummer: 'C002'
+            faktura_nummer: 'INV002'
+            fakturadato: '2024-02-01 00:00:00+00'
+            forfallsdato: '2024-03-01 00:00:00+00'
+            betalt_dato: '2024-02-28 00:00:00+00'
+            sum: 9800.50
+            sum_innbetalt: 9800.50
+            sum_utestaaende: 0.00
+            sum_utestaaende_forsinket: 0.00
+            sum_utestaaende_forsinket_dager: 0
+            kontraktsnummer: 'K-2024-002'
+            bygg_nummer: '101'
+            kid: '1234567891234'
+            faktura_sendt_elektronisk: 1
+            opprettet: '2024-02-01 08:00:00+00'
+            sist_oppdatert: '2024-02-28 10:00:00+00'
+            siste_innbetaling: '2024-02-28 00:00:00+00'
+            pdf_filnavn: 'faktura_F002.pdf'
+
+          # Overdue invoice — sum_utestaaende_forsinket > 0
+          - id: 'F003'
+            firma_id: 'k001'
+            kunde_nummer: 'c003'
+            faktura_nummer: 'inv003'
+            fakturadato: '2023-11-01 00:00:00+00'
+            forfallsdato: '2023-12-01 00:00:00+00'
+            betalt_dato: null
+            sum: 5000.00
+            sum_innbetalt: 0.00
+            sum_utestaaende: 5000.00
+            sum_utestaaende_forsinket: 5000.75
+            sum_utestaaende_forsinket_dager: 45
+            kontraktsnummer: 'K-2023-003'
+            bygg_nummer: null
+            kid: null
+            faktura_sendt_elektronisk: 0
+            opprettet: '2023-11-01 08:00:00+00'
+            sist_oppdatert: '2023-12-15 08:00:00+00'
+            siste_innbetaling: null
+            pdf_filnavn: null
+
+    expect:
+      rows:
+        - id: 'F001'
+          firma_id: 'k001'
+          kunde_nummer: 'c001'
+          faktura_nummer: 'inv001'
+          CommonId: 'K001-C001-INV001'
+          sum: 12500.00
+          sum_utestaaende: 12500.00
+          sum_utestaaende_forsinket: 0.00
+          sum_utestaaende_forsinket_dager: 0
+          betalt_dato: null
+          kontraktsnummer: 'K-2024-001'
+
+        - id: 'F002'
+          firma_id: 'K002'
+          kunde_nummer: 'C002'
+          faktura_nummer: 'INV002'
+          CommonId: 'K002-C002-INV002'
+          sum: 9800.50
+          sum_utestaaende: 0.00
+          sum_utestaaende_forsinket: 0.00
+          sum_utestaaende_forsinket_dager: 0
+          betalt_dato: '2024-02-28 00:00:00+00'
+          kontraktsnummer: 'K-2024-002'
+
+        - id: 'F003'
+          firma_id: 'k001'
+          kunde_nummer: 'c003'
+          faktura_nummer: 'inv003'
+          CommonId: 'K001-C003-INV003'
+          sum: 5000.00
+          sum_utestaaende: 5000.00
+          sum_utestaaende_forsinket: 5000.75
+          sum_utestaaende_forsinket_dager: 45
+          betalt_dato: null
+          kontraktsnummer: 'K-2023-003'

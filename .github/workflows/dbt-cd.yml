@@ -1,0 +1,165 @@
+name: dbt CD
+
+run-name: >-
+  dbt CD → ${{ github.event_name == 'workflow_dispatch' && inputs.environment
+  || (github.event_name == 'push' && 'dev') || 'test → prod' }}
+
+# Deploys the dbt models to RisingWave Cloud, replacing Azure build def 294.
+#
+# ── Why this needs example-project-runner, and why it needs NO repo secrets ──────
+# dbt/deploy.sh resolves its entire configuration from HashiCorp Vault at run
+# time, via dbt/scripts/fetch_vault_secrets.py. That script reads the
+# VaultOptions__* values from the env file first and then falls back to the
+# process environment:
+#
+#     def _vopt(key, default=""):
+#         return file_env.get(key) or os.environ.get(key, default)
+#
+# `.env.*` is gitignored, so in CI there is no env file and everything comes
+# from the environment — exactly how Azure fed it from variable groups.
+#
+# The runner already supplies the only genuine credential, VaultOptions__K8TokenId
+# (a ServiceAccount JWT), through `envFrom: secretRef: vault-options-secret`.
+# Everything below is non-secret and is set here in plain sight.
+#
+# ⚠ VaultRoleName is deliberately OVERRIDDEN. The runner's envFrom sets it to
+# `klpeiendom-dev-test-role`, whose policy (`klpeiendom-dev-test-ro`) returns
+# **403 on kv/risingwave/prod**. The same ServiceAccount is also accepted for
+# `klpeiendom-role` (policy `klpeiendom-ro`), which reads dev, test AND prod.
+# Verified from the runner 2026-08-27: 34 / 42 / 38 keys respectively, each
+# carrying DBT_RW_HOST, DBT_RW_USER, DBT_RW_PASSWORD and
+# GCS_BIGQUERY_STAGING_BUCKET. A job-level `env:` wins over the container's
+# envFrom, which is what makes the override work.
+#
+# Azure used a different role AND mount per environment (kdi-{dev,test,prod}-role
+# on kubernetes / cluster-test / cluster-prod). That is not reproducible here:
+# the mount governs authentication, and this runner's JWT is issued by
+# cluster-alm1, so only the `kubernetes` mount will ever accept it. One role
+# spanning all three is the correct adaptation, not a workaround.
+#
+# ── What deploy.sh needs from the runner ─────────────────────────────────────
+#   * Vault      — reachable on the internal network, internal CA already trusted
+#   * GCS        — smart-deploy state at gs://<bucket>/manifest_<env>.json,
+#                  via the mounted GOOGLE_APPLICATION_CREDENTIALS
+#   * Python+dbt — installed per run below
+# No kubectl or port-forward: DBT_RW_HOST resolves to a RisingWave Cloud
+# endpoint, so deploy.sh takes its direct-connection path.
+#
+# ── Sink modes port themselves ───────────────────────────────────────────────
+# The Sesam→RisingWave cutover state (<SYSTEM>_SINK_MODE) lives in Vault, not in
+# pipeline variables — test and prod each carry seven. deploy.sh applies them
+# with apply_sink_modes.py after every run. Because the source of truth is Vault
+# and no env file exists in CI to override it, this migration cannot perturb
+# which destination systems are live.
+#
+# ⚠ This workflow is path-filtered, so it does not report on PRs that touch no
+# dbt file. NEVER make any of its checks a required status check — a skipped
+# required check never reports and deadlocks the branch permanently.
+
+on:
+  # `dbt/**` only, matching Azure's own trigger. The workflow file itself is
+  # deliberately absent: editing a deploy workflow must not deploy, which is the
+  # same rule cd.yml follows by putting .github/workflows/** in paths-ignore.
+  # Use the dispatch below — with --dry-run first — to validate a change here.
+  push:
+    branches: [main]
+    paths:
+      - "dbt/**"
+  pull_request:
+    branches: [release]
+    types: [closed]
+    paths:
+      - "dbt/**"
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment"
+        type: choice
+        options: [dev, test, prod]
+        default: dev
+      dbt_args:
+        description: >
+          Extra arguments passed straight to deploy.sh, e.g. "--dry-run",
+          "--all", or "--select stg_foo". Empty = smart deploy (changed models
+          and their downstream dependencies only).
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  # One dbt deploy per environment at a time — deploy.sh reads, mutates and
+  # writes back a shared GCS state file, so concurrent runs would race it.
+  group: dbt-cd-${{ github.event_name == 'workflow_dispatch' && inputs.environment || (github.event_name == 'push' && 'dev') || 'release' }}
+  cancel-in-progress: false
+
+jobs:
+  dev:
+    name: dbt deploy → dev
+    if: >-
+      (github.event_name == 'push')
+      || (github.event_name == 'workflow_dispatch' && inputs.environment == 'dev')
+    runs-on: example-project-runner
+    environment: development
+    env:
+      VaultOptions__Server: https://vault.example.com
+      VaultOptions__Prefix: risingwave/
+      VaultOptions__Secrets: dev
+      VaultOptions__VaultRoleName: klpeiendom-role
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/dbt-deploy
+        with:
+          environment: dev
+          dbt_args: ${{ inputs.dbt_args }}
+
+  test:
+    name: dbt deploy → test
+    if: >-
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+      || (github.event_name == 'workflow_dispatch' && inputs.environment == 'test')
+    runs-on: example-project-runner
+    environment: staging
+    env:
+      VaultOptions__Server: https://vault.example.com
+      VaultOptions__Prefix: risingwave/
+      VaultOptions__Secrets: test
+      VaultOptions__VaultRoleName: klpeiendom-role
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/dbt-deploy
+        with:
+          environment: test
+          dbt_args: ${{ inputs.dbt_args }}
+
+  # Parks at "Waiting for review" because it declares `environment: production`,
+  # which carries the required-reviewer rule — the same gate the container CD
+  # uses. Replaces Azure's in-pipeline ManualValidation task.
+  #
+  # `needs: test` reproduces Azure's Approve_Prod → Deploy_Prod ordering, which
+  # the never-run draft workflow could not express (it used a matrix and an
+  # empty `needs:`).
+  prod:
+    name: dbt deploy → prod
+    needs: test
+    if: >-
+      always()
+      && (
+        (github.event_name == 'pull_request' && github.event.pull_request.merged == true
+         && needs.test.result == 'success')
+        || (github.event_name == 'workflow_dispatch' && inputs.environment == 'prod')
+      )
+    runs-on: example-project-runner
+    environment: production
+    env:
+      VaultOptions__Server: https://vault.example.com
+      VaultOptions__Prefix: risingwave/
+      VaultOptions__Secrets: prod
+      VaultOptions__VaultRoleName: klpeiendom-role
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/dbt-deploy
+        with:
+          environment: prod
+          dbt_args: ${{ inputs.dbt_args }}

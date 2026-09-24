@@ -1,0 +1,20 @@
+[
+  {
+    "#id": "24",
+    "id": "24",
+    "content": {
+      "mimeType": "application/pdf",
+      "uri": "gs://klpe_dev_workarea/document_archive/24_superoffice-document-hkxqkrmabf_syg4yrxcbt.pdf"
+    },
+    "jsonData": "{\"filnavn\": \"hkxqkrmabf_syg4yrxcbt.pdf\", \"kontaktperson\": \"Rune Mydske Nielsen\", \"kundeId\": 2, \"kundenavn\": \"KLP Eiendom Oslo AS - SOD\", \"kundenummer\": \"101219\", \"leko_dokument_id\": \"Syg4YRXCbt\", \"leko_konvolutt_id\": \"HkxQKRmAbF\", \"opprettetAv\": \"\", \"opprettetDato\": \"2021-09-02 13:00:05\", \"prosjektnavn\": \"N20900-N20902 Byporten Kjøpesenter\"}"
+  },
+  {
+    "#id": "25",
+    "id": "25",
+    "content": {
+      "mimeType": "application/pdf",
+      "uri": "gs://klpe_dev_workarea/document_archive/25_superoffice-document-h1lioq-pbk_skzsocz6wk.pdf"
+    },
+    "jsonData": "{\"filnavn\": \"h1lioq-pbk_skzsocz6wk.pdf\", \"kontaktperson\": \"Rune Mydske Nielsen\", \"kundeId\": 2, \"kundenavn\": \"KLP Eiendom Oslo AS - SOD\", \"kundenummer\": \"101219\", \"leko_dokument_id\": null, \"leko_konvolutt_id\": null, \"opprettetAv\": \"\", \"opprettetDato\": \"2021-09-03 10:57:56\", \"prosjektnavn\": null}"
+  }
+]

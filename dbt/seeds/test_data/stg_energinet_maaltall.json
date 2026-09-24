@@ -1,0 +1,28 @@
+{
+  "entities": [
+    {
+      "_id": "Norge-Vann",
+      "region": "Norge",
+      "Type": "Vann",
+      "Maaltall": null
+    },
+    {
+      "_id": "_null_-Vann",
+      "region": null,
+      "Type": "Vann",
+      "Maaltall": "80"
+    },
+    {
+      "_id": "Sverige-_null_",
+      "region": "Sverige",
+      "Type": null,
+      "Maaltall": "40"
+    },
+    {
+      "_id": "Danmark-Sorteringsgrad",
+      "region": "Danmark",
+      "Type": "Sorteringsgrad",
+      "Maaltall": "55"
+    }
+  ]
+}

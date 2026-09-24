@@ -1,0 +1,41 @@
+{{ config(
+    materialized='table_with_connector'
+) }}
+
+CREATE TABLE {{ this }} (
+    _id               VARCHAR         PRIMARY KEY,
+    "GABnr"           VARCHAR,
+    "GnrBnr"          VARCHAR,
+    adresse           VARCHAR,
+    andelfossilt      DOUBLE PRECISION,
+    arkitekt          VARCHAR,
+    beliggenhet       VARCHAR,
+    beskrivelse       VARCHAR,
+    "byggNavn"        VARCHAR,
+    "byggNavnId"      VARCHAR,
+    byggeaar          VARCHAR,
+    byggherre         VARCHAR,
+    byggnr            VARCHAR,
+    bygningskategori  VARCHAR,
+    bygningsnavn      VARCHAR,
+    driftsansv        VARCHAR,
+    driftsteknikker   VARCHAR,
+    eiendnr           VARCHAR,
+    eiendomsansv      VARCHAR,
+    eier              VARCHAR,
+    energiforbruk     DOUBLE PRECISION,
+    energiskalaid     BIGINT,
+    etasjer           VARCHAR,
+    historikk         VARCHAR,
+    kompleksnr        VARCHAR,
+    markedsomrade     VARCHAR,
+    "tomtAreal"       DOUBLE PRECISION,
+    "totAreal"        DOUBLE PRECISION,
+    "totEietAreal"    DOUBLE PRECISION,
+    "totLeietAreal"   DOUBLE PRECISION,
+    eiendnr_origin    VARCHAR,
+    "bruksAreal"      DOUBLE PRECISION,
+    "bruttoAreal"     DOUBLE PRECISION,
+    "nettoAreal"      DOUBLE PRECISION,
+    "oppvarmetAreal"  DOUBLE PRECISION
+);

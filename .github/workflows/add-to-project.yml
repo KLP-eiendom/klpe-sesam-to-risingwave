@@ -1,0 +1,33 @@
+# .github/workflows/add-to-project.yml
+#
+# Caller workflow committed to every klpe-* spoke. Delegates to the reusable
+# add-to-project hub in klpe-actions. The `actions/add-to-project` pin lives
+# in the hub — bumping it (e.g. `vN → vN+1`) is a one-PR change in klpe-actions
+# followed by a release; spokes pinned to `klpe-actions@v2` pick it up
+# automatically on the next event. No per-spoke PR needed.
+#
+# Variables (set at org level or per repo; both fall back to klpe defaults):
+#   KLPE_ORG       organisation name (default: klpkonsern)
+#   PROJECT_NUMBER   project number   (default: 47 / Team Eiendom)
+#
+# Secret required:
+#   GH_PROJECT_TOKEN classic PAT with scopes: project, repo
+#                    (same secret used by sprint-carryover.yml and
+#                    create-feature-issue.yml — no extra setup needed)
+
+name: Add to Project
+
+on:
+  issues:
+    types: [opened, transferred]
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  add:
+    name: Add issue/PR to project
+    uses: "klpkonsern/klpe-actions/.github/workflows/add-to-project.yml@v2"
+    with:
+      project_url: "https://github.com/orgs/${{ vars.KLPE_ORG || 'klpkonsern' }}/projects/${{ vars.PROJECT_NUMBER || '47' }}"
+    secrets:
+      GH_PROJECT_TOKEN: ${{ secrets.GH_PROJECT_TOKEN }}

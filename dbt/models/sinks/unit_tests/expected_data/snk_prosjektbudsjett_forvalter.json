@@ -1,0 +1,34 @@
+[
+  {
+    "#id": "24|N228|Pros.03-11300-N22801-EIER-2024-12-31",
+    "Id": "24|N228|Pros.03-11300-N22801-EIER-2024-12-31",
+    "FirmaId": "N228",
+    "KontoId": "11300",
+    "ByggAvdelingId": "N22801",
+    "Budsjettdato": "2024-12-31 00:00:00+00:00",
+    "KontraktId": "N228|",
+    "Budsjettnummer": "24|N228|Pros.03",
+    "Budsjettmodell": "Budsjett",
+    "BelopFastValutakurs": 1700000.0,
+    "BelopFastValutakursPerDato": 1700000.0,
+    "Kommentar": "Oppussing av 58 bad 4 etasje  gammel fløy iht til avtale. Totalprosjekt 9,5 mill som gjøres i des 24 og Q1 2025",
+    "Created": "2024-12-31 00:00:00",
+    "LastUpdated": "2024-12-31 00:00:00"
+  },
+  {
+    "#id": "24|N243|Pros.01-11399-N24302-EIER-2024-12-31",
+    "Id": "24|N243|Pros.01-11399-N24302-EIER-2024-12-31",
+    "FirmaId": "N243",
+    "KontoId": "11399",
+    "ByggAvdelingId": "N24302",
+    "Budsjettdato": "2024-12-31 00:00:00+00:00",
+    "KontraktId": "N243|",
+    "Budsjettnummer": "24|N243|Pros.01",
+    "Budsjettmodell": "Budsjett",
+    "BelopFastValutakurs": 11317.5,
+    "BelopFastValutakursPerDato": 11317.5,
+    "Kommentar": "Mye feil på disse heisene. Gammelt og venskelig å få deler.",
+    "Created": "2024-12-31 00:00:00",
+    "LastUpdated": "2024-12-31 00:00:00"
+  }
+]

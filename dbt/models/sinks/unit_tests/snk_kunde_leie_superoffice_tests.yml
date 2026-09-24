@@ -1,0 +1,100 @@
+unit_tests:
+  - name: snk_kunde_leie_superoffice__sesam_contract_area
+    description: >
+      Tests kundeLeieareal computation from the d365-contract-line-area-countable Sesam rule:
+        medregnet_areal = areal  WHERE areal_ikke_medregnet=0 AND leie_kost_gruppe_id=1 AND antall=0
+      Based on 2 Sesam d365-contract-line test entities (101323, 107651) + synthetic cases.
+      Scenario K1 (customer C001):
+        line 101323 — areal_ikke_medregnet=1  → excluded from area (0 m²)
+        line 107651 — all conditions met        → counted (41 005 m²)
+      Scenario K2 (customer C001):
+        line K2L1 — countable 252 m²
+        line K2L2 — countable 67 m²  → K2 total 319 m²
+      C001 kundeLeieareal = 41005 + 319 = 41 324.00 m²
+      Scenario K3 (customer C002):
+        line K3L1 — leie_kost_gruppe_id=2 (operating cost, not rent) → excluded
+        line K3L2 — antall=5 (count-based, not area-based)           → excluded
+      C002 kundeLeieareal = 0.00 m²
+    model: snk_kunde_leie_superoffice
+    given:
+      - input: ref('stg_d365_contract_line')
+        rows:
+          - unik_id: "101323"
+            kontrakt_nummer: "K1"
+            areal: 680.0
+            areal_ikke_medregnet: 1
+            leie_kost_gruppe_id: 23
+            antall: 0
+            gyldig_til: null
+            _is_active: true
+          - unik_id: "107651"
+            kontrakt_nummer: "K1"
+            areal: 41005.0
+            areal_ikke_medregnet: 0
+            leie_kost_gruppe_id: 1
+            antall: 0
+            gyldig_til: null
+            _is_active: true
+          - unik_id: "K2L1"
+            kontrakt_nummer: "K2"
+            areal: 252.0
+            areal_ikke_medregnet: 0
+            leie_kost_gruppe_id: 1
+            antall: 0
+            gyldig_til: null
+            _is_active: true
+          - unik_id: "K2L2"
+            kontrakt_nummer: "K2"
+            areal: 67.0
+            areal_ikke_medregnet: 0
+            leie_kost_gruppe_id: 1
+            antall: 0
+            gyldig_til: null
+            _is_active: true
+          - unik_id: "K3L1"
+            kontrakt_nummer: "K3"
+            areal: 500.0
+            areal_ikke_medregnet: 0
+            leie_kost_gruppe_id: 2
+            antall: 0
+            gyldig_til: null
+            _is_active: true
+          - unik_id: "K3L2"
+            kontrakt_nummer: "K3"
+            areal: 300.0
+            areal_ikke_medregnet: 0
+            leie_kost_gruppe_id: 1
+            antall: 5
+            gyldig_til: null
+            _is_active: true
+
+      - input: ref('stg_d365_kontrakt')
+        rows:
+          - {_id: "K1.U1", kontrakt_id: "K1", kundenummer: "C001", leie: 1200000.0}
+          - {_id: "K2.U1", kontrakt_id: "K2", kundenummer: "C001", leie:  800000.0}
+          - {_id: "K3.U1", kontrakt_id: "K3", kundenummer: "C002", leie:  500000.0}
+
+      - input: ref('stg_d365_kunde')
+        rows:
+          - {kundenummer: "C001"}
+          - {kundenummer: "C002"}
+
+      - input: ref('mrt_global_customer')
+        rows:
+          - {kundenummer: "C001", contactId: 2001}
+          - {kundenummer: "C002", contactId: 2002}
+
+      - input: ref('mrt_superoffice_contactsimple')
+        rows:
+          - {contactId: 2001, updatedDate: "2024-01-15 12:00:00+00"}
+
+    expect:
+      rows:
+        - kundenummer: "C001"
+          kundeAarsinntekt: 2000000.0
+          kundeLeieareal: 41324
+          updatedDate: "2024-01-15 12:00:00+00:00"
+        - kundenummer: "C002"
+          kundeAarsinntekt: 500000.0
+          kundeLeieareal: 0
+          updatedDate: null

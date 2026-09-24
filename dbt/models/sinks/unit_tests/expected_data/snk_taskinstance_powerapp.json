@@ -1,0 +1,50 @@
+[
+  {
+    "#id": "073715e9-25c9-11f0-9135-8a464d041997",
+    "id_": "073715e9-25c9-11f0-9135-8a464d041997",
+    "task_def_key_": "Activity_06ftnwe",
+    "proc_inst_id_": "07365288-25c9-11f0-9135-8a464d041997",
+    "proc_def_key_": "prosjekt_ltt_godkjenning",
+    "act_inst_id_": "Activity_06ftnwe:0736eed8-25c9-11f0-9135-8a464d041997",
+    "name_": "Definer prosjekt",
+    "owner_": null,
+    "assignee_": "d4f461d4-7347-4150-b621-d1db3e67d99e",
+    "start_time_": "~t2025-04-30T13:42:58.826Z",
+    "end_time_": "~t2025-04-30T13:43:00.098Z",
+    "duration_": 1272,
+    "delete_reason_": "completed",
+    "owner_role": "Prosjekteier"
+  },
+  {
+    "#id": "07ff4804-25c9-11f0-9135-8a464d041997",
+    "id_": "07ff4804-25c9-11f0-9135-8a464d041997",
+    "task_def_key_": "Activity_0n11puh",
+    "proc_inst_id_": "07365288-25c9-11f0-9135-8a464d041997",
+    "proc_def_key_": "prosjekt_ltt_godkjenning",
+    "act_inst_id_": "Activity_0n11puh:07ff4803-25c9-11f0-9135-8a464d041997",
+    "name_": "Kontroller og korriger",
+    "owner_": null,
+    "assignee_": null,
+    "start_time_": "~t2025-04-30T13:43:00.138Z",
+    "end_time_": "~t2025-04-30T13:43:00.541Z",
+    "duration_": 403,
+    "delete_reason_": "deleted",
+    "owner_role": "Prosjektleder"
+  },
+  {
+    "#id": "eb47a167-08b8-11f0-bdc8-e6706b5d0dd1",
+    "id_": "eb47a167-08b8-11f0-bdc8-e6706b5d0dd1",
+    "task_def_key_": "Activity_0vbv03d7",
+    "proc_inst_id_": "e803731b-08b8-11f0-bdc8-e6706b5d0dd1",
+    "proc_def_key_": "prosjekt_tek_bestilling",
+    "act_inst_id_": "Activity_0vbv03d7:eb47a166-08b8-11f0-bdc8-e6706b5d0dd1",
+    "name_": "Administrerendedirektør godkjenning",
+    "owner_": null,
+    "assignee_": "ola.nordmann@example.com",
+    "start_time_": "~t2025-03-24T14:04:36.284Z",
+    "end_time_": "~t2025-03-24T14:04:37.114Z",
+    "duration_": 830,
+    "delete_reason_": "completed",
+    "owner_role": "Administrerendedirektor"
+  }
+]

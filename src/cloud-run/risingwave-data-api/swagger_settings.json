@@ -1,0 +1,11 @@
+{
+  "Swagger": {
+    "VersionName": "v1",
+    "Title": "Risingwave Data API v1",
+    "Description": "Risingwave data api for Klpeiendom",
+    "VersionNumber": "1.0.0",
+    "TermsOfService": "None",
+    "DocUrl": "/swagger/v1/swagger.json",
+    "XmlFileName": "RisingWaveDataApi.xml"
+  }
+}

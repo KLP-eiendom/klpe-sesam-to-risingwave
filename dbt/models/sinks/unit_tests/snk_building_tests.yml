@@ -1,0 +1,276 @@
+unit_tests:
+  - name: snk_bygg_kundeportal__sesam_parity
+    model: snk_bygg_kundeportal
+    given:
+      - input: ref('mrt_bygg_forvalter')
+        rows:
+          - {
+              bygg_avdeling_id: "100",
+              has_avdeling: true,
+              bygg_id: null,
+              fb_byggnavnid: "b100",
+              fb_id: 500,
+              bygningsnavn: "Test Building",
+              b_navn: null,
+              ba_navn: null,
+              fb_adresse: "Street 1",
+              b_adresse: null,
+              GABnr: "G123",
+              eiendom_id: null,
+              kompleksnr: "K1",
+              GnrBnr: "1/2",
+              markedsomrade: "Oslo",
+              etasjer: 5,
+              totalphysicalarea: 1000.0,
+              totalrentedarea: 800.0,
+              eier: "Owner",
+              b_firma_id: null,
+              eiendomsansv: "Manager",
+              driftsansv: "Ops",
+              driftsteknikker: "Tech",
+              byggherre: "Builder",
+              arkitekt: "Architect",
+              fb_byggeaar: "1990",
+              byggeaar: null,
+              beliggenhet: "Central",
+              andelfossilt: 0.1,
+              energiforbruk: 50000.0,
+              beskrivelse: "A test building",
+              historikk: "New",
+              bildearkivLink: "img.jpg",
+              b_by: "Oslo",
+              fylke: "Viken",
+              b_postnummer: "0123",
+              avdeling_type: "Office",
+              region: null,
+              energycategory: null,
+              heatingcategory: null,
+              fb_oppvarmet_areal: null,
+              b_gyldig_fra: "1970-01-01",
+            }
+    expect:
+      rows:
+        - {
+            ByggId: "100",
+            ByggNummer: "100",
+            ByggNavnId: "b100",
+            FdvWebByggId: 500,
+            Navn: "Test Building",
+            Adresse: "Street 1",
+            GABNummer: "G123",
+            EiendomsNummer: "100",
+            KompleksNummer: 1,
+            GnrBnr: "1/2",
+            Markedsomrade: "Oslo",
+            Etasjer: 5,
+            TotEietAreal: 1000.0,
+            TotLeietAreal: 800.0,
+            Eier: "Owner",
+            Eiendomsansv: "Manager",
+            Driftsansv: "Ops",
+            Driftsteknikker: "Tech",
+            Byggherre: "Builder",
+            Arkitekt: "Architect",
+            Byggeaar: "1990",
+            Beliggenhet: "Central",
+            AndelFossilEl: 0.1,
+            EnergiForbruk: 50000.0,
+            Beskrivelse: "A test building",
+            Historikk: "New",
+            HovedVisningsBilde: "img.jpg",
+            By: "Oslo",
+            Fylke: "Viken",
+            Postnummer: "0123",
+            Type: "Office",
+            Region: null,
+            OppvarmetAreal: null,
+            BimSyncProjectId: null,
+            Latitude: null,
+            Longitude: null,
+            Created: "1970-01-01 00:00:00",
+            LastUpdated: "1970-01-01 00:00:00",
+          }
+
+  - name: snk_bygg_forvalter__sesam_parity
+    model: snk_bygg_forvalter
+    given:
+      - input: ref('mrt_bygg_forvalter')
+        rows:
+          - {
+              bygg_avdeling_id: "D20201",
+              ba_navn: "D20201 - Arne Jacobsens Allé 13/Edvard Thomsens Vej 8-14",
+              fb_adresse: "Arne Jacobsens Allé 13, 2300 Kbh. S",
+              avdeling_type: "Kontor",
+              ba_firma_id: "D202",
+              bildearkivLink: "img.jpg",
+              andelfossilt: 40,
+              energiforbruk: 100,
+              totalphysicalarea: 3346.26,
+              b_postnummer: "2300",
+              b_by: "KØBENHAVN S",
+              b_gyldig_fra: "2024-01-01",
+              Created: "2024-01-01 00:00:00",
+              LastUpdated: "2024-01-01 00:00:00",
+            }
+    expect:
+      rows:
+        - {
+            Id: "D20201",
+            Nummer: "D20201",
+            Navn: "D20201 - Arne Jacobsens Allé 13/Edvard Thomsens Vej 8-14",
+            Adresse: "Arne Jacobsens Allé 13, 2300 Kbh. S",
+            Type: "Kontor",
+            FirmaId: "D202",
+            PostNummer: "2300",
+            Sted: "KØBENHAVN S",
+            HovedVisningsBilde: "img.jpg",
+            AndelFossilEl: 40,
+            EnergiForbruk: 100,
+            TotaltAreal: 3346.26,
+            ForvalterId: null,
+            DrifterId: null,
+            OekonomId: null,
+            Region: null,
+            LedigAreal: 0.0,
+            LedigArealMarkedspris: 0.0,
+            EnergiKarakter: null,
+            OppvarmingKarakter: null,
+            Created: "2024-01-01 00:00:00",
+            LastUpdated: "2024-01-01 00:00:00",
+          }
+
+  - name: snk_bygg_forvalter__type_prefers_bygg_type
+    model: snk_bygg_forvalter
+    given:
+      - input: ref('mrt_bygg_forvalter')
+        rows:
+          - {
+              bygg_avdeling_id: "D20101",
+              ba_navn: "D20101 - Arne Jacobsens Allé 15-17",
+              avdeling_type: "BYGG",
+              b_bygg_type: "Kontor",
+              b_gyldig_fra: "2024-01-01",
+            }
+    expect:
+      rows:
+        - {
+            Id: "D20101",
+            Nummer: "D20101",
+            Navn: "D20101 - Arne Jacobsens Allé 15-17",
+            Type: "Kontor",
+            LedigAreal: 0.0,
+            LedigArealMarkedspris: 0.0,
+            Created: "2024-01-01 00:00:00",
+            LastUpdated: "2024-01-01 00:00:00",
+          }
+
+  - name: snk_bygg_forvalter__type_falls_back_when_no_bygg_type
+    model: snk_bygg_forvalter
+    given:
+      - input: ref('mrt_bygg_forvalter')
+        rows:
+          - {
+              bygg_avdeling_id: "D2010",
+              ba_navn: "D2010 - Arne Jacobsens Allé 15-17 (grunn)",
+              avdeling_type: "GRUNN",
+              b_bygg_type: null,
+              b_gyldig_fra: "2024-01-01",
+            }
+    expect:
+      rows:
+        - {
+            Id: "D2010",
+            Nummer: "D2010",
+            Navn: "D2010 - Arne Jacobsens Allé 15-17 (grunn)",
+            Type: "GRUNN",
+            LedigAreal: 0.0,
+            LedigArealMarkedspris: 0.0,
+            Created: "2024-01-01 00:00:00",
+            LastUpdated: "2024-01-01 00:00:00",
+          }
+
+  - name: snk_bygg_bqeos__sesam_parity
+    model: snk_bygg_bqeos
+    given:
+      - input: ref('mrt_bygg_forvalter')
+        rows:
+          - {
+              bygg_avdeling_id: "D20201",
+              bygg_id: null,
+              b_navn: "Arne Jacobsens Allé 13/Edvard Thomsens Vej 8-14",
+              ba_navn: null,
+              fb_byggnavn: null,
+              andelfossilt: 40,
+              energiforbruk: 100,
+              fb_byggnavnid: "bygg36",
+              fb_byggeaar: "2008",
+              energycategory: null,
+              fb_oppvarmet_areal: null,
+              heatingcategory: null,
+            }
+    expect:
+      rows:
+        - {
+            ByggId: "D20201",
+            Navn: "Arne Jacobsens Allé 13/Edvard Thomsens Vej 8-14",
+            AndelFossilt: 40,
+            Energiforbruk: 100,
+            FdvWebId: "bygg36",
+            Byggeaar: "2008",
+            Energikategori: null,
+            OppvarmetAreal: null,
+            Oppvarmingskategori: null,
+          }
+
+  - name: snk_bygg_leko__pass_through
+    model: snk_bygg_leko
+    given:
+      - input: ref('mrt_bygg_leko')
+        rows:
+          - { id: "D1", number: "D1", type: "Office" }
+    expect:
+      rows:
+        - { id: "D1", number: "D1", type: "Office" }
+
+
+  - name: snk_bygg_kundeportal__null_handling
+    model: snk_bygg_kundeportal
+    given:
+      - input: ref('mrt_bygg_forvalter')
+        rows:
+          - {
+              bygg_avdeling_id: "200",
+              has_avdeling: true,
+              bygg_id: null,
+              andelfossilt: 0,
+              energiforbruk: 0,
+              b_gyldig_fra: null,
+            }
+    expect:
+      rows:
+        - {
+            ByggId: "200",
+            EnergiForbruk: 0,
+            AndelFossilEl: 0,
+            Created: "1970-01-01 00:00:00",
+            LastUpdated: "1970-01-01 00:00:00",
+          }
+
+  # Building-only records (no bygg-avdeling) must NOT be sent to Kundeportal: Sesam keys those by
+  # BuildingId/BUILDINGID (a field RW lacks), so they can't reach ID-parity here. They stay in
+  # snk_bygg_forvalter/snk_bygg_bqeos only. has_avdeling=false => filtered out.
+  - name: snk_bygg_kundeportal__excludes_building_only
+    model: snk_bygg_kundeportal
+    given:
+      - input: ref('mrt_bygg_forvalter')
+        rows:
+          - {
+              bygg_avdeling_id: "N20101",
+              has_avdeling: false,
+              bygg_id: "N20101",
+              b_navn: "Holbergs gate 1",
+              andelfossilt: 0,
+              energiforbruk: 0,
+            }
+    expect:
+      rows: []

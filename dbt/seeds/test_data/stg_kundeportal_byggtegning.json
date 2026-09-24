@@ -1,0 +1,52 @@
+{
+  "entities": [
+    {
+      "_id": "12145",
+      "UniqueId": 12145,
+      "Navn": "Generell informasjon - Glasmagasinet rev. 14.10.2019",
+      "Filnavn": "https://web52.fdvweb.no/bygg28/brosjyrer/10/Generell informasjon - Glasmagasinet rev. 14.10.2019.docx",
+      "BucketFilnavn": "FDVbygg28/Diverse_Generell_informasjon_-_Glasmagasinet_rev._14.10.2019_1.docx",
+      "FdvWebByggId": "bygg28",
+      "Kategori": "Generell informasjon",
+      "Type": "Generell informasjon",
+      "Fag": "Generell informasjon",
+      "Nummer": "100.02-001",
+      "Revdato": "2019-10-14 00:00:00",
+      "SistVerifisert": "2021-04-17 06:05:58",
+      "Created": "2020-12-15 09:29:57.137628",
+      "LastUpdated": "2021-04-17 06:05:57.755681"
+    },
+    {
+      "_id": "15858",
+      "UniqueId": 15858,
+      "Navn": "Vedlegg 3 Glasmagasinet vedtekter",
+      "Filnavn": "https://web52.fdvweb.no/bygg28/brosjyrer/11/Glasmagasinet vedtekter.pdf",
+      "BucketFilnavn": "FDVbygg28/Diverse_Branntegning_Vedlegg_3_Glasmagasinet_vedtekter_7.pdf",
+      "FdvWebByggId": "bygg28",
+      "Kategori": "Vedtekter",
+      "Type": "Vedtekter",
+      "Fag": "Kontraktsvedlegg",
+      "Nummer": "110.05-001",
+      "Revdato": "2020-11-24 00:00:00",
+      "SistVerifisert": "2021-04-17 06:05:58",
+      "Created": "2021-02-09 09:49:10.325008",
+      "LastUpdated": "2021-04-17 06:05:57.756064"
+    },
+    {
+      "_id": "19876",
+      "UniqueId": 19876,
+      "Navn": "Vedlegg 2 - Generelle vilkår KLP Parkering",
+      "Filnavn": "Vedlegg 2 - Generelle vilkår KLP Parkering.pdf",
+      "BucketFilnavn": "superoffice_maler/kontor/Vedlegg 2 - Generelle vilkår KLP Parkering.pdf",
+      "FdvWebByggId": "bygg5",
+      "Kategori": "Vilkår",
+      "Type": "Vilkår",
+      "Fag": "Kontraktsvedlegg",
+      "Nummer": "110.06.1",
+      "Revdato": "2022-10-21 16:12:19.611",
+      "SistVerifisert": "2022-10-21 14:39:25",
+      "Created": "2022-10-21 14:30:58.471818",
+      "LastUpdated": "2022-10-21 14:39:24.823985"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+unit_tests:
+  - name: snk_prosjekt_powerapp__basic
+    model: snk_prosjekt_powerapp
+    given:
+      - input: ref('stg_d365_prosjekt')
+        rows:
+          - { prosjekt_id: 'P1', prosjekt_navn: 'Project 1', Origin: 'D365' }
+    expect:
+      rows:
+        - { prosjekt_id: 'P1', prosjekt_navn: 'Project 1', Origin: 'D365'  }
+
+  - name: snk_prosjektrapportering_powerapp__filtered
+    model: snk_prosjektrapportering_powerapp
+    given:
+      - input: ref('stg_d365_prosjekt')
+        rows:
+          - { prosjekt_id: 'P1', sortering_3: '01PROSJEKT', Origin: 'D365', prosjekt_gruppe_id: 'GRP1' }
+          - { prosjekt_id: 'P2', sortering_3: '09TID', Origin: 'D365', prosjekt_gruppe_id: 'GRP1' } # Filtered (09TID)
+          - { prosjekt_id: 'P3', sortering_3: '01PROSJEKT', Origin: 'D365 Budsjettprosjekt', prosjekt_gruppe_id: 'GRP1' } # Filtered (Origin)
+          - { prosjekt_id: 'P4', sortering_3: '01PROSJEKT', Origin: 'D365', prosjekt_gruppe_id: 'MIG1' } # Filtered (MIG%)
+    expect:
+      rows:
+        - { ProsjektId: 'P1'  }
+
+  - name: snk_processinstance_powerapp__filtered
+    model: snk_processinstance_powerapp
+    given:
+      - input: ref('stg_camunda_act_hi_procinst')
+        rows:
+          - { id_: 'INST1', proc_def_key_: 'prosjekt_v1', state_: 'ACTIVE' }
+          - { id_: 'INST2', proc_def_key_: 'tiltak_v2', state_: 'COMPLETED' }
+          - { id_: 'INST3', proc_def_key_: 'other_v1', state_: 'ACTIVE' } # Filtered (other)
+          - { id_: 'INST4', proc_def_key_: 'prosjekt_v1', state_: 'EXTERNALLY_TERMINATED' } # Filtered (state)
+    expect:
+      rows:
+        - { id_: 'INST1'  }
+        - { id_: 'INST2'  }
+
+  - name: snk_taskinstance_powerapp__joined
+    model: snk_taskinstance_powerapp
+    given:
+      - input: ref('stg_camunda_act_hi_taskinst')
+        rows:
+          - { id_: 'T1', proc_def_key_: 'prosjekt_v1', task_def_key_: 'task1', name_: 'Task 1', task_state_: 'Completed' }
+      - input: ref('stg_eiendom_prosjektsortedusertask')
+        rows:
+          - { _id: 'prosjekt_v1_task1', ownerRole: 'Manager' }
+    expect:
+      rows:
+        - { id_: 'T1', name_: 'Task 1', owner_role: 'Manager', task_state_: 'Completed'  }
+
+  - name: snk_user_powerapp__basic
+    model: snk_user_powerapp
+    given:
+      - input: ref('mrt_global_internaluser')
+        rows:
+          - { email: 'user1@example.com', fult_navn: 'User 1', bruker_id: 'U1', personId: 100, is_employee: true }
+    expect:
+      rows:
+        - { epost: 'user1@example.com', navn: 'User 1', brukerId: 'U1'  }
+
+  # Non-employees: Sesam falls back to SO firstName+lastName, NOT SuperOffice's own fullName
+  # (which can include a middle name the split fields don't have).
+  - name: snk_user_powerapp__non_employee_uses_so_names
+    model: snk_user_powerapp
+    given:
+      - input: ref('mrt_global_internaluser')
+        rows:
+          - { email: 'ekstern@example.com', fult_navn: 'Anette Kristin Bø Andreassen', so_firstName: 'Anette Kristin', so_lastName: 'Andreassen', bruker_id: 'ekstern@example.com', personId: 200, is_employee: false }
+    expect:
+      rows:
+        - { epost: 'ekstern@example.com', navn: 'Anette Kristin Andreassen', brukerId: 'ekstern@example.com' }

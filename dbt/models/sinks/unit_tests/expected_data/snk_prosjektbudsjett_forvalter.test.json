@@ -1,0 +1,5 @@
+{
+  "mart": "mrt_global_budget",
+  "id_field": "Id",
+  "blacklist": ["budsjettdato"]
+}

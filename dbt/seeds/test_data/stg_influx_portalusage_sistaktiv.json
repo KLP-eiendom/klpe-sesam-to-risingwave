@@ -1,0 +1,18 @@
+{
+  "entities": [
+    {
+      "_id": "600047",
+      "domene": "971278374",
+      "kunde_id": "30",
+      "kundenummer": "600047",
+      "sist_aktivitet_dato": "2023-09-01 00:00:00"
+    },
+    {
+      "_id": "knowit.no",
+      "domene": "knowit.no",
+      "kunde_id": null,
+      "kundenummer": null,
+      "sist_aktivitet_dato": "2021-09-27 00:00:00"
+    }
+  ]
+}

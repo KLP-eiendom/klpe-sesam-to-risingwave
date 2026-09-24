@@ -1,0 +1,197 @@
+unit_tests:
+  - name: mrt_bygg_leko__sesam_parity
+    model: mrt_bygg_leko
+    given:
+      - input: ref('mrt_global_property')
+        rows:
+          - {
+              bygg_avdeling_id: "D20201",
+              bygg_id: "D20201",
+              b_bygg_type: "Kontor",
+              ba_byggtype: null,
+              b_navn: "Arne Jacobsens Allé 13/Edvard Thomsens Vej 8-14",
+              ba_navn: null,
+              fb_byggnavn: null,
+              fb_adresse: null,
+              b_adresse: null,
+              b_by: "KØBENHAVN S",
+              b_postnummer: "2300",
+              bf_firma_postnummer: null,
+              GnrBnr: "304",
+              bildearkivLink: "img.jpg",
+              totAreal: 3346.26,
+              andelfossilt: 40,
+              energiforbruk: 100,
+              bf_firma_adresse: null,
+              bf_firma_sted: null,
+              ba_forvalter_epost: null,
+              forvalter_epost: null,
+              eiendomsansv: null,
+              ba_drift_epost: null,
+              drift_epost: null,
+              driftsansv: null,
+              bf_firma_navn: null,
+              bf_orgnummer: null,
+              bf_girokontonummer: null,
+              b_firma_id: "D202",
+            }
+    expect:
+      rows:
+        - {
+            id: "D20201",
+            number: "D20201",
+            type: "Kontor",
+            departmentname: "Arne Jacobsens Allé 13/Edvard Thomsens Vej 8-14",
+            name: null,
+            address: null,
+            city: "KØBENHAVN S",
+            zipCode: "2300",
+            municipaly: "KØBENHAVN S",
+            parcelNumber: "304",
+            buildingImageUrl: "img.jpg",
+            totalAreal: 3346.26,
+            fossilFuelShare: 40,
+            energyConsumption: 100,
+            postalAddress: null,
+            invoiceAddress: null,
+            propertyManager: null,
+            operationManager: null,
+            shoppingMall: null,
+            organisationalNumber: null,
+            accountNumber: null,
+          }
+
+  - name: mrt_byggtegning_leko__sesam_parity
+    model: mrt_byggtegning_leko
+    given:
+      - input: ref('stg_kundeportal_byggtegning')
+        rows:
+          - {
+              UniqueId: 15858,
+              Navn: "Vedlegg 3 Glasmagasinet vedtekter",
+              BucketFilnavn: "FDVbygg28/Diverse_Branntegning_Vedlegg_3_Glasmagasinet_vedtekter_7.pdf",
+              Type: "Vedtekter",
+              Fag: "Kontraktsvedlegg",
+              FdvWebByggId: "bygg28",
+              Created: "2021-02-09 09:49:10"
+            }
+      - input: ref('mrt_global_property')
+        rows:
+          - {
+              bygg_avdeling_id: "N21102",
+              fb_byggNavnId: "bygg28",
+              ba_byggtype: "Handel"
+            }
+    expect:
+      rows:
+        - {
+            id: 15858,
+            created: "2021-02-09 09:49:10",
+            name: "Vedlegg 3 Glasmagasinet vedtekter",
+            path: "FDVbygg28/Diverse_Branntegning_Vedlegg_3_Glasmagasinet_vedtekter_7.pdf",
+            type: "Vedtekter",
+            buildingIds: "{N21102}",
+            buildingType: "Handel"
+          }
+
+  - name: mrt_customer_leko__sesam_parity
+    model: mrt_customer_leko
+    given:
+      - input: ref('mrt_global_customer')
+        rows:
+          - {
+              contactId: 15368,
+              nameDepartment: "Forenede Service A/S (tidl. Green Circle)",
+              contactSimpleName: "Forenede Service A/S (tidl. Green Circle)",
+              orgnr: "21000016",
+              emailAddress: "",
+              updatedDate: "2024-02-22 16:30:14",
+              registeredDate: "2020-11-03 10:10:43",
+              city: "",
+              country: null,
+              stop: false,
+              category: "Leietaker",
+              department: "",
+              description: null,
+              invoiceAddress: ",  ",
+              streetAddress: "",
+              postalAddress: "",
+            }
+          - {
+              contactId: 99001,
+              nameDepartment: "Utgått selskap AS",
+              contactSimpleName: "Utgått selskap AS",
+              orgnr: null,
+              emailAddress: null,
+              updatedDate: null,
+              registeredDate: null,
+              city: null,
+              country: null,
+              stop: false,
+              category: "Utgått",
+              department: null,
+              description: null,
+              invoiceAddress: null,
+              streetAddress: null,
+              postalAddress: null,
+            }
+    expect:
+      rows:
+        - {
+            Id: 15368,
+            name: "Forenede Service A/S (tidl. Green Circle)",
+            orgNumber: "21000016",
+            updatedAt: "2024-02-22 16:30:14",
+            createdAt: "2020-11-03 10:10:43",
+          }
+
+  - name: mrt_user_leko__sesam_parity
+    model: mrt_user_leko
+    given:
+      - input: ref('mrt_superoffice_user')
+        rows:
+          - {
+              personid: 14542,
+              contactid: 2,
+              email: "siri.kristoffersen@example.com",
+              firstname: "Siri",
+              lastname: "Kristiansen",
+              retired: false,
+              _deleted: false,
+              personupdateddate: "2013-11-05 12:37:56",
+              personregistereddate: "2011-11-11 15:37:52",
+              mobilephone: "21000011",
+              personinterestids: null,
+              registered: "2011-11-11 15:37:52",
+              updated: "2013-11-05 12:37:56",
+            }
+      - input: ref('mrt_global_customer')
+        rows:
+          - { contactid: 2, kundenummer: null }
+    expect:
+      rows:
+        - {
+            id: 14542,
+            companyId: 2,
+            companyNumber: null,
+            email: "siri.kristoffersen@example.com",
+            firstName: "Siri",
+            lastName: "Kristiansen",
+            deleted: false,
+            updatedAt: "2013-11-05 12:37:56",
+            createdAt: "2011-11-11 15:37:52",
+            phone: "21000011",
+            hasCustomerPortalInterest: false,
+            isContractResponsible: false,
+          }
+
+  - name: mrt_leko_kontrakt__sesam_parity
+    model: mrt_leko_kontrakt
+    given:
+      - input: ref('stg_leko_kontrakt')
+        rows:
+          - payload: '{"_id":"C1","contractId":"CID1","id":"ID1","startDate":"2020-01-01 00:00:00","endDate":"2025-01-01 00:00:00"}'
+    expect:
+      rows:
+        - "#id": "ID1"
+          payload: '{"_id":"C1","contractId":"CID1","id":"ID1","startDate":"2020-01-01 00:00:00","endDate":"2025-01-01 00:00:00"}'

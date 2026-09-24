@@ -1,0 +1,54 @@
+kdi_risingwave:
+  target: dev
+  outputs:
+    ci:
+      type: risingwave # Note: RisingWave uses the dbt-postgres adapter under the hood or dbt-risingwave
+      host: "{{ env_var('DBT_RW_HOST', 'localhost') }}"
+      user: "{{ env_var('DBT_RW_USER', 'root') }}"
+      password: "{{ env_var('DBT_RW_PASSWORD', '') }}"
+      port: 4566
+      dbname: "{{ env_var('DBT_RW_DBNAME', 'ci') }}"
+      schema: public
+      threads: 4
+      keepalives_idle: 0
+    localdev:
+      type: risingwave
+      host: "localhost"
+      user: root
+      password: root
+      port: 4566
+      dbname: dev
+      schema: public
+      threads: 4
+      keepalives_idle: 0
+    dev:
+      type: risingwave
+      host: "{{ env_var('DBT_RW_HOST', 'localhost') }}"
+      user: "{{ env_var('DBT_RW_USER', 'root') }}"
+      password: "{{ env_var('DBT_RW_PASSWORD', '') }}"
+      port: 4566
+      dbname: dev
+      schema: public
+      threads: 2
+      keepalives_idle: 0
+      sslmode: require
+    test:
+      type: risingwave
+      host: "{{ env_var('DBT_RW_HOST') }}"
+      user: "{{ env_var('DBT_RW_USER', 'root') }}"
+      password: "{{ env_var('DBT_RW_PASSWORD') }}"
+      port: 4566
+      dbname: test
+      schema: public
+      threads: 4
+      keepalives_idle: 0
+    prod:
+      type: risingwave
+      host: "{{ env_var('DBT_RW_HOST') }}"
+      user: "{{ env_var('DBT_RW_USER', 'root') }}"
+      password: "{{ env_var('DBT_RW_PASSWORD') }}"
+      port: 4566
+      dbname: prod
+      schema: public
+      threads: 4
+      keepalives_idle: 0

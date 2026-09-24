@@ -1,0 +1,56 @@
+[
+  {
+    "#id": "11563",
+    "KundeNummer": "11563",
+    "KundeNavn": "UPS Norway AS",
+    "OrgNummer": "921000015",
+    "SoContactId": 7867,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "12659",
+    "KundeNummer": "12659",
+    "KundeNavn": "Tømrermesteren AS",
+    "OrgNummer": "921000014",
+    "SoContactId": 10589,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "90010139",
+    "KundeNummer": "90010139",
+    "KundeNavn": "Forenede Service A/S (tidl. Green Circle)",
+    "OrgNummer": "21000016",
+    "SoContactId": 15368,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "90012080",
+    "KundeNummer": "90012080",
+    "KundeNavn": "Meny Oslo City v/Norgesgeruppen Finans ASS",
+    "OrgNummer": "921000013",
+    "SoContactId": 16851,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "90013057",
+    "KundeNummer": "90013057",
+    "KundeNavn": "Idun Real Estate Solutions AB",
+    "OrgNummer": "559016-1245",
+    "SoContactId": 17828,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "90016596",
+    "KundeNummer": "90016596",
+    "KundeNavn": "Securitas Technology Sverige AB",
+    "OrgNummer": "556076-0737",
+    "SoContactId": 20326,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  }
+]

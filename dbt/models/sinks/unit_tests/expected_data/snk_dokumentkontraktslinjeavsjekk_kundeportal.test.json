@@ -1,0 +1,7 @@
+{
+  "id_field": [
+    "DokumentId",
+    "KontraktlinjeId"
+  ],
+  "blacklist": []
+}

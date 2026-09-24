@@ -1,0 +1,42 @@
+{
+  "entities": [
+    {
+      "_id": "n254600035",
+      "faktura_dato": "2025-05-07T00:00:00",
+      "fil_finnes": true,
+      "forfallsdato": "2025-05-21T00:00:00",
+      "id": "n254600035",
+      "pdf_filnavn": "n254600035.pdf",
+      "kid": "6123756000356",
+      "kommentar": "Vi tillater oss å minne om vårt tilgodehavende. Ved unnlatt betaling innen fristen i dette varsel, vil saken oversendes til inkasso, og omkostninger kan påløpe. Hvis dette varselet har krysset deres betaling, ber vi dere se bort fra dette varselet.\n\nDersom faktura ikke er mottatt, kan fakturakopi hentes ut via Mitt Leieforhold: https://mittleieforhold.acme-realestate.no/",
+      "kunde_nummer": "612375",
+      "purring_kode": 5,
+      "purring_nummer": "600035",
+      "sendt_elektronisk": 0,
+      "sist_oppdatert": "2025-05-07T11:26:06",
+      "siste_innbetaling": null,
+      "status": 0,
+      "sum_innbetalt": null,
+      "valuta": "NOK"
+    },
+    {
+      "_id": "n249600017",
+      "faktura_dato": "2025-05-07T00:00:00",
+      "fil_finnes": true,
+      "forfallsdato": "2025-05-21T00:00:00",
+      "id": "n249600017",
+      "pdf_filnavn": "n249600017.pdf",
+      "kid": "6006266000174",
+      "kommentar": "Vi tillater oss å minne om vårt tilgodehavende. Ved unnlatt betaling innen fristen i dette varsel, vil saken oversendes til inkasso, og omkostninger kan påløpe. Hvis dette varselet har krysset deres betaling, ber vi dere se bort fra dette varselet.\n\nDersom faktura ikke er mottatt, kan fakturakopi hentes ut via Mitt Leieforhold: https://mittleieforhold.acme-realestate.no/",
+      "kunde_nummer": "600626",
+      "purring_kode": 1,
+      "purring_nummer": "600017",
+      "sendt_elektronisk": 0,
+      "sist_oppdatert": "2025-05-07T11:26:00",
+      "siste_innbetaling": null,
+      "status": 0,
+      "sum_innbetalt": null,
+      "valuta": "NOK"
+    }
+  ]
+}

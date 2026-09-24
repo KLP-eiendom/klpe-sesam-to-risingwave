@@ -1,0 +1,40 @@
+# .github/workflows/sprint-carryover.yml
+#
+# Caller workflow committed to every bootstrapped klpe-* repo.
+# Delegates to the reusable hub workflow in klpe-actions.
+#
+# Triggers:
+#   · Scheduled: last day of every month at 16:00 UTC (cron fires days 28–31;
+#                the hub script checks is_last_day_of_month() before running).
+#   · Manual:    workflow_dispatch from the Actions tab (supports dry-run).
+#
+# Variables required (set at org level or per repo):
+#   PROJECT_NUMBER   integer from github.com/orgs/<org>/projects/<N>
+#   KLPE_ORG       organisation name (defaults to klpkonsern)
+#
+# Secret required (set at org level or per repo):
+#   GH_PROJECT_TOKEN classic PAT with scopes: project, repo
+
+name: Sprint Carry-over
+
+on:
+  schedule:
+    - cron: "0 16 28-31 * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run — log without making changes"
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  carryover:
+    name: Sprint carry-over
+    uses: "klpkonsern/klpe-actions/.github/workflows/sprint-carryover.yml@v2"
+    with:
+      project_number: ${{ vars.PROJECT_NUMBER && fromJSON(vars.PROJECT_NUMBER) || 47 }}
+      org:            ${{ vars.KLPE_ORG || 'klpkonsern' }}
+      dry_run:        ${{ inputs.dry_run || false }}
+    secrets:
+      GH_PROJECT_TOKEN: ${{ secrets.GH_PROJECT_TOKEN }}

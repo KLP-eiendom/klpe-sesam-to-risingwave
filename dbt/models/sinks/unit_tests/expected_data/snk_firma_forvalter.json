@@ -1,0 +1,172 @@
+[
+  {
+    "#id": "S100",
+    "Id": "S100",
+    "Navn": "KLP Fastigheter AB",
+    "Region": "Sverige",
+    "OrgNivaa2": "Sverige",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N211",
+    "Id": "N211",
+    "Navn": "GlasMagasinet ANS",
+    "Region": "Oslo",
+    "OrgNivaa2": "Norge",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N930",
+    "Id": "N930",
+    "Navn": "KLP Festetomter",
+    "Region": "Oslo",
+    "OrgNivaa2": "Norge",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N201",
+    "Id": "N201",
+    "Navn": "Holbergsgt. 1 AS",
+    "Region": "Oslo",
+    "OrgNivaa2": "Norge",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "D208",
+    "Id": "D208",
+    "Navn": "KLP Weidekampsgade 12-16 A/S",
+    "Region": "Danmark",
+    "OrgNivaa2": "Danmark",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N101",
+    "Id": "N101",
+    "Navn": "KLP Eiendom Oslo AS",
+    "Region": "Oslo",
+    "OrgNivaa2": "Norge",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N519",
+    "Id": "N519",
+    "Navn": "Jonsvollskvartalet AS",
+    "Region": "Trondheim",
+    "OrgNivaa2": "Norge",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N504",
+    "Id": "N504",
+    "Navn": "KLP Sluppen AS",
+    "Region": "Trondheim",
+    "OrgNivaa2": "Norge",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N501",
+    "Id": "N501",
+    "Navn": "KLP Næringsbygg Trondheim AS",
+    "Region": "Trondheim",
+    "OrgNivaa2": "Norge",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "KN16",
+    "Id": "KN16",
+    "Navn": "Kn Europa NOK",
+    "Region": "Konsolidert",
+    "OrgNivaa2": "Konsolidert",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "D100",
+    "Id": "D100",
+    "Navn": "KLP Ejendomme A/S",
+    "Region": "Danmark",
+    "OrgNivaa2": "Danmark",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N210",
+    "Id": "N210",
+    "Navn": "Paleet Karl Johan ANS",
+    "Region": "Oslo",
+    "OrgNivaa2": "Norge",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "S204",
+    "Id": "S204",
+    "Navn": "KLP Viken AB",
+    "Region": "Sverige",
+    "OrgNivaa2": "Sverige",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N152",
+    "Id": "N152",
+    "Navn": "KLP Eiendomsdrift Trondheim AS",
+    "Region": "Trondheim",
+    "OrgNivaa2": "Norge",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "ZMEU",
+    "Id": "ZMEU",
+    "Navn": "Malselskap Europa",
+    "Region": null,
+    "OrgNivaa2": null,
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "D202",
+    "Id": "D202",
+    "Navn": "KLP Ørestad 5G A/S",
+    "Region": "Danmark",
+    "OrgNivaa2": "Danmark",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "EL16",
+    "Id": "EL16",
+    "Navn": "El Europa NOK",
+    "Region": "Europa",
+    "OrgNivaa2": "Europa",
+    "OrgNivaa3": null,
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  }
+]

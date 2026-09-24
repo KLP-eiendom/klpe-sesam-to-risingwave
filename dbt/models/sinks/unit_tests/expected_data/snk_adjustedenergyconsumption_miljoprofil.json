@@ -1,0 +1,62 @@
+[
+  {
+    "#id": "N24901-Totalt-kWh-202105",
+    "UniqueId": "N24901-Totalt-kWh-202105",
+    "ByggNummer": "N24901",
+    "Mnd": 202105,
+    "Type": "Totalt",
+    "Unit": "kWh",
+    "Sum": 6989.200012208,
+    "System": "Energinet",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N22701-Totalt-kWh-202105",
+    "UniqueId": "N22701-Totalt-kWh-202105",
+    "ByggNummer": "N22701",
+    "Mnd": 202105,
+    "Type": "Totalt",
+    "Unit": "kWh",
+    "Sum": 105256.8,
+    "System": "Energinet",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N24901-Totalt-kWh-202106",
+    "UniqueId": "N24901-Totalt-kWh-202106",
+    "ByggNummer": "N24901",
+    "Mnd": 202106,
+    "Type": "Totalt",
+    "Unit": "kWh",
+    "Sum": 286.0,
+    "System": "Energinet",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N24901-Prognoser-kWh-202106",
+    "UniqueId": "N24901-Prognoser-kWh-202106",
+    "ByggNummer": "N24901",
+    "Mnd": 202106,
+    "Type": "Prognoser",
+    "Unit": "kWh",
+    "Sum": 119129.123,
+    "System": "Energinet",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  },
+  {
+    "#id": "N24901-Prognoser-kWh-202107",
+    "UniqueId": "N24901-Prognoser-kWh-202107",
+    "ByggNummer": "N24901",
+    "Mnd": 202107,
+    "Type": "Prognoser",
+    "Unit": "kWh",
+    "Sum": 200112.123,
+    "System": "Energinet",
+    "Created": "1970-01-01 00:00:00",
+    "LastUpdated": "1970-01-01 00:00:00"
+  }
+]

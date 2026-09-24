@@ -1,0 +1,116 @@
+trigger:
+  branches:
+    include:
+      - main
+      - release
+      - release/*
+  paths:
+    include:
+      - dbt/**
+      - azure-pipelines-cd.yml
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - name: DBT_PROFILES_DIR
+    value: $(Build.SourcesDirectory)/dbt
+
+stages:
+  - stage: Deploy_Dev
+    displayName: "Deploy to Development"
+    condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+    variables:
+      - group: Risingwave - Dev
+    jobs:
+      - deployment: DeployDBT
+        environment: "dev"
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - script: |
+                    pip install dbt-risingwave
+                    cd dbt
+                    chmod +x deploy.sh
+                    ./deploy.sh dev
+                  displayName: "Run dbt (dev)"
+                  env:
+                    VaultOptions__Server: $(VaultOptions__Server)
+                    VaultOptions__Prefix: $(VaultOptions__Prefix)
+                    VaultOptions__K8TokenId: $(VaultOptions__K8TokenId)
+                    VaultOptions__K8Mountpoint: $(VaultOptions__K8Mountpoint)
+                    VaultOptions__VaultRoleName: $(VaultOptions__VaultRoleName)
+                    VaultOptions__Secrets: $(VaultOptions__Secrets)
+
+  - stage: Deploy_Test
+    displayName: "Deploy to Test"
+    dependsOn: []
+    condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/release'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'))
+    variables:
+      - group: Risingwave - Test
+    jobs:
+      - deployment: DeployDBT
+        environment: "test"
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - script: |
+                    pip install dbt-risingwave
+                    cd dbt
+                    chmod +x deploy.sh
+                    ./deploy.sh test
+                  displayName: "Run dbt (test)"
+                  env:
+                    VaultOptions__Server: $(VaultOptions__Server)
+                    VaultOptions__Prefix: $(VaultOptions__Prefix)
+                    VaultOptions__K8TokenId: $(VaultOptions__K8TokenId)
+                    VaultOptions__K8Mountpoint: $(VaultOptions__K8Mountpoint)
+                    VaultOptions__VaultRoleName: $(VaultOptions__VaultRoleName)
+                    VaultOptions__Secrets: $(VaultOptions__Secrets)
+
+  - stage: Approve_Prod
+    displayName: "Approve Production Deployment"
+    dependsOn: Deploy_Test
+    condition: and(succeeded('Deploy_Test'), or(eq(variables['Build.SourceBranch'], 'refs/heads/release'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
+    jobs:
+      - job: WaitForApproval
+        displayName: "Manual approval gate"
+        pool: server
+        timeoutInMinutes: 20160
+        steps:
+          - task: ManualValidation@0
+            inputs:
+              instructions: 'Godkjenn deploy til produksjon'
+              onTimeout: reject
+
+  - stage: Deploy_Prod
+    displayName: "Deploy to Production"
+    dependsOn: Approve_Prod
+    condition: and(succeeded('Approve_Prod'), or(eq(variables['Build.SourceBranch'], 'refs/heads/release'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
+    variables:
+      - group: Risingwave - Prod
+    jobs:
+      - deployment: DeployDBT
+        environment: "prod"
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - script: |
+                    pip install dbt-risingwave
+                    cd dbt
+                    chmod +x deploy.sh
+                    ./deploy.sh prod
+                  displayName: "Run dbt (prod)"
+                  env:
+                    VaultOptions__Server: $(VaultOptions__Server)
+                    VaultOptions__Prefix: $(VaultOptions__Prefix)
+                    VaultOptions__K8TokenId: $(VaultOptions__K8TokenId)
+                    VaultOptions__K8Mountpoint: $(VaultOptions__K8Mountpoint)
+                    VaultOptions__VaultRoleName: $(VaultOptions__VaultRoleName)
+                    VaultOptions__Secrets: $(VaultOptions__Secrets)

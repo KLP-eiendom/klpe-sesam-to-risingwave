@@ -1,0 +1,74 @@
+{
+  "entities": [
+    {
+      "_id": "N24901-202106-Utetemperatur-C-600015",
+      "BuildingId": "N24901",
+      "CustomerNumber": "600015",
+      "Mnd": 202106,
+      "MndString": "202106",
+      "Sum": "~f66.4",
+      "Type": "Utetemperatur",
+      "unit": "C"
+    },
+    {
+      "_id": "N24901-202105-Utetemperatur-C-600015",
+      "BuildingId": "N24901",
+      "CustomerNumber": "600015",
+      "Mnd": 202105,
+      "MndString": "202105",
+      "Sum": "~f567.6",
+      "Type": "Utetemperatur",
+      "unit": "C"
+    },
+    {
+      "_id": "N22701-202106-Fjernvarme-kWh-600005",
+      "BuildingId": "N22701",
+      "CustomerNumber": "600005",
+      "Mnd": 202106,
+      "MndString": "202106",
+      "Sum": 100,
+      "Type": "Fjernvarme",
+      "unit": "kWh"
+    },
+    {
+      "_id": "N22701-202105-Fjernvarme-kWh-600005",
+      "BuildingId": "N22701",
+      "CustomerNumber": "600005",
+      "Mnd": 202105,
+      "MndString": "202105",
+      "Sum": 37020,
+      "Type": "Fjernvarme",
+      "unit": "kWh"
+    },
+    {
+      "_id": "N22701-202105-El-kWh-600005",
+      "BuildingId": "N22701",
+      "CustomerNumber": "600005",
+      "Mnd": 202105,
+      "MndString": "202105",
+      "Sum": "~f105256.8",
+      "Type": "El",
+      "unit": "kWh"
+    },
+    {
+      "_id": "N24901-202106-El-kWh-600001",
+      "BuildingId": "N24901",
+      "CustomerNumber": "600001",
+      "Mnd": 202106,
+      "MndString": "202106",
+      "Sum": 286,
+      "Type": "El",
+      "unit": "kWh"
+    },
+    {
+      "_id": "N24901-202105-El-kWh-600001",
+      "BuildingId": "N24901",
+      "CustomerNumber": "600001",
+      "Mnd": 202105,
+      "MndString": "202105",
+      "Sum": "~f6989.200012208",
+      "Type": "El",
+      "unit": "kWh"
+    }
+  ]
+}

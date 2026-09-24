@@ -1,0 +1,68 @@
+{
+  "entities": [
+    {
+      "_id": "2-superoffice-property",
+      "name": "001 Leuthen P Hus",
+      "assignmentLag": 0,
+      "categoryMaster": 2,
+      "closingStatus": "UserDefined",
+      "delegateMethod": "Even",
+      "externalName": "Leuthen P Hus",
+      "flags": "Unknown",
+      "fullname": "001 Leuthen P Hus",
+      "msgClosingStatus": "UserDefined",
+      "notificationEmail": "",
+      "parentId": -1,
+      "replyTemplate": 0,
+      "ticketCategoryId": 2
+    },
+    {
+      "_id": "3-superoffice-property",
+      "name": "002 Bakke P Hus",
+      "assignmentLag": 0,
+      "categoryMaster": 2,
+      "closingStatus": "UserDefined",
+      "delegateMethod": "Even",
+      "externalName": "Bakke P Hus",
+      "flags": "Unknown",
+      "fullname": "002 Bakke P Hus",
+      "msgClosingStatus": "UserDefined",
+      "notificationEmail": "",
+      "parentId": -1,
+      "replyTemplate": 0,
+      "ticketCategoryId": 3
+    },
+    {
+      "_id": "1-superoffice-property",
+      "name": "300 Frydenlund Eiendom ANS",
+      "assignmentLag": 0,
+      "categoryMaster": 2,
+      "closingStatus": "UserDefined",
+      "delegateMethod": "Even",
+      "externalName": "Frydenlund Eiendom ANS",
+      "flags": "Unknown",
+      "fullname": "300 Frydenlund Eiendom ANS",
+      "msgClosingStatus": "UserDefined",
+      "notificationEmail": "",
+      "parentId": -1,
+      "replyTemplate": 0,
+      "ticketCategoryId": 1
+    },
+    {
+      "_id": "5-superoffice-property",
+      "name": "300-302 Pilestredet 42",
+      "assignmentLag": 0,
+      "categoryMaster": 2,
+      "closingStatus": "UserDefined",
+      "delegateMethod": "Even",
+      "externalName": "Pilestredet 42",
+      "flags": "Unknown",
+      "fullname": "300-302 Pilestredet 42",
+      "msgClosingStatus": "UserDefined",
+      "notificationEmail": "",
+      "parentId": 1,
+      "replyTemplate": 0,
+      "ticketCategoryId": 5
+    }
+  ]
+}
